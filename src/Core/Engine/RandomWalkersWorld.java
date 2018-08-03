@@ -1,6 +1,5 @@
 package Core.Engine;
 
-import javax.xml.bind.annotation.XmlType;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -42,13 +41,10 @@ public class RandomWalkersWorld {
 
     public static void main(String... args) {
 
-        PositionValueBoard board = new PositionValueBoard(100, 150);
-        board.checkRectangularPerimeter(50, 75, 20, 25);
-
     }
 
     //Simulation
-    private int step;
+    private long counter;
 
     //Walkers
     private final ArrayList<RandomWalker> walkers;
@@ -56,10 +52,13 @@ public class RandomWalkersWorld {
 
     //PositionIndexBoard
     private final PositionValueBoard walkersIndexBoard;
-    private final PositionValueBoard barriersIndexBoard;
 
     //tendencyBoard
     private final TendencyBoard tendencyBoard;
+    private final ArrayList<Tendency> localTendencies;
+
+    //collisions Boards
+    private final CollisionBoard collisionBoards;
 
     private final int w, h;
 
@@ -75,41 +74,54 @@ public class RandomWalkersWorld {
 
         //Boards
         walkersIndexBoard = new PositionValueBoard(w, h);
-        barriersIndexBoard = new PositionValueBoard(w, h);
         tendencyBoard = new TendencyBoard(w, h);
 
-        //Simulation
-        step = Constants.DEFAULT_STEP;
+        //Tendencies
+        localTendencies = new ArrayList<>();
+
+        //Collision Boards
+        collisionBoards = new CollisionBoard(w, h, barrier);
     }
 
     /**
      * @param x
      * @param y
      * @param size
-     * @return true if the operation was successful, false otherwise
+     * @return true if the operation was successful, false otherwise.
      */
     public boolean addSquareWalker(int x, int y, int size) {
 
-        //Checking boundaries
-        if (x < size || y < size || x > w - size || y > h - size) return false;
+        RandomWalker newWalker = new RandomWalker(x, y, size, Constants.SQUARE_SHAPE);
 
-        //Check barriers overlapping
-        if (barriersIndexBoard.checkSquareArea(x, y, size)) return false;
+        //Update collision board
+        collisionBoards.attachThisWalker(newWalker);
+
+        //Check collisions
+        if (collisionBoards.checkCollision(x, y, newWalker)) return false;
 
         //Adding walker
-        walkers.add(new RandomWalker(x, y, size, Constants.SQUARE_SHAPE));
+        walkers.add(newWalker);
         walkersIndexBoard.setValue(walkers.size() - 1, x, y);
         return true;
     }
 
-    public Point getWalkerPosition(int walkerIndex) {
-        return new Point(walkers.get(walkerIndex).getPositionX(), walkers.get(walkerIndex).getPositionY());
+    public Vector getWalkerPosition(int walkerIndex) {
+        return new Vector(walkers.get(walkerIndex).getPositionX(), walkers.get(walkerIndex).getPositionY());
+    }
+
+    public void run(int iterations) {
+
+        do {
+            run();
+            iterations--;
+        } while (iterations >= 0);
+
     }
 
     public void run() {
 
         //Moving walkers
-        Point newPosition;
+        Vector newPosition;
         RandomWalker walker;
         for (int i = 0; i < walkers.size(); i++) {
 
@@ -117,26 +129,103 @@ public class RandomWalkersWorld {
             walker = walkers.get(i);
 
             //New Position
-            newPosition = tendencyBoard.tryDirection(walker.positionX, walker.positionY, step);
+            newPosition = tendencyBoard.tryDirection(walker.positionX, walker.positionY);
 
-            //Checking New Position
-            if (newPosition.x < walker.getSize() || newPosition.x >= w - walker.getSize() ||
-                    newPosition.y < walker.getSize() && newPosition.y >= h - walker.getSize()) {
+            //Check collisions
+            if (collisionBoards.checkCollision(newPosition.x, newPosition.y, walker)) {
                 continue;
             } else {
                 walker.setPositionX(newPosition.x);
                 walker.setPositionY(newPosition.y);
             }
         }
+
+        counter++;
     }
 
     public void setTendency(int xPosition, int yPosition, int xTendency, int yTendency) {
         tendencyBoard.setTendency(xPosition, yPosition, xTendency, yTendency);
     }
 
+    public void setTendency(int xPosition, int yPosition, int xTendency, int yTendency, float factor) {
+        tendencyBoard.setTendency(xPosition, yPosition, (int) (xTendency * factor), (int) (yTendency * factor));
+    }
+
+    public Vector getTendency(int xPosition, int yPosition) {
+        return tendencyBoard.getTendency(xPosition, yPosition);
+    }
+
     public void setGlobalTendency(int xGlobalTendency, int yGlobalTendency) {
         tendencyBoard.setGlobalTendency(xGlobalTendency, yGlobalTendency);
     }
+
+    /**
+     * It will set a tendency after translated. Translate means move the vector from the
+     * upper left origin screen coordinate system to a standard Cartesian coordinate system with the center
+     * in xPosition and yPosition. In this new system the vector will start at the origin, due to, it can be
+     * represented as a single pair of coordinates and set as the Tendency of this point.
+     * This method guaranty that the Tendency behave just as you set it in the original system. If it represent
+     * a vector pointing to the North direction, it will point to the North direction in the new system and will
+     * still have the same magnitude.
+     *
+     * @param xPosition the x position you want to set a Tendency, at the same time it is the
+     *                  x coordinate of the first point of the virgin vector.
+     * @param yPosition the y position you want to set a Tendency, at the same time it is the
+     *                  y coordinate of the first point of the virgin vector.
+     * @param xTendency The value of the x Tendency, at the same time it is the
+     *                  x coordinate of the second point of the virgin vector.
+     * @param yTendency The value of the y Tendency, at the same time it is the
+     *                  y coordinate of the second point of the virgin vector.
+     */
+    public void translateAndSetTendency(int xPosition, int yPosition, int xTendency, int yTendency) {
+
+        int xt = xTendency - xPosition;
+        int yt = yTendency - yPosition;
+
+        tendencyBoard.setTendency(xPosition, yPosition, xt, -yt);
+
+    }
+
+    /**
+     * It will set a tendency after translated. Translate means move the vector from the
+     * upper left origin screen coordinate system to a standard Cartesian coordinate system with the center
+     * in xPosition and yPosition. In this new system the vector will start at the origin, due to, it can be
+     * represented as a single pair of coordinates and set as the Tendency of this point.
+     * This method guaranty that the Tendency behave just as you set it in the original system. If it represent
+     * a vector pointing to the North direction, it will point to the North direction in the new system and will
+     * still have the same magnitude.
+     *
+     * @param xPosition the x position you want to set a Tendency, at the same time it is the
+     *                  x coordinate of the first point of the virgin vector.
+     * @param yPosition the y position you want to set a Tendency, at the same time it is the
+     *                  y coordinate of the first point of the virgin vector.
+     * @param xTendency The value of the x Tendency, at the same time it is the
+     *                  x coordinate of the second point of the virgin vector.
+     * @param yTendency The value of the y Tendency, at the same time it is the
+     *                  y coordinate of the second point of the virgin vector.
+     */
+    public void translateAndSetTendency(int xPosition, int yPosition, int xTendency, int yTendency, float factor) {
+
+        int xt = xTendency - xPosition;
+        int yt = yTendency - yPosition;
+
+        tendencyBoard.setTendency(xPosition, yPosition, (int) (xt * factor), (int) (-yt * factor));
+
+    }
+
+    public int getW() {
+        return w;
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    public long getCounter() {
+        return counter;
+    }
+
+    //CLASSES ----------------------------------------------------------------------------------------------------------
 
     /**
      * This class represent the RandomWalkers that will exist
@@ -193,7 +282,7 @@ public class RandomWalkersWorld {
     public static class PositionValueBoard {
 
         //Fields
-        protected final int[][] board;
+        final int[][] board;
         private final int w;
         private final int h;
         private int emptyValue;
@@ -242,6 +331,19 @@ public class RandomWalkersWorld {
         }
 
         /**
+         * Set the value of a given position in the Board checking that this is
+         * within it.
+         *
+         * @param value
+         * @param x
+         * @param y
+         */
+        public void setValueSafely(int value, int x, int y) {
+            if (isWithinBoard(x, y))
+                board[x][y] = value;
+        }
+
+        /**
          * Set the value of a given position in the Board
          *
          * @param value
@@ -253,11 +355,13 @@ public class RandomWalkersWorld {
         }
 
         /**
+         * Return true if the Position contain the empty value
+         *
          * @param x
          * @param y
          * @return true if the position is EMPTY
          */
-        public boolean isPositionEmpty(int x, int y) {
+        public boolean checkForEmptyPosition(int x, int y) {
             return board[x][y] == emptyValue;
         }
 
@@ -285,7 +389,7 @@ public class RandomWalkersWorld {
             BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
             for (int d0 = 0; d0 < board.length; d0++) {
                 for (int d1 = 0; d1 < board[0].length; d1++) {
-                    if (!isPositionEmpty(d0, d1))
+                    if (!checkForEmptyPosition(d0, d1))
                         image.setRGB(d0, d1, Color.BLACK.getRGB());
                     else
                         image.setRGB(d0, d1, Color.WHITE.getRGB());
@@ -323,7 +427,7 @@ public class RandomWalkersWorld {
                             i++;
                         }
                         if (i == values.length) {
-                            if (!isPositionEmpty(d0, d1))
+                            if (!checkForEmptyPosition(d0, d1))
                                 image.setRGB(d0, d1, Color.BLACK.getRGB());
                             else
                                 image.setRGB(d0, d1, Color.WHITE.getRGB());
@@ -345,37 +449,24 @@ public class RandomWalkersWorld {
         public boolean checkCircularArea(int centerX, int centerY, int radius) {
 
             //|x| = radius
-            if (!isPositionEmpty(centerX - radius, centerY)) return false;
-            if (!isPositionEmpty(centerX + radius, centerY)) return false;
+            if (!checkForEmptyPosition(centerX - radius, centerY)) return false;
+            if (!checkForEmptyPosition(centerX + radius, centerY)) return false;
 
-//            //TODO Deb
-//            board.setValue(5, centerX - radius, centerY);
-//            board.setValue(5, centerX + radius, centerY);
-
-            //|y| < radius
             int y;
             for (int x = 1 - radius; x < radius; x++) {
 
                 //Diameter
-                if (!isPositionEmpty(centerX + x, centerY)) return false;
+                if (!checkForEmptyPosition(centerX + x, centerY)) return false;
 
-//                //TODO Deb
-//                //Diameter
-//                board.setValue(5, centerX + x, centerY);
 
                 y = (int) Math.round(Math.sqrt(radius * radius - x * x));
 
                 for (int i = 0; i < y; i++) {
 
                     //Upper half
-                    if (!isPositionEmpty(centerX - x, centerY - y + i)) return false;
+                    if (!checkForEmptyPosition(centerX - x, centerY - y + i)) return false;
                     //Downer half
-                    if (!isPositionEmpty(centerX - x, centerY + y - i)) return false;
-//                    //TODO Deb
-//                    //Upper half
-//                    board.setValue(5, centerX - x, centerY - y + i);
-//                    //Downer half
-//                    board.setValue(5, centerX - x, centerY + y - i);
+                    if (!checkForEmptyPosition(centerX - x, centerY + y - i)) return false;
                 }
 
             }
@@ -393,78 +484,54 @@ public class RandomWalkersWorld {
             for (int x = 0; x < boxels; x++) {
                 for (int y = 0; y < boxels; y++) {
 
-                    if (!isPositionEmpty(cornerX + x, cornerY + y)) return false;
+                    if (!checkForEmptyPosition(cornerX + x, cornerY + y)) return false;
 
-                    //TODO Deb
-                    //board.setValue(5, cornerX + x, cornerY + y);
                 }
             }
 
             return true;
         }
 
-        public boolean checkRectangularArea(int centerX, int centerY, int sizeH, int sizeV) {
+        public boolean checkRectangularArea(int centerX, int centerY, int sizeX, int sizeY) {
 
-            int lineV = sizeV * 2 + 1;
-            int lineH = sizeH * 2 + 1;
-            int cornerX = centerX - sizeH;
-            int cornerY = centerY - sizeV;
+            int lineV = sizeY * 2 + 1;
+            int lineH = sizeX * 2 + 1;
+            int cornerX = centerX - sizeX;
+            int cornerY = centerY - sizeY;
 
             for (int x = 0; x < lineH; x++) {
                 for (int y = 0; y < lineV; y++) {
 
-                    if (!isPositionEmpty(cornerX + x, cornerY + y)) return false;
+                    if (!checkForEmptyPosition(cornerX + x, cornerY + y)) return false;
 
-                    //TODO Deb
-                    //board.setValue(5, cornerX + x, cornerY + y);
                 }
             }
-
-            //TODO Deb
-            //BufferedImage image = board.getImage();
 
             return true;
         }
 
         public boolean checkCircularPerimeter(int centerX, int centerY, int radius) {
             //|x| = radius
-            if (!isPositionEmpty(centerX - radius, centerY)) return false;
-            if (!isPositionEmpty(centerX + radius, centerY)) return false;
+            if (!checkForEmptyPosition(centerX - radius, centerY)) return false;
+            if (!checkForEmptyPosition(centerX + radius, centerY)) return false;
 
-            //TODO Deb
-//            board.setValue(5, centerX - radius, centerY);
-//            board.setValue(5, centerX + radius, centerY);
-
-            //|x| < radius
             int y, lastY = 0, dy;
             for (int x = radius - 1; x >= 0; x--) {
 
                 y = (int) Math.round(Math.sqrt(radius * radius - x * x));
                 dy = Math.abs(lastY - y);
 
-                if (!isPositionEmpty(centerX + x, centerY - y)) return false;
-                if (!isPositionEmpty(centerX + x, centerY + y)) return false;
-                if (!isPositionEmpty(centerX - x, centerY - y)) return false;
-                if (!isPositionEmpty(centerX - x, centerY + y)) return false;
-
-                //TODO Deb
-//                board.setValue(5, centerX + x, centerY - y);
-//                board.setValue(5, centerX + x, centerY + y);
-//                board.setValue(5, centerX - x, centerY - y);
-//                board.setValue(5, centerX - x, centerY + y);
+                if (!checkForEmptyPosition(centerX + x, centerY - y)) return false;
+                if (!checkForEmptyPosition(centerX + x, centerY + y)) return false;
+                if (!checkForEmptyPosition(centerX - x, centerY - y)) return false;
+                if (!checkForEmptyPosition(centerX - x, centerY + y)) return false;
 
                 for (int i = 1; i < dy; i++) {
 
-                    if (!isPositionEmpty(centerX + x, centerY - y + i)) return false;
-                    if (!isPositionEmpty(centerX + x, centerY + y - i)) return false;
-                    if (!isPositionEmpty(centerX - x, centerY - y + i)) return false;
-                    if (!isPositionEmpty(centerX - x, centerY + y - i)) return false;
-
-                    //TODO Deb
-//                    board.setValue(5, centerX + x, centerY - y + i);
-//                    board.setValue(5, centerX + x, centerY + y - i);
-//                    board.setValue(5, centerX - x, centerY - y + i);
-//                    board.setValue(5, centerX - x, centerY + y - i);
+                    if (!checkForEmptyPosition(centerX + x, centerY - y + i)) return false;
+                    if (!checkForEmptyPosition(centerX + x, centerY + y - i)) return false;
+                    if (!checkForEmptyPosition(centerX - x, centerY - y + i)) return false;
+                    if (!checkForEmptyPosition(centerX - x, centerY + y - i)) return false;
 
                 }
                 lastY = y;
@@ -483,30 +550,17 @@ public class RandomWalkersWorld {
             int dm = centerY + size;
 
             //Corners
-            if (!isPositionEmpty(lm, um)) return false;
-            if (!isPositionEmpty(rm, um)) return false;
-            if (!isPositionEmpty(lm, dm)) return false;
-            if (!isPositionEmpty(rm, dm)) return false;
+            if (!checkForEmptyPosition(lm, um)) return false;
+            if (!checkForEmptyPosition(rm, um)) return false;
+            if (!checkForEmptyPosition(lm, dm)) return false;
+            if (!checkForEmptyPosition(rm, dm)) return false;
 
-            //TODO Deb
-            //board.setValue(5, lm, um);
-            //board.setValue(5, rm, um);
-            //board.setValue(5, lm, dm);
-            //board.setValue(5, rm, dm);
-
-            //Filling center
             for (int i = 1; i < size * 2; i++) {
 
-                if (!isPositionEmpty(lm + i, um)) return false;
-                if (!isPositionEmpty(lm, um + i)) return false;
-                if (!isPositionEmpty(rm, um + i)) return false;
-                if (!isPositionEmpty(lm + i, dm)) return false;
-
-                //TODO Deb
-                //board.setValue(5, lm + i, um);
-                //board.setValue(5, lm, um + i);
-                //board.setValue(5, rm, um + i);
-                //board.setValue(5, lm + i, dm);
+                if (!checkForEmptyPosition(lm + i, um)) return false;
+                if (!checkForEmptyPosition(lm, um + i)) return false;
+                if (!checkForEmptyPosition(rm, um + i)) return false;
+                if (!checkForEmptyPosition(lm + i, dm)) return false;
 
             }
 
@@ -514,45 +568,693 @@ public class RandomWalkersWorld {
 
         }
 
-        public boolean checkRectangularPerimeter(int centerX, int centerY, int sizeH, int sizeV) {
+        public boolean checkRectangularPerimeter(int centerX, int centerY, int sizeX, int sizeY) {
 
             //Borders
-            int ub = centerY - sizeV;
-            int db = centerY + sizeV;
-            int lb = centerX - sizeH;
-            int rb = centerX + sizeH;
+            int ub = centerY - sizeY;
+            int db = centerY + sizeY;
+            int lb = centerX - sizeX;
+            int rb = centerX + sizeX;
 
 
             //Upper line
-            for (int x = 0; x < sizeH * 2 + 1; x++) {
-                if (!isPositionEmpty(lb + x, ub)) return false;
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                if (!checkForEmptyPosition(lb + x, ub)) return false;
 
-                //TODO Deb
-                //board.setValue(5, lb + x, ub);
             }
 
             //Sides lines
-            for (int y = 1; y < sizeV * 2; y++) {
-                if (!isPositionEmpty(lb, ub + y)) return false;
-                if (!isPositionEmpty(rb, ub + y)) return false;
+            for (int y = 1; y < sizeY * 2; y++) {
+                if (!checkForEmptyPosition(lb, ub + y)) return false;
+                if (!checkForEmptyPosition(rb, ub + y)) return false;
 
-                //TODO Deb
-                //board.setValue(5, lb, ub + y);
-                //board.setValue(5, rb, ub + y);
             }
 
             //Downer line
-            for (int x = 0; x < sizeH * 2 + 1; x++) {
-                if (!isPositionEmpty(lb + x, db)) return false;
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                if (!checkForEmptyPosition(lb + x, db)) return false;
 
-                //TODO Deb
-                //board.setValue(5, lb + x, db);
             }
 
-            //TODO Deb
-            //BufferedImage image = board.getImage();
+            return true;
+
+        }
+
+        public void setCircularArea(int centerX, int centerY, int radius, int value) {
+
+            //|x| = radius
+            setValue(value, centerX - radius, centerY);
+            setValue(value, centerX + radius, centerY);
+
+            int y;
+            for (int x = 1 - radius; x < radius; x++) {
+
+                //Diameter
+                setValue(value, centerX + x, centerY);
+
+                y = (int) Math.round(Math.sqrt(radius * radius - x * x));
+
+                for (int i = 0; i < y; i++) {
+
+                    //Upper half
+                    setValue(value, centerX - x, centerY - y + i);
+                    //Downer half
+                    setValue(value, centerX - x, centerY + y - i);
+                }
+
+            }
+        }
+
+        public void setSquareArea(int centerX, int centerY, int size, int value) {
+
+            int boxels = size * 2 + 1;
+            int cornerX = centerX - size;
+            int cornerY = centerY - size;
+
+            for (int x = 0; x < boxels; x++) {
+                for (int y = 0; y < boxels; y++) {
+
+                    setValue(value, cornerX + x, cornerY + y);
+
+                }
+            }
+
+        }
+
+        public void setRectangularArea(int centerX, int centerY, int sizeX, int sizeY, int value) {
+
+            int lineV = sizeY * 2 + 1;
+            int lineH = sizeX * 2 + 1;
+            int cornerX = centerX - sizeX;
+            int cornerY = centerY - sizeY;
+
+            for (int x = 0; x < lineH; x++) {
+                for (int y = 0; y < lineV; y++) {
+
+                    setValue(value, cornerX + x, cornerY + y);
+
+                }
+            }
+
+        }
+
+        public void setCircularPerimeter(int centerX, int centerY, int radius, int value) {
+            //|x| = radius
+            setValue(value, centerX - radius, centerY);
+            setValue(value, centerX + radius, centerY);
+
+            int y, lastY = 0, dy;
+            for (int x = radius - 1; x >= 0; x--) {
+
+                y = (int) Math.round(Math.sqrt(radius * radius - x * x));
+                dy = Math.abs(lastY - y);
+
+                setValue(value, centerX + x, centerY - y);
+                setValue(value, centerX + x, centerY + y);
+                setValue(value, centerX - x, centerY - y);
+                setValue(value, centerX - x, centerY + y);
+
+                for (int i = 1; i < dy; i++) {
+
+                    setValue(value, centerX + x, centerY - y + i);
+                    setValue(value, centerX + x, centerY + y - i);
+                    setValue(value, centerX - x, centerY - y + i);
+                    setValue(value, centerX - x, centerY + y - i);
+
+                }
+                lastY = y;
+
+            }
+        }
+
+        public void setSquarePerimeter(int centerX, int centerY, int size, int value) {
+            //Margins
+            int lm = centerX - size;
+            int rm = centerX + size;
+            int um = centerY - size;
+            int dm = centerY + size;
+
+            //Corners
+            setValue(value, lm, um);
+            setValue(value, rm, um);
+            setValue(value, lm, dm);
+            setValue(value, rm, dm);
+
+            for (int i = 1; i < size * 2; i++) {
+
+                setValue(value, lm + i, um);
+                setValue(value, lm, um + i);
+                setValue(value, rm, um + i);
+                setValue(value, lm + i, dm);
+
+            }
+
+        }
+
+        public void setRectangularPerimeter(int centerX, int centerY, int sizeX, int sizeY, int value) {
+
+            //Borders
+            int ub = centerY - sizeY;
+            int db = centerY + sizeY;
+            int lb = centerX - sizeX;
+            int rb = centerX + sizeX;
+
+
+            //Upper line
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                setValue(value, lb + x, ub);
+
+            }
+
+            //Sides lines
+            for (int y = 1; y < sizeY * 2; y++) {
+                setValue(value, lb, ub + y);
+                setValue(value, rb, ub + y);
+
+            }
+
+            //Downer line
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                setValue(value, lb + x, db);
+
+            }
+        }
+
+        public boolean checkCircularAreaSafely(int centerX, int centerY, int radius) {
+
+            //|x| = radius
+            if (isWithinBoard(centerX - radius, centerY))
+                if (!checkForEmptyPosition(centerX - radius, centerY)) return false;
+            if (isWithinBoard(centerX + radius, centerY))
+                if (!checkForEmptyPosition(centerX + radius, centerY)) return false;
+
+            int y;
+            for (int x = 1 - radius; x < radius; x++) {
+
+                //Diameter
+                if (isWithinBoard(centerX + x, centerY))
+                    if (!checkForEmptyPosition(centerX + x, centerY)) return false;
+
+
+                y = (int) Math.round(Math.sqrt(radius * radius - x * x));
+
+                for (int i = 0; i < y; i++) {
+
+                    //Upper half
+                    if (isWithinBoard(centerX - x, centerY - y + i))
+                        if (!checkForEmptyPosition(centerX - x, centerY - y + i)) return false;
+                    //Downer half
+                    if (isWithinBoard(centerX - x, centerY + y - i))
+                        if (!checkForEmptyPosition(centerX - x, centerY + y - i)) return false;
+                }
+
+            }
 
             return true;
+
+        }
+
+        public boolean checkSquareAreaSafely(int centerX, int centerY, int size) {
+
+            int boxels = size * 2 + 1;
+            int cornerX = centerX - size;
+            int cornerY = centerY - size;
+
+            for (int x = 0; x < boxels; x++) {
+                for (int y = 0; y < boxels; y++) {
+
+                    if (isWithinBoard(x, y))
+                        if (!checkForEmptyPosition(cornerX + x, cornerY + y)) return false;
+
+                }
+            }
+
+            return true;
+        }
+
+        public boolean checkRectangularAreaSafely(int centerX, int centerY, int sizeX, int sizeY) {
+
+            int lineV = sizeY * 2 + 1;
+            int lineH = sizeX * 2 + 1;
+            int cornerX = centerX - sizeX;
+            int cornerY = centerY - sizeY;
+
+            for (int x = 0; x < lineH; x++) {
+                for (int y = 0; y < lineV; y++) {
+
+                    if (isWithinBoard(x, y))
+                        if (!checkForEmptyPosition(cornerX + x, cornerY + y)) return false;
+
+                }
+            }
+
+            return true;
+        }
+
+        public boolean checkCircularPerimeterSafely(int centerX, int centerY, int radius) {
+
+            //|x| = radius
+            if (isWithinBoard(centerX - radius, centerY))
+                if (!checkForEmptyPosition(centerX - radius, centerY)) return false;
+            if (isWithinBoard(centerX + radius, centerY))
+                if (!checkForEmptyPosition(centerX + radius, centerY)) return false;
+
+            int y, lastY = 0, dy;
+            for (int x = radius - 1; x >= 0; x--) {
+
+                y = (int) Math.round(Math.sqrt(radius * radius - x * x));
+                dy = Math.abs(lastY - y);
+                if (isWithinBoard(centerX + x, centerY - y))
+                    if (!checkForEmptyPosition(centerX + x, centerY - y)) return false;
+                if (isWithinBoard(centerX + x, centerY + y))
+                    if (!checkForEmptyPosition(centerX + x, centerY + y)) return false;
+                if (isWithinBoard(centerX - x, centerY - y))
+                    if (!checkForEmptyPosition(centerX - x, centerY - y)) return false;
+                if (isWithinBoard(centerX - x, centerY + y))
+                    if (!checkForEmptyPosition(centerX - x, centerY + y)) return false;
+
+                for (int i = 1; i < dy; i++) {
+
+                    if (isWithinBoard(centerX + x, centerY - y + i))
+                        if (!checkForEmptyPosition(centerX + x, centerY - y + i)) return false;
+                    if (isWithinBoard(centerX + x, centerY + y - i))
+                        if (!checkForEmptyPosition(centerX + x, centerY + y - i)) return false;
+                    if (isWithinBoard(centerX - x, centerY - y + i))
+                        if (!checkForEmptyPosition(centerX - x, centerY - y + i)) return false;
+                    if (isWithinBoard(centerX - x, centerY + y - i))
+                        if (!checkForEmptyPosition(centerX - x, centerY + y - i)) return false;
+
+                }
+                lastY = y;
+
+            }
+
+            return true;
+        }
+
+        public boolean checkSquarePerimeterSafely(int centerX, int centerY, int size) {
+
+            //Margins
+            int lm = centerX - size;
+            int rm = centerX + size;
+            int um = centerY - size;
+            int dm = centerY + size;
+
+            //Corners
+            if (isWithinBoard(lm, um))
+                if (!checkForEmptyPosition(lm, um)) return false;
+            if (isWithinBoard(rm, um))
+                if (!checkForEmptyPosition(rm, um)) return false;
+            if (isWithinBoard(lm, dm))
+                if (!checkForEmptyPosition(lm, dm)) return false;
+            if (isWithinBoard(rm, dm))
+                if (!checkForEmptyPosition(rm, dm)) return false;
+
+            for (int i = 1; i < size * 2; i++) {
+
+                if (isWithinBoard(lm + i, um))
+                    if (!checkForEmptyPosition(lm + i, um)) return false;
+                if (isWithinBoard(lm, um + i))
+                    if (!checkForEmptyPosition(lm, um + i)) return false;
+                if (isWithinBoard(rm, um + i))
+                    if (!checkForEmptyPosition(rm, um + i)) return false;
+                if (isWithinBoard(lm + i, dm))
+                    if (!checkForEmptyPosition(lm + i, dm)) return false;
+
+            }
+
+            return true;
+
+        }
+
+        public boolean checkRectangularPerimeterSafely(int centerX, int centerY, int sizeX, int sizeY) {
+
+            //Borders
+            int ub = centerY - sizeY;
+            int db = centerY + sizeY;
+            int lb = centerX - sizeX;
+            int rb = centerX + sizeX;
+
+
+            //Upper line
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                if (isWithinBoard(lb + x, ub))
+                    if (!checkForEmptyPosition(lb + x, ub)) return false;
+
+            }
+
+            //Sides lines
+            for (int y = 1; y < sizeY * 2; y++) {
+                if (isWithinBoard(lb, ub + y))
+                    if (!checkForEmptyPosition(lb, ub + y)) return false;
+                if (isWithinBoard(rb, ub + y))
+                    if (!checkForEmptyPosition(rb, ub + y)) return false;
+
+            }
+
+            //Downer line
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                if (isWithinBoard(lb + x, db))
+                    if (!checkForEmptyPosition(lb + x, db)) return false;
+
+            }
+
+            return true;
+
+        }
+
+        public void setCircularAreaSafely(int centerX, int centerY, int radius, int value) {
+
+            //|x| = radius
+            setValueSafely(value, centerX - radius, centerY);
+            setValueSafely(value, centerX + radius, centerY);
+
+            int y;
+            for (int x = 1 - radius; x < radius; x++) {
+
+                //Diameter
+                setValueSafely(value, centerX + x, centerY);
+
+                y = (int) Math.round(Math.sqrt(radius * radius - x * x));
+
+                for (int i = 0; i < y; i++) {
+
+                    //Upper half
+                    setValueSafely(value, centerX - x, centerY - y + i);
+                    //Downer half
+                    setValueSafely(value, centerX - x, centerY + y - i);
+                }
+
+            }
+        }
+
+        public void setSquareAreaSafely(int centerX, int centerY, int size, int value) {
+
+            int boxels = size * 2 + 1;
+            int cornerX = centerX - size;
+            int cornerY = centerY - size;
+
+            for (int x = 0; x < boxels; x++) {
+                for (int y = 0; y < boxels; y++) {
+
+                    setValueSafely(value, cornerX + x, cornerY + y);
+
+                }
+            }
+
+        }
+
+        public void setRectangularAreaSafely(int centerX, int centerY, int sizeX, int sizeY, int value) {
+
+            int lineV = sizeY * 2 + 1;
+            int lineH = sizeX * 2 + 1;
+            int cornerX = centerX - sizeX;
+            int cornerY = centerY - sizeY;
+
+            for (int x = 0; x < lineH; x++) {
+                for (int y = 0; y < lineV; y++) {
+
+                    setValueSafely(value, cornerX + x, cornerY + y);
+
+                }
+            }
+
+        }
+
+        public void setCircularPerimeterSafely(int centerX, int centerY, int radius, int value) {
+            //|x| = radius
+            setValueSafely(value, centerX - radius, centerY);
+            setValueSafely(value, centerX + radius, centerY);
+
+            int y, lastY = 0, dy;
+            for (int x = radius - 1; x >= 0; x--) {
+
+                y = (int) Math.round(Math.sqrt(radius * radius - x * x));
+                dy = Math.abs(lastY - y);
+
+                setValueSafely(value, centerX + x, centerY - y);
+                setValueSafely(value, centerX + x, centerY + y);
+                setValueSafely(value, centerX - x, centerY - y);
+                setValueSafely(value, centerX - x, centerY + y);
+
+                for (int i = 1; i < dy; i++) {
+
+                    setValueSafely(value, centerX + x, centerY - y + i);
+                    setValueSafely(value, centerX + x, centerY + y - i);
+                    setValueSafely(value, centerX - x, centerY - y + i);
+                    setValueSafely(value, centerX - x, centerY + y - i);
+
+                }
+                lastY = y;
+
+            }
+        }
+
+        public void setSquarePerimeterSafely(int centerX, int centerY, int size, int value) {
+            //Margins
+            int lm = centerX - size;
+            int rm = centerX + size;
+            int um = centerY - size;
+            int dm = centerY + size;
+
+            //Corners
+            setValueSafely(value, lm, um);
+            setValueSafely(value, rm, um);
+            setValueSafely(value, lm, dm);
+            setValueSafely(value, rm, dm);
+
+            for (int i = 1; i < size * 2; i++) {
+
+                setValueSafely(value, lm + i, um);
+                setValueSafely(value, lm, um + i);
+                setValueSafely(value, rm, um + i);
+                setValueSafely(value, lm + i, dm);
+
+            }
+
+        }
+
+        public void setRectangularPerimeterSafely(int centerX, int centerY, int sizeX, int sizeY, int value) {
+
+            //Borders
+            int ub = centerY - sizeY;
+            int db = centerY + sizeY;
+            int lb = centerX - sizeX;
+            int rb = centerX + sizeX;
+
+
+            //Upper line
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                setValueSafely(value, lb + x, ub);
+
+            }
+
+            //Sides lines
+            for (int y = 1; y < sizeY * 2; y++) {
+                setValueSafely(value, lb, ub + y);
+                setValueSafely(value, rb, ub + y);
+
+            }
+
+            //Downer line
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                setValueSafely(value, lb + x, db);
+
+            }
+        }
+
+        public ArrayList<RandomWalkersWorld.Vector> getCircularAreaPointsPointsSafely(int centerX, int centerY, int radius) {
+
+            ArrayList<RandomWalkersWorld.Vector> points = new ArrayList<>();
+
+            //|x| = radius
+            if (isWithinBoard(centerX - radius, centerY))
+                points.add(new RandomWalkersWorld.Vector(centerX - radius, centerY));
+            if (isWithinBoard(centerX + radius, centerY))
+                points.add(new RandomWalkersWorld.Vector(centerX + radius, centerY));
+
+            int y;
+            for (int x = 1 - radius; x < radius; x++) {
+
+                //Diameter
+                if (isWithinBoard(centerX + x, centerY))
+                    points.add(new RandomWalkersWorld.Vector(centerX + x, centerY));
+
+
+                y = (int) Math.round(Math.sqrt(radius * radius - x * x));
+
+                for (int i = 0; i < y; i++) {
+
+                    //Upper half
+                    if (isWithinBoard(centerX - x, centerY - y + i))
+                        points.add(new RandomWalkersWorld.Vector(centerX - x, centerY - y + i));
+                    //Downer half
+                    if (isWithinBoard(centerX - x, centerY + y - i))
+                        points.add(new RandomWalkersWorld.Vector(centerX - x, centerY + y - i));
+                }
+
+            }
+
+            return points;
+
+        }
+
+        public ArrayList<RandomWalkersWorld.Vector> getSquareAreaPointsSafely(int centerX, int centerY, int size) {
+
+            ArrayList<RandomWalkersWorld.Vector> points = new ArrayList<>();
+
+            int boxels = size * 2 + 1;
+            int cornerX = centerX - size;
+            int cornerY = centerY - size;
+
+            for (int x = 0; x < boxels; x++) {
+                for (int y = 0; y < boxels; y++) {
+
+                    if (isWithinBoard(x, y))
+                        points.add(new RandomWalkersWorld.Vector(cornerX + x, cornerY + y));
+
+                }
+            }
+
+            return points;
+        }
+
+        public ArrayList<RandomWalkersWorld.Vector> getRectangularAreaPointsSafely(int centerX, int centerY, int sizeX, int sizeY) {
+
+            ArrayList<RandomWalkersWorld.Vector> points = new ArrayList<>();
+
+            int lineV = sizeY * 2 + 1;
+            int lineH = sizeX * 2 + 1;
+            int cornerX = centerX - sizeX;
+            int cornerY = centerY - sizeY;
+
+            for (int x = 0; x < lineH; x++) {
+                for (int y = 0; y < lineV; y++) {
+
+                    if (isWithinBoard(x, y))
+                        points.add(new RandomWalkersWorld.Vector(cornerX + x, cornerY + y));
+
+                }
+            }
+
+            return points;
+        }
+
+        public ArrayList<RandomWalkersWorld.Vector> getCircularPerimeterPointsSafely(int centerX, int centerY, int radius) {
+
+            ArrayList<RandomWalkersWorld.Vector> points = new ArrayList<>();
+
+            //|x| = radius
+            if (isWithinBoard(centerX - radius, centerY))
+                points.add(new RandomWalkersWorld.Vector(centerX - radius, centerY));
+            if (isWithinBoard(centerX + radius, centerY))
+                points.add(new RandomWalkersWorld.Vector(centerX + radius, centerY));
+
+            int y, lastY = 0, dy;
+            for (int x = radius - 1; x >= 0; x--) {
+
+                y = (int) Math.round(Math.sqrt(radius * radius - x * x));
+                dy = Math.abs(lastY - y);
+                if (isWithinBoard(centerX + x, centerY - y))
+                    points.add(new RandomWalkersWorld.Vector(centerX + x, centerY - y));
+                if (isWithinBoard(centerX + x, centerY + y))
+                    points.add(new RandomWalkersWorld.Vector(centerX + x, centerY + y));
+                if (isWithinBoard(centerX - x, centerY - y))
+                    points.add(new RandomWalkersWorld.Vector(centerX - x, centerY - y));
+                if (isWithinBoard(centerX - x, centerY + y))
+                    points.add(new RandomWalkersWorld.Vector(centerX - x, centerY + y));
+
+                for (int i = 1; i < dy; i++) {
+
+                    if (isWithinBoard(centerX + x, centerY - y + i))
+                        points.add(new RandomWalkersWorld.Vector(centerX + x, centerY - y + i));
+                    if (isWithinBoard(centerX + x, centerY + y - i))
+                        points.add(new RandomWalkersWorld.Vector(centerX + x, centerY + y - i));
+                    if (isWithinBoard(centerX - x, centerY - y + i))
+                        points.add(new RandomWalkersWorld.Vector(centerX - x, centerY - y + i));
+                    if (isWithinBoard(centerX - x, centerY + y - i))
+                        points.add(new RandomWalkersWorld.Vector(centerX - x, centerY + y - i));
+
+                }
+                lastY = y;
+
+            }
+
+            return points;
+        }
+
+        public ArrayList<RandomWalkersWorld.Vector> getSquarePerimeterPointsSafely(int centerX, int centerY, int size) {
+
+            ArrayList<RandomWalkersWorld.Vector> points = new ArrayList<>();
+
+            //Margins
+            int lm = centerX - size;
+            int rm = centerX + size;
+            int um = centerY - size;
+            int dm = centerY + size;
+
+            //Corners
+            if (isWithinBoard(lm, um))
+                points.add(new RandomWalkersWorld.Vector(lm, um));
+            if (isWithinBoard(rm, um))
+                points.add(new RandomWalkersWorld.Vector(rm, um));
+            if (isWithinBoard(lm, dm))
+                points.add(new RandomWalkersWorld.Vector(lm, dm));
+            if (isWithinBoard(rm, dm))
+                points.add(new RandomWalkersWorld.Vector(rm, dm));
+
+            for (int i = 1; i < size * 2; i++) {
+
+                if (isWithinBoard(lm + i, um))
+                    points.add(new RandomWalkersWorld.Vector(lm + i, um));
+                if (isWithinBoard(lm, um + i))
+                    points.add(new RandomWalkersWorld.Vector(lm, um + i));
+                if (isWithinBoard(rm, um + i))
+                    points.add(new RandomWalkersWorld.Vector(rm, um + i));
+                if (isWithinBoard(lm + i, dm))
+                    points.add(new RandomWalkersWorld.Vector(lm + i, dm));
+
+            }
+
+            return points;
+
+        }
+
+        public ArrayList<RandomWalkersWorld.Vector> getRectangularPerimeterPointsSafely(int centerX, int centerY, int sizeX, int sizeY) {
+
+            ArrayList<RandomWalkersWorld.Vector> points = new ArrayList<>();
+
+            //Borders
+            int ub = centerY - sizeY;
+            int db = centerY + sizeY;
+            int lb = centerX - sizeX;
+            int rb = centerX + sizeX;
+
+
+            //Upper line
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                if (isWithinBoard(lb + x, ub))
+                    points.add(new RandomWalkersWorld.Vector(lb + x, ub));
+
+            }
+
+            //Sides lines
+            for (int y = 1; y < sizeY * 2; y++) {
+                if (isWithinBoard(lb, ub + y))
+                    points.add(new RandomWalkersWorld.Vector(lb, ub + y));
+                if (isWithinBoard(rb, ub + y))
+                    points.add(new RandomWalkersWorld.Vector(rb, ub + y));
+
+            }
+
+            //Downer line
+            for (int x = 0; x < sizeX * 2 + 1; x++) {
+                if (isWithinBoard(lb + x, db))
+                    points.add(new RandomWalkersWorld.Vector(lb + x, db));
+
+            }
+
+            return points;
 
         }
 
@@ -560,10 +1262,80 @@ public class RandomWalkersWorld {
 
     public static class Barrier {
 
-        public Barrier() {
 
+        private int positionX;
+        private int positionY;
+        private final int shape;
+        private int sizeX;
+        private int sizeY;
+
+        /**
+         * Dou to Barrier support rectangular shapes,  you can set more than a
+         * size value. If the shape is SQUARE or CIRCULAR the first passed value
+         * will be set as the size/radio of the barrier, the rest will be drop.
+         * If the shape is RECTANGULAR the two first passed values will be set as
+         * sizeX, sizeY respectively. If only one value is passed it will set as
+         * boths.
+         *
+         * @param size
+         */
+        public Barrier(int positionX, int positionY, int shape, int... size) {
+
+            this.positionX = positionX;
+            this.positionY = positionY;
+            this.shape = shape;
+
+            if (shape == Constants.SQUARE_SHAPE || shape == Constants.CIRCULAR_SHAPE) {
+                sizeX = size[0];
+            } else if (shape == Constants.RECTANGULAR_SHAPE) {
+                if (size.length > 1) {
+                    sizeX = size[0];
+                    sizeY = size[1];
+                } else {
+                    sizeX = size[0];
+                    sizeY = size[0];
+                }
+            }
         }
 
+
+        public int getSize() {
+            return sizeX;
+        }
+
+        public int getSizeX() {
+            return sizeX;
+        }
+
+        public int getSizeY() {
+            if (shape == Constants.SQUARE_SHAPE || shape == Constants.CIRCULAR_SHAPE) {
+                return sizeX;
+            } else if (shape == Constants.RECTANGULAR_SHAPE) {
+                return sizeY;
+            } else {
+                return sizeX;
+            }
+        }
+
+        public int getPositionX() {
+            return positionX;
+        }
+
+        public int getPositionY() {
+            return positionY;
+        }
+
+        public int getShape() {
+            return shape;
+        }
+
+        public void setPositionX(int positionX) {
+            this.positionX = positionX;
+        }
+
+        public void setPositionY(int positionY) {
+            this.positionY = positionY;
+        }
     }
 
     public static class Constants {
@@ -594,7 +1366,7 @@ public class RandomWalkersWorld {
         //Probabilities
         private static final int[] _10n1_ = new int[]{-1, 0, 1};
         private static final int DEFAULT_CHANCE = 1000;
-        private static final int DEFAULT_TOTAL_CHANCE = 8999;
+        private static final int DEFAULT_TOTAL_CHANCE = 4999;
 
     }
 
@@ -625,16 +1397,15 @@ public class RandomWalkersWorld {
          *
          * @param xPosition
          * @param yPosition
-         * @param step
          * @return
          */
-        public Point tryDirection(int xPosition, int yPosition, int step) {
+        public Vector tryDirection(int xPosition, int yPosition) {
 
             int xTendency = xTendencyBoard.getValueAt(xPosition, yPosition);
             int yTendency = yTendencyBoard.getValueAt(xPosition, yPosition);
 
-            if (xPosition == 0 && yPosition == 0) {
-                return new Point(xPosition + Constants._10n1_[r.nextInt(3)],
+            if (xTendency == 0 && yTendency == 0) {
+                return new Vector(xPosition + Constants._10n1_[r.nextInt(3)],
                         yPosition + Constants._10n1_[r.nextInt(3)]);
             }
 
@@ -642,7 +1413,7 @@ public class RandomWalkersWorld {
             int e = Constants.DEFAULT_CHANCE;
             int s = Constants.DEFAULT_CHANCE;
             int w = Constants.DEFAULT_CHANCE;
-            int total = 4999;
+            int total = Constants.DEFAULT_TOTAL_CHANCE;
 
             //Y
             if (yTendency > 0) {
@@ -664,14 +1435,14 @@ public class RandomWalkersWorld {
 
             int randomNumber = r.nextInt(total);
             if ((randomNumber -= n) < 0) {
-                return new Point(xPosition, yPosition - step);
+                return new Vector(xPosition, yPosition - 1);
             } else if ((randomNumber -= e) < 0) {
-                return new Point(xPosition + step, yPosition);
+                return new Vector(xPosition + 1, yPosition);
             } else if ((randomNumber -= s) < 0) {
-                return new Point(xPosition, yPosition + step);
-            } else if ((randomNumber -= w) < 0) {
-                return new Point(xPosition - step, yPosition);
-            } else return new Point(xPosition, yPosition);
+                return new Vector(xPosition, yPosition + 1);
+            } else if (randomNumber - w < 0) {
+                return new Vector(xPosition - 1, yPosition);
+            } else return new Vector(xPosition, yPosition);
 
         }
 
@@ -684,20 +1455,263 @@ public class RandomWalkersWorld {
             xTendencyBoard.fillBoard(xGlobalTendency);
             yTendencyBoard.fillBoard(yGlobalTendency);
         }
+
+        public Vector getTendency(int xPosition, int yPosition) {
+            return new Vector(xTendencyBoard.getValueAt(xPosition, yPosition), yTendencyBoard.getValueAt(xPosition, yPosition));
+        }
+
     }
 
-    public static class Point {
+    public static class Vector {
 
         public final int x;
         public final int y;
 
-        public Point(int x, int y) {
+        public Vector(int x, int y) {
 
             this.x = x;
             this.y = y;
         }
 
+
     }
 
+    static class Tendency {
+
+        public final int xPosition;
+        public final int yPosition;
+        public final int actionRatio;
+
+        public Tendency(int xPosition, int yPosition, int actionRatio) {
+
+            this.xPosition = xPosition;
+            this.yPosition = yPosition;
+            this.actionRatio = actionRatio;
+        }
+    }
+
+    public static class AttractiveTendency extends Tendency {
+
+
+        public AttractiveTendency(int xPosition, int yPosition, int actionRatio) {
+            super(xPosition, yPosition, actionRatio);
+        }
+    }
+
+    public static class CollisionBoard {
+
+        private final int w;
+        private final int h;
+        private ArrayList<Barrier> barriers;
+
+        //Statics
+        private static final int BORDER = -2;
+
+        private final ArrayList<PositionValueBoard> squareWalkersCollisionBoards;
+        private final ArrayList<PositionValueBoard> circularWalkersCollisionBoards;
+        private final ArrayList<Integer> squaredWalkerSizes;
+        private final ArrayList<Integer> circularWalkerSizes;
+
+        CollisionBoard(int w, int h, ArrayList<Barrier> barriers) {
+
+            this.w = w;
+            this.h = h;
+            this.barriers = barriers;
+            squaredWalkerSizes = new ArrayList<>();
+            squareWalkersCollisionBoards = new ArrayList<>();
+            circularWalkerSizes = new ArrayList<>();
+            circularWalkersCollisionBoards = new ArrayList<>();
+        }
+
+        /**
+         * Add a new walker to track, if a similar walker was added
+         * before it will do nothing.
+         *
+         * @param walker
+         */
+        public void attachThisWalker(RandomWalker walker) {
+
+            if (walker.getShape() == Constants.SQUARE_SHAPE) {
+                if (squaredWalkerSizes.contains(walker.getSize()))
+                    return;
+
+                //New Size
+                squaredWalkerSizes.add(walker.getSize());
+
+                //new CollisionBoard
+                addCollisionBoard(walker.getSize(), walker.getShape());
+
+            } else if (walker.getShape() == Constants.CIRCULAR_SHAPE) {
+                if (circularWalkerSizes.contains(walker.getSize()))
+                    return;
+
+                //New Size
+                circularWalkerSizes.add(walker.getSize());
+                addCollisionBoard(walker.getSize(), walker.getShape());
+            }
+        }
+
+        private void addCollisionBoard(int targetSize, int targetShape) {
+
+            //Capacity
+            ensureBoardsArrayListCapacity(targetSize, targetShape);
+
+            //Adding
+            if (targetShape == Constants.SQUARE_SHAPE) {
+
+                PositionValueBoard newBoard = new PositionValueBoard(w, h);
+                updateCollisionBoard(targetSize, targetShape, newBoard);
+                squareWalkersCollisionBoards.set(targetSize, newBoard);
+
+            } else if (targetShape == Constants.CIRCULAR_SHAPE) {
+
+                PositionValueBoard newBoard = new PositionValueBoard(w, h);
+                updateCollisionBoard(targetSize, targetShape, newBoard);
+                circularWalkersCollisionBoards.set(targetSize, newBoard);
+
+            }
+
+        }
+
+        /**
+         * Will update the permitted positions of a given board.
+         *
+         * @param targetSize
+         * @param targetShape
+         * @param board
+         */
+        private void updateCollisionBoard(int targetSize, int targetShape, PositionValueBoard board) {
+
+            //Positioning barriers...
+            getBarriersInPosition(board);
+
+            //Extending restriction
+            extendBarriersRestriction(targetSize, targetShape, board);
+
+            //Border
+            addBorderRestriction(targetSize, board);
+
+        }
+
+        private void getBarriersInPosition(PositionValueBoard board) {
+            int index = 0;
+            for (Barrier barrier : barriers) {
+                if (barrier.getShape() == Constants.SQUARE_SHAPE) {
+                    board.setSquareAreaSafely(barrier.getPositionX(), barrier.getPositionY(),
+                            barrier.getSize(), index);
+                } else if (barrier.getShape() == Constants.CIRCULAR_SHAPE) {
+                    board.setCircularAreaSafely(barrier.getPositionX(), barrier.getPositionY(),
+                            barrier.getSize(), index);
+                } else if (barrier.getShape() == Constants.RECTANGULAR_SHAPE) {
+                    board.setRectangularAreaSafely(barrier.getPositionX(), barrier.getPositionY(),
+                            barrier.getSizeX(), barrier.sizeY, index);
+                } else {
+                    System.out.println("Error: Unsupported shape " + barrier.getShape());
+                    return;
+                }
+                index++;
+            }
+        }
+
+        private void extendBarriersRestriction(int targetSize, int targetShape, PositionValueBoard board) {
+            int index = 0;
+            for (Barrier barrier : barriers) {
+
+                //Getting perimeter
+                ArrayList<Vector> perimeter;
+                if (barrier.getShape() == Constants.SQUARE_SHAPE) {
+                    perimeter = board.getSquarePerimeterPointsSafely(barrier.getPositionX(), barrier.getPositionY(),
+                            barrier.getSize());
+                } else if (barrier.getShape() == Constants.CIRCULAR_SHAPE) {
+                    perimeter = board.getCircularPerimeterPointsSafely(barrier.getPositionX(), barrier.getPositionY(),
+                            barrier.getSize());
+                } else if (barrier.getShape() == Constants.RECTANGULAR_SHAPE) {
+                    perimeter = board.getRectangularPerimeterPointsSafely(barrier.getPositionX(), barrier.getPositionY(),
+                            barrier.getSizeX(), barrier.getSizeY());
+                } else {
+                    System.out.println("Error: Unsupported shape " + barrier.getShape());
+                    return;
+                }
+                index++;
+
+                //updating points
+                if (targetShape == Constants.SQUARE_SHAPE) {
+                    for (Vector pp : perimeter) {
+                        board.setSquarePerimeterSafely(pp.x, pp.y, targetSize, index);
+                    }
+                } else if (targetShape == Constants.CIRCULAR_SHAPE) {
+                    for (Vector pp : perimeter) {
+                        board.setCircularPerimeterSafely(pp.x, pp.y, targetSize, index);
+                    }
+                }
+
+            }
+        }
+
+        private void addBorderRestriction(int targetSize, PositionValueBoard board) {
+
+            //Upper line
+            for (int y = 0; y < targetSize; y++) {
+                for (int x = 0; x < w; x++) {
+                    board.setValue(BORDER, x, y);
+                }
+            }
+
+            //left Border lines
+            int lastY = h - targetSize;
+            for (int x = 0; x < targetSize; x++) {
+                for (int y = targetSize; y < lastY; y++) {
+                    board.setValue(BORDER, x, y);
+                }
+            }
+
+            //right Border lines
+            int lastX = w - targetSize;
+            for (int x = lastX; x < w; x++) {
+                for (int y = targetSize; y < lastY; y++) {
+                    board.setValue(BORDER, x, y);
+                }
+            }
+
+            //Upper line
+            for (int y = lastY; y < h; y++) {
+                for (int x = 0; x < w; x++) {
+                    board.setValue(BORDER, x, y);
+                }
+            }
+
+        }
+
+        private void ensureBoardsArrayListCapacity(int minCapacity, int shape) {
+            if (shape == Constants.SQUARE_SHAPE)
+                while (squareWalkersCollisionBoards.size() <= minCapacity) {
+                    squareWalkersCollisionBoards.add(null);
+                }
+            else if (shape == Constants.CIRCULAR_SHAPE)
+                while (circularWalkersCollisionBoards.size() <= minCapacity) {
+                    circularWalkersCollisionBoards.add(null);
+                }
+        }
+
+        /**
+         * Return true is a walker will collide in a given position
+         *
+         * @return
+         */
+        public boolean checkCollision(int positionX, int positionY, RandomWalker walker) {
+
+            if (walker.getShape() == Constants.SQUARE_SHAPE) {
+                return squareWalkersCollisionBoards.get(walker.getSize()).
+                        getValueAt(positionX, positionY) != PositionValueBoard.EMPTY;
+            } else if (walker.getShape() == Constants.CIRCULAR_SHAPE) {
+                return circularWalkersCollisionBoards.get(walker.getSize()).
+                        getValueAt(positionX, positionY) != PositionValueBoard.EMPTY;
+            } else {
+                System.out.println("Error: Unsupported shape " + walker.getShape());
+                return false;
+            }
+        }
+
+    }
 
 }
