@@ -1,11 +1,16 @@
-package Core.Engine;
+package Core.Engine.World;
+
+import Core.Engine.OnIterationActionHandler.Iterations;
+import Core.Engine.OnIterationActionHandler.OnIterationActionHandler;
+import Core.Engine.PositionValueBoard.PositionValueBoard;
+import Core.Engine.Vector.Vector;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static Core.Engine.RandomWalkersWorld.Constants.*;
+import static Core.Engine.World.RandomWalkersWorld.Constants.*;
 
 /**
  * This class is the entire world of the RandomWalkersUniverse. In this universe
@@ -99,7 +104,7 @@ public class RandomWalkersWorld {
     }
 
     //Deb
-    private static boolean enablePrompt;
+    public static boolean enablePrompt;
 
     //region WORLD METHODS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -313,7 +318,8 @@ public class RandomWalkersWorld {
      *                     not a barrier.
      * @param walkerIndex  the walker that collide.
      */
-    public void onCollisionOccurred(int barrierIndex, int walkerIndex) {    }
+    public void onCollisionOccurred(int barrierIndex, int walkerIndex) {
+    }
 
     //endregion BARRIER METHODS ----------------------------------------------------------------------------------------
 
@@ -413,7 +419,7 @@ public class RandomWalkersWorld {
      * Set a tendency for a given point of the world. <br>
      * Walkers positioned in this point will TEND to walk in this direction. <br>
      * The Tendency is a Vector(xTendency, yTendency) witch direction from the position point
-     * and his magnitude constitute the Tendency itself. So, a tendency of (1,0) in the point
+     * and his getMagnitude constitute the Tendency itself. So, a tendency of (1,0) in the point
      * (25,152) means that a walker positioned in the coordinate (25,152) will TEND to go North (Up).
      * Due to the default values the minimal Tendency influence is about 0.4%. In the example above
      * this mean the North direction have a 0.4% more chance to be picked as the next step direction
@@ -445,18 +451,18 @@ public class RandomWalkersWorld {
      * Set a tendency for a given point of the world. <br>
      * Walkers positioned in this point will TEND to walk in this direction. <br>
      * The Tendency is a Vector(xTendency, yTendency) witch direction from the position point
-     * and his magnitude constitute the Tendency itself. So, a tendency of (1,0) in the point
+     * and his getMagnitude constitute the Tendency itself. So, a tendency of (1,0) in the point
      * (25,152) means that a walker positioned in the coordinate (25,152) will TEND to go North (Up).
      * Due to the default values the minimal Tendency influence is about 0.4%. In the example above
      * this mean the North direction have a 0.4% more chance to be picked as the next step direction
      * of the walker. <br>
-     * Using a factor different that 1.0F will modified the original magnitude.
+     * Using a factor different that 1.0F will modified the original getMagnitude.
      *
      * @param xPosition the x position you want to set a Tendency.
      * @param yPosition the y position you want to set a Tendency.
      * @param xTendency The value of the x Tendency.
      * @param yTendency The value of the y Tendency.
-     * @param factor    This factor will be multiplied to the magnitude of the tendency.
+     * @param factor    This factor will be multiplied to the getMagnitude of the tendency.
      */
     public final void setTendency(int xPosition, int yPosition, int xTendency, int yTendency, float factor) {
         globalTendencyBoard.setTendency(xPosition, yPosition, (int) (xTendency * factor), (int) (yTendency * factor));
@@ -465,7 +471,7 @@ public class RandomWalkersWorld {
     /**
      * Add a given Tendency to the existing Tendency of a given Point. <br>
      * The Tendency is a Vector(xTendency, yTendency) witch direction from the position point
-     * and his magnitude constitute the Tendency itself. So, a Tendency of (1,0) in the point
+     * and his getMagnitude constitute the Tendency itself. So, a Tendency of (1,0) in the point
      * (25,152) means that a walker positioned in the coordinate (25,152) will TEND to go North (Up).
      * Due to the default values the minimal Tendency influence is about 0.4%. In the example above
      * this mean the North direction have a 0.4% more chance to be picked as the next step direction
@@ -483,7 +489,7 @@ public class RandomWalkersWorld {
     /**
      * Get the tendency stored in this position.
      * The Tendency is a Vector(xTendency, yTendency) witch direction from the position point
-     * and his magnitude constitute the Tendency itself. So, a Tendency of (1,0) in the point
+     * and his getMagnitude constitute the Tendency itself. So, a Tendency of (1,0) in the point
      * (25,152) means that a walker positioned in the coordinate (25,152) will TEND to go North (Up).
      * Due to the default values the minimal Tendency influence is about 0.4%. In the example above
      * this mean the North direction have a 0.4% more chance to be picked as the next step direction
@@ -500,7 +506,7 @@ public class RandomWalkersWorld {
     /**
      * Set the same Tendency to all the points in the World.
      * The Tendency is a Vector(xTendency, yTendency) witch direction from the position point
-     * and his magnitude constitute the Tendency itself. So, a Tendency of (1,0) in the point
+     * and his getMagnitude constitute the Tendency itself. So, a Tendency of (1,0) in the point
      * (25,152) means that a walker positioned in the coordinate (25,152) will TEND to go North (Up).
      * Due to the default values the minimal Tendency influence is about 0.4%. In the example above
      * this mean the North direction have a 0.4% more chance to be picked as the next step direction
@@ -783,584 +789,6 @@ public class RandomWalkersWorld {
     }
 
     /**
-     * This general class is used to relate a value with a position.
-     */
-    protected static class PositionValueBoard {
-
-        //Fields
-        final int[][] board;
-        private final int w;
-        private final int h;
-        private int emptyValue;
-
-        //IterationHandlers
-        private static OnIterationActionHandler<Integer> setterIterationHandler = new OnIterationActionHandler<Integer>() {
-            @Override
-            public void action(int x, int y, PositionValueBoard board) {
-                board.setValue(getExtraData(), x, y);
-            }
-
-        };
-
-        private static OnIterationActionHandler<Boolean> checkerIterationHandler = new OnIterationActionHandler<Boolean>() {
-            @Override
-            public void action(int x, int y, PositionValueBoard board) {
-                if (board.isOccupied(x, y)) {
-                    setExtraData(true);
-                    iterate = false;
-                }
-            }
-        };
-
-        //CONSTANTS
-        /**
-         * The value that is consider as null or empty, it is important
-         * to avoid the uses of this value with others proposes.
-         */
-        public static final int EMPTY = Integer.MIN_VALUE;
-
-        /**
-         * @param w the width of the board
-         * @param h the height of the board
-         */
-        public PositionValueBoard(int w, int h) {
-            this.w = w;
-            this.h = h;
-            board = new int[w][h];
-            emptyValue = EMPTY;
-            fillBoard(emptyValue);
-        }
-
-        /**
-         * Fill all the board with a given value
-         *
-         * @param value
-         */
-        public void fillBoard(int value) {
-            for (int d0 = 0; d0 < board.length; d0++) {
-                for (int d1 = 0; d1 < board[0].length; d1++) {
-                    board[d0][d1] = value;
-                }
-            }
-        }
-
-        /**
-         * Get the value stored in a given position.
-         *
-         * @param x xPosition
-         * @param y yPosition
-         * @return
-         */
-        public int getValueAt(int x, int y) {
-            return board[x][y];
-        }
-
-        /**
-         * Set the value of a given position in the Board checking that this is
-         * within it.
-         *
-         * @param value
-         * @param x
-         * @param y
-         */
-        public void setValueSafely(int value, int x, int y) {
-            if (isWithinBoard(x, y))
-                board[x][y] = value;
-        }
-
-        /**
-         * Set the value of a given position in the Board
-         *
-         * @param value
-         * @param x
-         * @param y
-         */
-        public void setValue(int value, int x, int y) {
-            board[x][y] = value;
-        }
-
-        /**
-         * Return true if the Position have a value different than Empty
-         *
-         * @param x
-         * @param y
-         * @return true if the position is EMPTY
-         */
-        public boolean isOccupied(int x, int y) {
-            return board[x][y] != emptyValue;
-        }
-
-        /**
-         * @param x
-         * @param y
-         * @return tru if the given coordinate fit in this Board
-         */
-        public boolean isWithinBoard(int x, int y) {
-            return x >= 0 && x < w && y >= 0 && y < h;
-        }
-
-        /**
-         * It will return a image representation of the data stored
-         * in the board, white pixels represent EMPTY values and black
-         * pixels any other value.
-         * This method has a debug propose and should not be used
-         * as a graphic tool.
-         */
-        public BufferedImage getImage() {
-
-            //Deb
-            if (enablePrompt) System.out.println("PositionValueBoard getImage called!!!");
-
-            BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-            for (int d0 = 0; d0 < board.length; d0++) {
-                for (int d1 = 0; d1 < board[0].length; d1++) {
-                    if (isOccupied(d0, d1))
-                        image.setRGB(d0, d1, Color.BLACK.getRGB());
-                    else
-                        image.setRGB(d0, d1, Color.WHITE.getRGB());
-                }
-            }
-            return image;
-        }
-
-        /**
-         * It will return a image representation of the data stored
-         * in the board, if the params are null or a value wasn't specified,
-         * white pixels will represent EMPTY values and black pixels any other value.
-         * Otherwise the given values will have the give colors respectively.
-         * This method has a debug propose and should not be used
-         * as a graphic tool.
-         *
-         * @param values
-         * @param colors
-         * @return
-         */
-        public BufferedImage getImage(int[] values, int[] colors) {
-
-            if (values != null && colors != null) {
-                BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-                int value;
-                for (int d0 = 0; d0 < board.length; d0++) {
-                    for (int d1 = 0; d1 < board[0].length; d1++) {
-                        int i = 0;
-                        value = board[d0][d1];
-                        while (i < values.length) {
-                            if (value == values[i]) {
-                                image.setRGB(d0, d1, colors[i]);
-                                break;
-                            }
-                            i++;
-                        }
-                        if (i == values.length) {
-                            if (isOccupied(d0, d1))
-                                image.setRGB(d0, d1, Color.BLACK.getRGB());
-                            else
-                                image.setRGB(d0, d1, Color.WHITE.getRGB());
-                        }
-                    }
-                }
-                return image;
-            } else return getImage();
-        }
-
-        /**
-         * Returns the current EMPTY representation of this Board.
-         *
-         * @return
-         */
-        public int getEmptyValue() {
-            return emptyValue;
-        }
-
-        /**
-         * Set the value that wil be consider as EMPTY in this Board.
-         *
-         * @param emptyValue
-         */
-        public void setEmptyValue(int emptyValue) {
-            this.emptyValue = emptyValue;
-        }
-
-        //region Iterative Check Methods _______________________________________________________________________________
-
-        /**
-         * Return True
-         *
-         * @param centerX The center x of the Area
-         * @param centerY The center y of the Area
-         * @param radius  The radius of the Area. It is important to know that
-         *                the diameter of the area will be radius * 2 + 1.It is because
-         *                the world can't support pair diameters particles...
-         * @return The result
-         */
-        public boolean checkCircularArea(int centerX, int centerY, int radius) {
-            checkerIterationHandler.iterate = true;
-            checkerIterationHandler.setExtraData(false);
-            iterateCircularArea(centerX, centerY, radius, checkerIterationHandler);
-            return checkerIterationHandler.getExtraData();
-        }
-
-        /**
-         * @param centerX The center x of the Area
-         * @param centerY The center y of the Area
-         * @param size    The size of the Area. This size refers to the distans since the
-         *                center of the Area and the borders. It is important to know that
-         *                the total size of the area will be size * 2 + 1. it is because
-         *                the world can't support pair total size particles...
-         * @return The result
-         */
-        public boolean checkSquareArea(int centerX, int centerY, int size) {
-            checkerIterationHandler.iterate = true;
-            checkerIterationHandler.setExtraData(false);
-            iterateSquareArea(centerX, centerY, size, checkerIterationHandler);
-            return checkerIterationHandler.getExtraData();
-        }
-
-        public boolean checkRectangularArea(int centerX, int centerY, int sizeX, int sizeY) {
-
-            checkerIterationHandler.iterate = true;
-            checkerIterationHandler.setExtraData(false);
-            iterateRectangularArea(centerX, centerY, sizeX, sizeY, checkerIterationHandler);
-            return checkerIterationHandler.getExtraData();
-        }
-
-        public boolean checkCircularPerimeter(int centerX, int centerY, int radius) {
-            checkerIterationHandler.iterate = true;
-            checkerIterationHandler.setExtraData(false);
-            iterateCircularPerimeter(centerX, centerY, radius, checkerIterationHandler);
-            return checkerIterationHandler.getExtraData();
-        }
-
-        public boolean checkSquarePerimeter(int centerX, int centerY, int size) {
-            checkerIterationHandler.iterate = true;
-            checkerIterationHandler.setExtraData(false);
-            iterateSquarePerimeter(centerX, centerY, size, checkerIterationHandler);
-            return checkerIterationHandler.getExtraData();
-        }
-
-        public boolean checkRectangularPerimeter(int centerX, int centerY, int sizeX, int sizeY) {
-            checkerIterationHandler.iterate = true;
-            checkerIterationHandler.setExtraData(false);
-            iterateRectangularPerimeter(centerX, centerY, sizeX, sizeY, checkerIterationHandler);
-            return checkerIterationHandler.getExtraData();
-        }
-
-        //endregion Iterative Check Methods ............................................................................
-
-        //region Iterative Set Methods _________________________________________________________________________________
-
-        public void setCircularArea(int centerX, int centerY, int radius, int value) {
-            setterIterationHandler.setExtraData(value);
-            iterateCircularArea(centerX, centerY, radius, setterIterationHandler);
-        }
-
-        public void setSquareArea(int centerX, int centerY, int size, int value) {
-            setterIterationHandler.setExtraData(value);
-            iterateSquareArea(centerX, centerY, size, setterIterationHandler);
-        }
-
-        public void setRectangularArea(int centerX, int centerY, int sizeX, int sizeY, int value) {
-            setterIterationHandler.setExtraData(value);
-            iterateRectangularArea(centerX, centerY, sizeX, sizeY, setterIterationHandler);
-        }
-
-        public void setCircularPerimeter(int centerX, int centerY, int radius, int value) {
-            setterIterationHandler.setExtraData(value);
-            iterateCircularPerimeter(centerX, centerY, radius, setterIterationHandler);
-        }
-
-        public void setSquarePerimeter(int centerX, int centerY, int size, int value) {
-            setterIterationHandler.setExtraData(value);
-            iterateSquarePerimeter(centerX, centerY, size, setterIterationHandler);
-        }
-
-        public void setRectangularPerimeter(int centerX, int centerY, int sizeX, int sizeY, int value) {
-
-            //Borders
-            int ub = centerY - sizeY;
-            int db = centerY + sizeY;
-            int lb = centerX - sizeX;
-            int rb = centerX + sizeX;
-
-
-            //Upper line
-            for (int x = 0; x < sizeX * 2 + 1; x++) {
-                setValue(value, lb + x, ub);
-
-            }
-
-            //Sides lines
-            for (int y = 1; y < sizeY * 2; y++) {
-                setValue(value, lb, ub + y);
-                setValue(value, rb, ub + y);
-
-            }
-
-            //Downer line
-            for (int x = 0; x < sizeX * 2 + 1; x++) {
-                setValue(value, lb + x, db);
-
-            }
-        }
-
-        //endregion Iterative Set Methods ..............................................................................
-
-        //region Custom Iterative Methods ______________________________________________________________________________
-
-
-        /**
-         * This method will iterate through a circular area inside this board. In all the iterations
-         * it will call the action method of the OnIterationActionHandler object. So, to do a certain action only implement this
-         * method. The method will have a reference to the current x and y position of the iteration and a reference
-         * to owner board. Enjoy it :) <br>
-         * To abort the iteration set true the breakIteration variable of the OnIterationActionHandler object.
-         *
-         * @param centerX                  the center x position of the Area to iterate
-         * @param centerY                  the center y position of the Area to iterate
-         * @param radius                   the radius of the circle
-         * @param onIterationActionHandler the iteration handler...
-         */
-        public void iterateCircularArea(int centerX, int centerY, int radius,
-                                        OnIterationActionHandler onIterationActionHandler) {
-
-            //|x| = radius
-            if (onIterationActionHandler.iterate)
-                onIterationActionHandler.action(centerX - radius, centerY, this);
-            if (onIterationActionHandler.iterate)
-                onIterationActionHandler.action(centerX + radius, centerY, this);
-
-            int y;
-            for (int x = 1 - radius; x < radius; x++) {
-
-                //Diameter
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(centerX + x, centerY, this);
-
-                y = Maths.roundedSqrt(radius * radius - x * x);
-
-                for (int i = 0; i < y; i++) {
-
-                    //Upper half
-                    if (onIterationActionHandler.iterate)
-                        onIterationActionHandler.action(centerX - x, centerY - y + i, this);
-                    //Downer half
-                    if (onIterationActionHandler.iterate)
-                        onIterationActionHandler.action(centerX - x, centerY + y - i, this);
-                }
-
-            }
-        }
-
-        /**
-         * This method will iterate through a square area inside this board. In all the iterations
-         * it will call the action method of the OnIterationActionHandler object. So, to do a certain action only implement this
-         * method. The method will have a reference to the current x and y position of the iteration and a reference
-         * to owner board. Enjoy it :) <br>
-         * To abort the iteration set true the breakIteration variable of the OnIterationActionHandler object.
-         *
-         * @param centerX                  the center x position of the Area to iterate
-         * @param centerY                  the center y position of the Area to iterate
-         * @param size                     the size of the square
-         * @param onIterationActionHandler the iteration handler...
-         */
-        public void iterateSquareArea(int centerX, int centerY, int size,
-                                      OnIterationActionHandler onIterationActionHandler) {
-
-            int boxels = size * 2 + 1;
-            int cornerX = centerX - size;
-            int cornerY = centerY - size;
-
-            for (int x = 0; x < boxels; x++) {
-                for (int y = 0; y < boxels; y++) {
-
-                    if (onIterationActionHandler.iterate)
-                        onIterationActionHandler.action(cornerX + x, cornerY + y, this);
-
-                }
-            }
-
-        }
-
-        /**
-         * This method will iterate through a rectangular area inside this board. In all the iterations
-         * it will call the action method of the OnIterationActionHandler object. So, to do a certain action only implement this
-         * method. The method will have a reference to the current x and y position of the iteration and a reference
-         * to owner board. Enjoy it :) <br>
-         * To abort the iteration set true the breakIteration variable of the OnIterationActionHandler object.
-         *
-         * @param centerX                  the center x position of the Area to iterate
-         * @param centerY                  the center y position of the Area to iterate
-         * @param sizeX                    the size of the Area
-         * @param sizeY                    the size of the Area
-         * @param onIterationActionHandler the iteration handler...
-         */
-        public void iterateRectangularArea(int centerX, int centerY, int sizeX, int sizeY,
-                                           OnIterationActionHandler onIterationActionHandler) {
-
-            int lineV = sizeY * 2 + 1;
-            int lineH = sizeX * 2 + 1;
-            int cornerX = centerX - sizeX;
-            int cornerY = centerY - sizeY;
-
-            for (int x = 0; x < lineH; x++) {
-                for (int y = 0; y < lineV; y++) {
-
-                    if (onIterationActionHandler.iterate)
-                        onIterationActionHandler.action(cornerX + x, cornerY + y, this);
-
-                }
-            }
-
-        }
-
-        /**
-         * This method will iterate through a circular perimeter inside this board. In all the iterations
-         * it will call the action method of the OnIterationActionHandler object. So, to do a certain action only implement this
-         * method. The method will have a reference to the current x and y position of the iteration and a reference
-         * to owner board. Enjoy it :) <br>
-         * To abort the iteration set true the breakIteration variable of the OnIterationActionHandler object.
-         *
-         * @param centerX                  the center x position of the Area to iterate
-         * @param centerY                  the center y position of the Area to iterate
-         * @param radius                   the radius of the circle
-         * @param onIterationActionHandler the iteration handler...
-         */
-        public void iterateCircularPerimeter(int centerX, int centerY, int radius,
-                                             OnIterationActionHandler onIterationActionHandler) {
-            //|x| = radius
-            if (onIterationActionHandler.iterate)
-                onIterationActionHandler.action(centerX - radius, centerY, this);
-            if (onIterationActionHandler.iterate)
-                onIterationActionHandler.action(centerX + radius, centerY, this);
-
-            int y, lastY = 0, dy;
-            for (int x = radius - 1; x >= 0; x--) {
-
-                y = Maths.roundedSqrt(radius * radius - x * x);
-                dy = Math.abs(lastY - y);
-
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(centerX + x, centerY - y, this);
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(centerX + x, centerY + y, this);
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(centerX - x, centerY - y, this);
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(centerX - x, centerY + y, this);
-
-                for (int i = 1; i < dy; i++) {
-
-                    if (onIterationActionHandler.iterate)
-                        onIterationActionHandler.action(centerX + x, centerY - y + i, this);
-                    if (onIterationActionHandler.iterate)
-                        onIterationActionHandler.action(centerX + x, centerY + y - i, this);
-                    if (onIterationActionHandler.iterate)
-                        onIterationActionHandler.action(centerX - x, centerY - y + i, this);
-                    if (onIterationActionHandler.iterate)
-                        onIterationActionHandler.action(centerX - x, centerY + y - i, this);
-
-                }
-                lastY = y;
-
-            }
-        }
-
-        /**
-         * This method will iterate through a square perimeter inside this board. In all the iterations
-         * it will call the action method of the OnIterationActionHandler object. So, to do a certain action only implement this
-         * method. The method will have a reference to the current x and y position of the iteration and a reference
-         * to owner board. Enjoy it :) <br>
-         * To abort the iteration set true the breakIteration variable of the OnIterationActionHandler object.
-         *
-         * @param centerX                  the center x position of the Area to iterate
-         * @param centerY                  the center y position of the Area to iterate
-         * @param size                     the size of the square
-         * @param onIterationActionHandler the iteration handler...
-         */
-        public void iterateSquarePerimeter(int centerX, int centerY, int size,
-                                           OnIterationActionHandler onIterationActionHandler) {
-            //Margins
-            int lm = centerX - size;
-            int rm = centerX + size;
-            int um = centerY - size;
-            int dm = centerY + size;
-
-            //Corners
-            if (onIterationActionHandler.iterate)
-                onIterationActionHandler.action(lm, um, this);
-            if (onIterationActionHandler.iterate)
-                onIterationActionHandler.action(rm, um, this);
-            if (onIterationActionHandler.iterate)
-                onIterationActionHandler.action(lm, dm, this);
-            if (onIterationActionHandler.iterate)
-                onIterationActionHandler.action(rm, dm, this);
-
-            for (int i = 1; i < size * 2; i++) {
-
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(lm + i, um, this);
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(lm, um + i, this);
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(rm, um + i, this);
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(lm + i, dm, this);
-
-            }
-
-        }
-
-        /**
-         * This method will iterate through a rectangular perimeter inside this board. In all the iterations
-         * it will call the action method of the OnIterationActionHandler object. So, to do a certain action only implement this
-         * method. The method will have a reference to the current x and y position of the iteration and a reference
-         * to owner board. Enjoy it :) <br>
-         * To abort the iteration set true the breakIteration variable of the OnIterationActionHandler object.
-         *
-         * @param centerX                  the center x position of the Area to iterate
-         * @param centerY                  the center y position of the Area to iterate
-         * @param sizeX                    the size of the Area
-         * @param sizeY                    the size of the Area
-         * @param onIterationActionHandler the iteration handler...
-         */
-        public void iterateRectangularPerimeter(int centerX, int centerY, int sizeX, int sizeY,
-                                                OnIterationActionHandler onIterationActionHandler) {
-
-            //Borders
-            int ub = centerY - sizeY;
-            int db = centerY + sizeY;
-            int lb = centerX - sizeX;
-            int rb = centerX + sizeX;
-
-
-            //Upper line
-            for (int x = 0; x < sizeX * 2 + 1; x++) {
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(lb + x, ub, this);
-
-            }
-
-            //Sides lines
-            for (int y = 1; y < sizeY * 2; y++) {
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(lb, ub + y, this);
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(rb, ub + y, this);
-
-            }
-
-            //Downer line
-            for (int x = 0; x < sizeX * 2 + 1; x++) {
-                if (onIterationActionHandler.iterate)
-                    onIterationActionHandler.action(lb + x, db, this);
-
-            }
-        }
-        //endregion Custom Iterative Methods ...........................................................................
-
-    }
-
-    /**
      * This class represent a Barrier. The only object that can collide
      * with the Walkers. As RandomWalker Class it only is a container of
      * characteristics, all the job is done by the World.
@@ -1451,7 +879,7 @@ public class RandomWalkersWorld {
      * A Tendency is a Vector (x,y) that represent how favored is
      * a direction to be selected as the next step of the walker.
      * This vector has its origin in the given position and his
-     * magnitude and direction depend of the xTendency and yTendency
+     * getMagnitude and direction depend of the xTendency and yTendency
      * values stored in this position. So, if in the coordinate
      * (25,26) of the world we have a tendency value of (1,0) this
      * mean that the North (Up) direction is favored. Dou to the Default
@@ -1466,12 +894,12 @@ public class RandomWalkersWorld {
         private final PositionValueBoard yTendencyBoard;
 
         //OnIterationHandlers
-        private OnIterationActionHandler<OnGetTendency> tendencySetterIterationHandler =
-                new OnIterationActionHandler<OnGetTendency>() {
+        private OnIterationActionHandler<OnGetTendency, PositionValueBoard, Void> tendencySetterIterationHandler =
+                new OnIterationActionHandler<OnGetTendency, PositionValueBoard, Void>() {
                     @Override
-                    public void action(int x, int y, PositionValueBoard board) {
-                        if (board.isWithinBoard(x, y)) {
-                            Vector tendency = getExtraData().getTendency(x, y);
+                    public void action(int x, int y) {
+                        if (getExtraTwo().isWithinBoard(x, y)) {
+                            Vector tendency = getExtraOne().getTendency(x, y);
                             setTendency(x, y, tendency.x, tendency.y);
                         }
                     }
@@ -1617,10 +1045,11 @@ public class RandomWalkersWorld {
         }
 
         void setCircularTendency(int centerX, int centerY, int radius, OnGetTendency onGetTendency) {
-            tendencySetterIterationHandler.setExtraData(onGetTendency);
-            xTendencyBoard.iterateCircularArea(centerX, centerY, radius, new OnIterationActionHandler() {
+            tendencySetterIterationHandler.setExtraOne(onGetTendency);
+            tendencySetterIterationHandler.setExtraTwo(xTendencyBoard);
+            Iterations.iterateCircularArea(centerX, centerY, radius, new OnIterationActionHandler() {
                 @Override
-                public void action(int x, int y, PositionValueBoard board) {
+                public void action(int x, int y) {
                     if (xTendencyBoard.isWithinBoard(x, y)) {
                         Vector tendency = onGetTendency.getTendency(x, y);
                         setTendency(x, y, tendency.x, tendency.y);
@@ -1630,9 +1059,11 @@ public class RandomWalkersWorld {
         }
 
         void setSquareTendency(int centerX, int centerY, int size, OnGetTendency onGetTendency) {
-            xTendencyBoard.iterateSquareArea(centerX, centerY, size, new OnIterationActionHandler() {
+            tendencySetterIterationHandler.setExtraOne(onGetTendency);
+            tendencySetterIterationHandler.setExtraTwo(xTendencyBoard);
+            Iterations.iterateSquareArea(centerX, centerY, size, new OnIterationActionHandler() {
                 @Override
-                public void action(int x, int y, PositionValueBoard board) {
+                public void action(int x, int y) {
                     if (xTendencyBoard.isWithinBoard(x, y)) {
                         Vector tendency = onGetTendency.getTendency(x, y);
                         setTendency(x, y, tendency.x, tendency.y);
@@ -1642,9 +1073,11 @@ public class RandomWalkersWorld {
         }
 
         void setRectangularTendency(int centerX, int centerY, int sizeX, int sizeY, OnGetTendency onGetTendency) {
-            xTendencyBoard.iterateRectangularArea(centerX, centerY, sizeX, sizeY, new OnIterationActionHandler() {
+            tendencySetterIterationHandler.setExtraOne(onGetTendency);
+            tendencySetterIterationHandler.setExtraTwo(xTendencyBoard);
+            Iterations.iterateRectangularArea(centerX, centerY, sizeX, sizeY, new OnIterationActionHandler() {
                 @Override
-                public void action(int x, int y, PositionValueBoard board) {
+                public void action(int x, int y) {
                     if (xTendencyBoard.isWithinBoard(x, y)) {
                         Vector tendency = onGetTendency.getTendency(x, y);
                         setTendency(x, y, tendency.x, tendency.y);
@@ -1783,7 +1216,7 @@ public class RandomWalkersWorld {
          * @param positionY the y position to check
          * @return the result
          */
-        boolean checkForGlobalCollisionPoint(int positionX, int positionY) {
+        boolean checkForGlobalCollisionifPoint(int positionX, int positionY) {
             return globalCollisionBoard.isOccupied(positionX, positionY);
         }
 
@@ -1850,7 +1283,7 @@ public class RandomWalkersWorld {
             //Setting OnIterationActionHandler
             OnIterationActionHandler onIterationActionHandler = new OnIterationActionHandler() {
                 @Override
-                public void action(int x, int y, PositionValueBoard board) {
+                public void action(int x, int y) {
                     if (board.isWithinBoard(x, y))
                         board.setValue(finalIndex, x, y);
                 }
@@ -1859,13 +1292,13 @@ public class RandomWalkersWorld {
             //Barriers
             for (Barrier barrier : barriers) {
                 if (barrier.getShape() == Constants.SQUARE_SHAPE) {
-                    board.iterateSquareArea(barrier.getPositionX(), barrier.getPositionY(),
+                    Iterations.iterateSquareArea(barrier.getPositionX(), barrier.getPositionY(),
                             barrier.getSize(), onIterationActionHandler);
                 } else if (barrier.getShape() == Constants.CIRCULAR_SHAPE) {
-                    board.iterateCircularArea(barrier.getPositionX(), barrier.getPositionY(),
+                    Iterations.iterateCircularArea(barrier.getPositionX(), barrier.getPositionY(),
                             barrier.getSize(), onIterationActionHandler);
                 } else if (barrier.getShape() == Constants.RECTANGULAR_SHAPE) {
-                    board.iterateRectangularArea(barrier.getPositionX(), barrier.getPositionY(),
+                    Iterations.iterateRectangularArea(barrier.getPositionX(), barrier.getPositionY(),
                             barrier.getSizeX(), barrier.getSizeY(), onIterationActionHandler);
                 } else {
                     if (enablePrompt) System.out.println("Error: Unsupported shape " + barrier.getShape());
@@ -1888,7 +1321,7 @@ public class RandomWalkersWorld {
 
                     onIterationActionHandler = new OnIterationActionHandler() {
                         @Override
-                        public void action(int x, int y, PositionValueBoard board) {
+                        public void action(int x, int y) {
                             if (board.isWithinBoard(x, y))
                                 board.setSquarePerimeter(x, y, targetSize, finalIndex);
                         }
@@ -1896,7 +1329,7 @@ public class RandomWalkersWorld {
                 } else if (targetShape == Constants.CIRCULAR_SHAPE) {
                     onIterationActionHandler = new OnIterationActionHandler() {
                         @Override
-                        public void action(int x, int y, PositionValueBoard board) {
+                        public void action(int x, int y) {
                             if (board.isWithinBoard(x, y)) {
                                 //Circular perimeter produce empty points, that is
                                 // why it is needed to draw several perimeters
@@ -1913,11 +1346,11 @@ public class RandomWalkersWorld {
 
                 //Iteration t
                 if (barrier.getShape() == Constants.SQUARE_SHAPE) {
-                    board.iterateSquarePerimeter(barrier.getPositionX(), barrier.getPositionY(), barrier.getSize(), onIterationActionHandler);
+                    Iterations.iterateSquarePerimeter(barrier.getPositionX(), barrier.getPositionY(), barrier.getSize(), onIterationActionHandler);
                 } else if (barrier.getShape() == Constants.CIRCULAR_SHAPE) {
-                    board.iterateCircularPerimeter(barrier.getPositionX(), barrier.getPositionY(), barrier.getSize(), onIterationActionHandler);
+                    Iterations.iterateCircularPerimeter(barrier.getPositionX(), barrier.getPositionY(), barrier.getSize(), onIterationActionHandler);
                 } else if (barrier.getShape() == Constants.RECTANGULAR_SHAPE) {
-                    board.iterateRectangularPerimeter(barrier.getPositionX(), barrier.getPositionY(), barrier.getSizeX(), barrier.getSizeY(),
+                    Iterations.iterateRectangularPerimeter(barrier.getPositionX(), barrier.getPositionY(), barrier.getSizeX(), barrier.getSizeY(),
                             onIterationActionHandler);
                 } else {
                     if (enablePrompt) System.out.println("Error: Unsupported shape " + barrier.getShape());
@@ -2008,26 +1441,6 @@ public class RandomWalkersWorld {
 
     }
 
-    /**
-     * A class that handle an Iteration Action.
-     */
-    private static abstract class OnIterationActionHandler<T1> {
-
-        public boolean iterate = true;
-        private T1 extraData;
-
-        public void action(int x, int y, PositionValueBoard board) {
-        }
-
-        public final T1 getExtraData() {
-            return extraData;
-        }
-
-        public final void setExtraData(T1 extraData) {
-            this.extraData = extraData;
-        }
-    }
-
     private static class RunThreadRunnable implements Runnable {
 
         public volatile boolean running;
@@ -2050,81 +1463,9 @@ public class RandomWalkersWorld {
         }
     }
 
-    private static class Maths {
-
-        /**
-         * @param d
-         * @return
-         */
-        public static int roundedSqrt(float d) {
-            return (int) Math.round(Math.sqrt(d));
-        }
-
-        public static int roundedSqrt(int i) {
-            return (int) Math.round(Math.sqrt(i));
-        }
-
-
-    }
-
     //endregion CLASSES ------------------------------------------------------------------------------------------------
 
     //region PUBLIC CLASSES ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    /**
-     * Just a pair of values x,y...
-     */
-    public static class Vector {
-
-        public int x;
-        public int y;
-
-        public Vector(int x, int y) {
-
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj.getClass() == this.getClass())
-                return ((Vector) obj).x == x && ((Vector) obj).y == y;
-            else return false;
-        }
-
-        public Vector scalarMult(float factor) {
-            x = (int) (x * factor);
-            y = (int) (y * factor);
-            return this;
-        }
-
-        public Vector add(Vector v) {
-            x += v.x;
-            y += v.y;
-            return this;
-        }
-
-        public Vector add(int v) {
-            x += v;
-            y += v;
-            return this;
-        }
-
-        public int magnitudExp2() {
-            return x * x + y * y;
-        }
-
-        public Vector sub(Vector v) {
-            x -= v.x;
-            y -= v.y;
-            return this;
-        }
-
-        @Override
-        public String toString() {
-            return "Vector (x = " + x + ", y = " + y + ")";
-        }
-    }
 
     /**
      * Contain all the constants of the world :)
@@ -2207,6 +1548,5 @@ public class RandomWalkersWorld {
     }
 
     //endregion PUBLIC CLASSES -----------------------------------------------------------------------------------------
-
 
 }

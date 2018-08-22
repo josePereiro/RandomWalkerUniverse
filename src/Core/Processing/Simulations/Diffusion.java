@@ -1,6 +1,7 @@
 package Core.Processing.Simulations;
 
-import Core.Engine.RandomWalkersWorld;
+import Core.Engine.Vector.Vector;
+import Core.Engine.World.RandomWalkersWorld;
 import processing.core.PApplet;
 
 import java.awt.*;
@@ -19,10 +20,10 @@ public class Diffusion extends PApplet {
     int desireParticleCount = 8000;
     int walkerRadius = 1;
     int targetFrameRate = 15;
-    int particlesToDraw = (int) (desireParticleCount * 0.1);
+    int particlesToDraw = desireParticleCount;
     int maxXValue, maxYValue;
     boolean drawInfo;
-    RandomWalkersWorld.Vector startPos;
+    Vector startPos;
 
     @Override
     public void settings() {
@@ -47,7 +48,7 @@ public class Diffusion extends PApplet {
 
         //Adding Walkers
         if (startPos == null)
-            startPos = new RandomWalkersWorld.Vector(world.getWorldCenterX(), world.getWorldCenterY());
+            startPos = new Vector(world.getWorldCenterX(), world.getWorldCenterY());
         for (int i = 0; i < desireParticleCount; i++) {
             world.addCircularWalker(startPos.x, startPos.y, walkerRadius);
 
@@ -246,7 +247,7 @@ public class Diffusion extends PApplet {
 
         fill(255);
         String text = "WalkerCount: " + world.getWalkersCount() +
-                "\nWalkerDrown: : " + particlesToDraw +
+                "\nWalkerDrown: " + particlesToDraw +
                 "\nFrame Rate: " + Math.round(frameRate) +
                 "\nSimulationSteps: " + Math.round(world.getStepsCounter());
 
@@ -282,7 +283,7 @@ public class Diffusion extends PApplet {
         int translatedMouseX = mouseX - globalMargin;
         int translatedMouseY = mouseY - globalMargin;
         if (!world.isOutOfTheWorld(translatedMouseX, translatedMouseY)) {
-            startPos = new RandomWalkersWorld.Vector(translatedMouseX, translatedMouseY);
+            startPos = new Vector(translatedMouseX, translatedMouseY);
             if (world.addCircularWalker(startPos.x, startPos.y, walkerRadius)) {
                 world.clearWorld();
                 initializing();
