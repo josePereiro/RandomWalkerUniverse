@@ -3,34 +3,46 @@ package Core.Engine.Shape;
 import Core.Engine.Vector.Vector;
 
 /**
- * Will hold all the information related with a given point of the shape.
- * Contain the type and all the {@link Shape.RelativeVector} describing the
- * position of this point in any transformation.
+ * Will hold all the information related with a given point of a PinnedShape.
  */
 public class ShapePoint {
 
     //Constants
-    private static final int PERIMETER_POINT = 730;
-    private static final int INNER_POINT = 29;
-    private static final int VERTEX_POINT = 874;
-    private static final int CENTER_POINT = 458;
+    public static final int PERIMETER_POINT_LABEL = 730;
+    public static final int INNER_POINT_LABEL = 29;
     public static final float DEFAULT_NORMAL_VECTOR_MAGNITUDE = 10;
+    public static final int OUTER_POINT_LABEL = 869;
 
     //Fields
     int type;
-    int rx;
-    int ry;
+    public final int x;
+    public final int y;
 
     //ExtraData
     public ShapePoint closerPerimeterPoint;
     public float distanceToCloserPerimeterPoint;
     public float distanceToCenter;
-    public Vector closerPerimeterPointNormal;
+    public Vector normal;
 
-    public ShapePoint(int rx, int ry) {
-        this.rx = rx;
-        this.ry = ry;
+    public ShapePoint(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
+    public Vector toVector() {
+        return new Vector(x, y);
+    }
 
+    public boolean equalsPos(ShapePoint toCompare) {
+        return toCompare.x == x && toCompare.y == y;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.getClass() == this.getClass() && ((ShapePoint) obj).x == x && ((ShapePoint) obj).y == y;
+    }
 }

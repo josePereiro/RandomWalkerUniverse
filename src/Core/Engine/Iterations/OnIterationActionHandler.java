@@ -1,8 +1,6 @@
-package Core.Engine.OnIterationActionHandler;
+package Core.Engine.Iterations;
 
 import Core.Engine.Vector.Vector;
-
-import java.util.ArrayList;
 
 /**
  * A class that handle an Iteration Action.
@@ -28,7 +26,7 @@ public abstract class OnIterationActionHandler<eT1, eT2, eT3> {
         Iterations.iterateLine(0, 0, 0, 10, onOnIterationActionHandler);
     }
 
-    public boolean iterate = true;
+    public boolean break_ = false;
     private eT1 extraOne;
     private eT2 extraTwo;
     private eT3 extraThree;

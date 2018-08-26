@@ -1,17 +1,18 @@
 package Core.Engine.PositionValueBoard;
 
-import Core.Engine.Maths.Tools;
-import Core.Engine.OnIterationActionHandler.Iterations;
-import Core.Engine.OnIterationActionHandler.OnIterationActionHandler;
+import Core.Engine.Iterations.Iterations;
+import Core.Engine.Iterations.OnIterationActionHandler;
+import Core.Engine.Vector.Vector;
 import Core.Engine.World.RandomWalkersWorld;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
- * This general class is used to relate a value with a position.
+ * This general class is used to relate a label with a position.
  */
-public class PositionValueBoard {
+public class LabeledPositionsBoard {
 
     public static void main(String... args) {
 
@@ -24,11 +25,11 @@ public class PositionValueBoard {
     private int emptyValue;
 
     //IterationHandlers
-    private OnIterationActionHandler<Integer, Void, Void> setterIterationHandler =
-            new OnIterationActionHandler<Integer, Void, Void>() {
+    private OnIterationActionHandler<Vector[], Integer, Void> setterIterationHandler =
+            new OnIterationActionHandler<Vector[], Integer, Void>() {
                 @Override
                 public void action(int x, int y) {
-                    PositionValueBoard.this.setValue(getExtraOne(), x, y);
+                    LabeledPositionsBoard.this.setLabel(getExtraTwo(), x, y);
                 }
 
             };
@@ -37,17 +38,17 @@ public class PositionValueBoard {
             new OnIterationActionHandler<Boolean, Void, Void>() {
                 @Override
                 public void action(int x, int y) {
-                    if (PositionValueBoard.this.isOccupied(x, y)) {
+                    if (LabeledPositionsBoard.this.isOccupied(x, y)) {
                         setExtraOne(true);
-                        iterate = false;
+                        break_ = true;
                     }
                 }
             };
 
     //CONSTANTS
     /**
-     * The value that is consider as null or empty, it is important
-     * to avoid the uses of this value with others proposes.
+     * The label that is consider as null or empty, it is important
+     * to avoid the uses of this label with others proposes.
      */
     public static final int EMPTY = Integer.MIN_VALUE;
 
@@ -55,7 +56,7 @@ public class PositionValueBoard {
      * @param w the width of the board
      * @param h the height of the board
      */
-    public PositionValueBoard(int w, int h) {
+    public LabeledPositionsBoard(int w, int h) {
         this.w = w;
         this.h = h;
         board = new int[w][h];
@@ -63,56 +64,84 @@ public class PositionValueBoard {
         fillBoard(emptyValue);
     }
 
+    public LabeledPositionsBoard(int w, int h, int emptyValue) {
+        this.w = w;
+        this.h = h;
+        board = new int[w][h];
+        this.emptyValue = emptyValue;
+        fillBoard(emptyValue);
+    }
+
     /**
-     * Fill all the board with a given value
+     * Fill all the board with a given label
      *
-     * @param value
+     * @param label
      */
-    public void fillBoard(int value) {
+    public void fillBoard(int label) {
         for (int d0 = 0; d0 < board.length; d0++) {
             for (int d1 = 0; d1 < board[0].length; d1++) {
-                board[d0][d1] = value;
+                board[d0][d1] = label;
             }
         }
     }
 
     /**
-     * Get the value stored in a given position.
+     * Get the label stored in a given position.
      *
      * @param x xPosition
      * @param y yPosition
      * @return
      */
-    public int getValueAt(int x, int y) {
+    public int getLabelAt(int x, int y) {
         return board[x][y];
     }
 
+    public int getLabelAt(Vector v) {
+        return board[v.x][v.y];
+    }
+
     /**
-     * Set the value of a given position in the Board checking that this is
+     * Set the label of a given position in the Board checking that this is
      * within it.
      *
-     * @param value
+     * @param label
      * @param x
      * @param y
      */
-    public void setValueSafely(int value, int x, int y) {
+    public void setLabelSafely(int label, int x, int y) {
         if (isWithinBoard(x, y))
-            board[x][y] = value;
+            board[x][y] = label;
     }
 
     /**
-     * Set the value of a given position in the Board
+     * Set the label of a given position in the Board
      *
-     * @param value
+     * @param label
      * @param x
      * @param y
      */
-    public void setValue(int value, int x, int y) {
-        board[x][y] = value;
+    public void setLabel(int label, int x, int y) {
+        board[x][y] = label;
+    }
+
+    public void setLabel(int label, Vector v) {
+        board[v.x][v.y] = label;
+    }
+
+    public void setLabel(int label, Vector... vs) {
+        for (Vector v : vs) {
+            board[v.x][v.y] = label;
+        }
+    }
+
+    public void setLabel(int label, ArrayList<Vector> vs) {
+        for (Vector v : vs) {
+            board[v.x][v.y] = label;
+        }
     }
 
     /**
-     * Return true if the Position have a value different than Empty
+     * Return true if the Position have a label different than Empty
      *
      * @param x
      * @param y
@@ -120,6 +149,10 @@ public class PositionValueBoard {
      */
     public boolean isOccupied(int x, int y) {
         return board[x][y] != emptyValue;
+    }
+
+    public boolean isOccupied(Vector v) {
+        return board[v.x][v.y] != emptyValue;
     }
 
     public int getW() {
@@ -139,17 +172,21 @@ public class PositionValueBoard {
         return x >= 0 && x < w && y >= 0 && y < h;
     }
 
+    public boolean isWithinBoard(Vector v) {
+        return v.x >= 0 && v.x < w && v.y >= 0 && v.y < h;
+    }
+
     /**
      * It will return a image representation of the data stored
      * in the board, white pixels represent EMPTY values and black
-     * pixels any other value.
+     * pixels any other label.
      * This method has a debug propose and should not be used
      * as a graphic tool.
      */
     public BufferedImage getImage() {
 
         //TODO Deb
-        if (RandomWalkersWorld.enablePrompt) System.out.println("PositionValueBoard getImage called!!!");
+        if (RandomWalkersWorld.enablePrompt) System.out.println("LabeledPositionsBoard getFullColorImage called!!!");
 
         BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         for (int d0 = 0; d0 < board.length; d0++) {
@@ -165,8 +202,8 @@ public class PositionValueBoard {
 
     /**
      * It will return a image representation of the data stored
-     * in the board, if the params are null or a value wasn't specified,
-     * white pixels will represent EMPTY values and black pixels any other value.
+     * in the board, if the params are null or a label wasn't specified,
+     * white pixels will represent EMPTY values and black pixels any other label.
      * Otherwise the given values will have the give colors respectively.
      * This method has a debug propose and should not be used
      * as a graphic tool.
@@ -179,13 +216,13 @@ public class PositionValueBoard {
 
         if (values != null && colors != null) {
             BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-            int value;
+            int label;
             for (int d0 = 0; d0 < board.length; d0++) {
                 for (int d1 = 0; d1 < board[0].length; d1++) {
                     int i = 0;
-                    value = board[d0][d1];
+                    label = board[d0][d1];
                     while (i < values.length) {
-                        if (value == values[i]) {
+                        if (label == values[i]) {
                             image.setRGB(d0, d1, colors[i]);
                             break;
                         }
@@ -208,17 +245,25 @@ public class PositionValueBoard {
      *
      * @return
      */
-    public int getEmptyValue() {
+    public int getEmptyLabel() {
         return emptyValue;
     }
 
     /**
-     * Set the value that wil be consider as EMPTY in this Board.
+     * Set the label that wil be consider as EMPTY in this Board.
      *
      * @param emptyValue
      */
-    public void setEmptyValue(int emptyValue) {
+    public void setEmptyLabel(int emptyValue) {
         this.emptyValue = emptyValue;
+    }
+
+    public void reset() {
+        fillBoard(emptyValue);
+    }
+
+    public Vector getCenter() {
+        return new Vector(w / 2, h / 2);
     }
 
     //region Iterative Check Methods _______________________________________________________________________________
@@ -234,7 +279,7 @@ public class PositionValueBoard {
      * @return The result
      */
     public boolean checkCircularArea(int centerX, int centerY, int radius) {
-        checkerIterationHandler.iterate = true;
+        checkerIterationHandler.break_ = false;
         checkerIterationHandler.setExtraOne(false);
         Iterations.iterateCircularArea(centerX, centerY, radius, checkerIterationHandler);
         return checkerIterationHandler.getExtraOne();
@@ -250,7 +295,7 @@ public class PositionValueBoard {
      * @return The result
      */
     public boolean checkSquareArea(int centerX, int centerY, int size) {
-        checkerIterationHandler.iterate = true;
+        checkerIterationHandler.break_ = false;
         checkerIterationHandler.setExtraOne(false);
         Iterations.iterateSquareArea(centerX, centerY, size, checkerIterationHandler);
         return checkerIterationHandler.getExtraOne();
@@ -258,28 +303,28 @@ public class PositionValueBoard {
 
     public boolean checkRectangularArea(int centerX, int centerY, int sizeX, int sizeY) {
 
-        checkerIterationHandler.iterate = true;
+        checkerIterationHandler.break_ = false;
         checkerIterationHandler.setExtraOne(false);
         Iterations.iterateRectangularArea(centerX, centerY, sizeX, sizeY, checkerIterationHandler);
         return checkerIterationHandler.getExtraOne();
     }
 
     public boolean checkCircularPerimeter(int centerX, int centerY, int radius) {
-        checkerIterationHandler.iterate = true;
+        checkerIterationHandler.break_ = false;
         checkerIterationHandler.setExtraOne(false);
         Iterations.iterateCircularPerimeter(centerX, centerY, radius, checkerIterationHandler);
         return checkerIterationHandler.getExtraOne();
     }
 
     public boolean checkSquarePerimeter(int centerX, int centerY, int size) {
-        checkerIterationHandler.iterate = true;
+        checkerIterationHandler.break_ = false;
         checkerIterationHandler.setExtraOne(false);
         Iterations.iterateSquarePerimeter(centerX, centerY, size, checkerIterationHandler);
         return checkerIterationHandler.getExtraOne();
     }
 
     public boolean checkRectangularPerimeter(int centerX, int centerY, int sizeX, int sizeY) {
-        checkerIterationHandler.iterate = true;
+        checkerIterationHandler.break_ = false;
         checkerIterationHandler.setExtraOne(false);
         Iterations.iterateRectangularPerimeter(centerX, centerY, sizeX, sizeY, checkerIterationHandler);
         return checkerIterationHandler.getExtraOne();
@@ -289,58 +334,39 @@ public class PositionValueBoard {
 
     //region Iterative Set Methods _________________________________________________________________________________
 
-    public void setCircularArea(int centerX, int centerY, int radius, int value) {
-        setterIterationHandler.setExtraOne(value);
+    public void setCircularArea(int centerX, int centerY, int radius, int label) {
+        setterIterationHandler.setExtraTwo(label);
         Iterations.iterateCircularArea(centerX, centerY, radius, setterIterationHandler);
     }
 
-    public void setSquareArea(int centerX, int centerY, int size, int value) {
-        setterIterationHandler.setExtraOne(value);
+    public void setSquareArea(int centerX, int centerY, int size, int label) {
+        setterIterationHandler.setExtraTwo(label);
         Iterations.iterateSquareArea(centerX, centerY, size, setterIterationHandler);
     }
 
-    public void setRectangularArea(int centerX, int centerY, int sizeX, int sizeY, int value) {
-        setterIterationHandler.setExtraOne(value);
+    public void setRectangularArea(int centerX, int centerY, int sizeX, int sizeY, int label) {
+        setterIterationHandler.setExtraTwo(label);
         Iterations.iterateRectangularArea(centerX, centerY, sizeX, sizeY, setterIterationHandler);
     }
 
-    public void setCircularPerimeter(int centerX, int centerY, int radius, int value) {
-        setterIterationHandler.setExtraOne(value);
+    public void setCircularPerimeter(int centerX, int centerY, int radius, int label) {
+        setterIterationHandler.setExtraTwo(label);
         Iterations.iterateCircularPerimeter(centerX, centerY, radius, setterIterationHandler);
     }
 
-    public void setSquarePerimeter(int centerX, int centerY, int size, int value) {
-        setterIterationHandler.setExtraOne(value);
+    public void setSquarePerimeter(int centerX, int centerY, int size, int label) {
+        setterIterationHandler.setExtraTwo(label);
         Iterations.iterateSquarePerimeter(centerX, centerY, size, setterIterationHandler);
     }
 
-    public void setRectangularPerimeter(int centerX, int centerY, int sizeX, int sizeY, int value) {
+    public void setRectangularPerimeter(int centerX, int centerY, int sizeX, int sizeY, int label) {
+        setterIterationHandler.setExtraTwo(label);
+        Iterations.iterateRectangularArea(centerX, centerY, sizeX, sizeY, setterIterationHandler);
+    }
 
-        //Borders
-        int ub = centerY - sizeY;
-        int db = centerY + sizeY;
-        int lb = centerX - sizeX;
-        int rb = centerX + sizeX;
-
-
-        //Upper line
-        for (int x = 0; x < sizeX * 2 + 1; x++) {
-            setValue(value, lb + x, ub);
-
-        }
-
-        //Sides lines
-        for (int y = 1; y < sizeY * 2; y++) {
-            setValue(value, lb, ub + y);
-            setValue(value, rb, ub + y);
-
-        }
-
-        //Downer line
-        for (int x = 0; x < sizeX * 2 + 1; x++) {
-            setValue(value, lb + x, db);
-
-        }
+    public void setPolygonalPerimeter(Vector[] vertexes, int label) {
+        setterIterationHandler.setExtraTwo(label);
+        Iterations.iteratePolygonPerimeter(vertexes, setterIterationHandler);
     }
 
     //endregion Iterative Set Methods ..............................................................................

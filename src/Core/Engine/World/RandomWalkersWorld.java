@@ -1,12 +1,10 @@
 package Core.Engine.World;
 
-import Core.Engine.OnIterationActionHandler.Iterations;
-import Core.Engine.OnIterationActionHandler.OnIterationActionHandler;
-import Core.Engine.PositionValueBoard.PositionValueBoard;
+import Core.Engine.Iterations.Iterations;
+import Core.Engine.Iterations.OnIterationActionHandler;
+import Core.Engine.PositionValueBoard.LabeledPositionsBoard;
 import Core.Engine.Vector.Vector;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -67,7 +65,7 @@ public class RandomWalkersWorld {
     private CollisionBoard staticCollisionsBoard;
 
     //walkersCountBoard
-    private PositionValueBoard walkersCountBoard;
+    private LabeledPositionsBoard walkersCountBoard;
 
     //World
     private int w, h;
@@ -210,7 +208,7 @@ public class RandomWalkersWorld {
     }
 
     public int getWalkersCount(int positionX, int positionY) {
-        return walkersCountBoard.getValueAt(positionX, positionY);
+        return walkersCountBoard.getLabelAt(positionX, positionY);
     }
 
     /**
@@ -241,9 +239,9 @@ public class RandomWalkersWorld {
 
             //delete old position
             if (enablePerPositionWalkerCount) {
-                int oldValue = walkersCountBoard.getValueAt(walker.positionX, walker.positionY);
+                int oldValue = walkersCountBoard.getLabelAt(walker.positionX, walker.positionY);
                 if (oldValue != 0)
-                    walkersCountBoard.setValue(walkersCountBoard.getValueAt(walker.positionX, walker.positionY) - 1,
+                    walkersCountBoard.setLabel(walkersCountBoard.getLabelAt(walker.positionX, walker.positionY) - 1,
                             walker.positionX, walker.positionY);
             }
 
@@ -253,7 +251,7 @@ public class RandomWalkersWorld {
 
             //count new position
             if (enablePerPositionWalkerCount) {
-                walkersCountBoard.setValue(walkersCountBoard.getValueAt(walker.positionX, walker.positionY) + 1,
+                walkersCountBoard.setLabel(walkersCountBoard.getLabelAt(walker.positionX, walker.positionY) + 1,
                         walker.positionX, walker.positionY);
             }
 
@@ -557,8 +555,8 @@ public class RandomWalkersWorld {
         runThread = new Thread(runnable);
 
         //PositionCounter
-        walkersCountBoard = new PositionValueBoard(w, h);
-        walkersCountBoard.setEmptyValue(0);
+        walkersCountBoard = new LabeledPositionsBoard(w, h);
+        walkersCountBoard.setEmptyLabel(0);
         walkersCountBoard.fillBoard(0);
 
         //cache
@@ -890,12 +888,12 @@ public class RandomWalkersWorld {
     private static class TendencyBoard {
 
         //Boards
-        private final PositionValueBoard xTendencyBoard;
-        private final PositionValueBoard yTendencyBoard;
+        private final LabeledPositionsBoard xTendencyBoard;
+        private final LabeledPositionsBoard yTendencyBoard;
 
         //OnIterationHandlers
-        private OnIterationActionHandler<OnGetTendency, PositionValueBoard, Void> tendencySetterIterationHandler =
-                new OnIterationActionHandler<OnGetTendency, PositionValueBoard, Void>() {
+        private OnIterationActionHandler<OnGetTendency, LabeledPositionsBoard, Void> tendencySetterIterationHandler =
+                new OnIterationActionHandler<OnGetTendency, LabeledPositionsBoard, Void>() {
                     @Override
                     public void action(int x, int y) {
                         if (getExtraTwo().isWithinBoard(x, y)) {
@@ -908,9 +906,9 @@ public class RandomWalkersWorld {
 
         public TendencyBoard(int w, int h) {
 
-            xTendencyBoard = new PositionValueBoard(w, h);
+            xTendencyBoard = new LabeledPositionsBoard(w, h);
             xTendencyBoard.fillBoard(0);
-            yTendencyBoard = new PositionValueBoard(w, h);
+            yTendencyBoard = new LabeledPositionsBoard(w, h);
             yTendencyBoard.fillBoard(0);
         }
 
@@ -924,8 +922,8 @@ public class RandomWalkersWorld {
          */
         Vector tryDirection(int xPosition, int yPosition) {
 
-            int xTendency = xTendencyBoard.getValueAt(xPosition, yPosition);
-            int yTendency = yTendencyBoard.getValueAt(xPosition, yPosition);
+            int xTendency = xTendencyBoard.getLabelAt(xPosition, yPosition);
+            int yTendency = yTendencyBoard.getLabelAt(xPosition, yPosition);
 
             if (xTendency == 0 && yTendency == 0) {
                 return new Vector(xPosition + r.nextInt(3) - 1,
@@ -971,7 +969,7 @@ public class RandomWalkersWorld {
 
         int tryXDirection(int xPosition, int yPosition) {
 
-            int xTendency = xTendencyBoard.getValueAt(xPosition, yPosition);
+            int xTendency = xTendencyBoard.getLabelAt(xPosition, yPosition);
 
             if (xTendency == 0) {
                 return xPosition + r.nextInt(3) - 1;
@@ -1003,7 +1001,7 @@ public class RandomWalkersWorld {
 
         int tryYDirection(int xPosition, int yPosition) {
 
-            int yTendency = yTendencyBoard.getValueAt(xPosition, yPosition);
+            int yTendency = yTendencyBoard.getLabelAt(xPosition, yPosition);
 
             if (yTendency == 0) {
                 return yPosition + r.nextInt(3) - 1;
@@ -1040,8 +1038,8 @@ public class RandomWalkersWorld {
          * @param yTendency
          */
         void setTendency(int xPosition, int yPosition, int xTendency, int yTendency) {
-            xTendencyBoard.setValue(xTendency, xPosition, yPosition);
-            yTendencyBoard.setValue(yTendency, xPosition, yPosition);
+            xTendencyBoard.setLabel(xTendency, xPosition, yPosition);
+            yTendencyBoard.setLabel(yTendency, xPosition, yPosition);
         }
 
         void setCircularTendency(int centerX, int centerY, int radius, OnGetTendency onGetTendency) {
@@ -1106,8 +1104,8 @@ public class RandomWalkersWorld {
          * @param yTendency
          */
         void addTendency(int xPosition, int yPosition, int xTendency, int yTendency) {
-            xTendencyBoard.setValue(xTendencyBoard.getValueAt(xPosition, yPosition) + xTendency, xPosition, yPosition);
-            yTendencyBoard.setValue(yTendencyBoard.getValueAt(xPosition, yPosition) + yTendency, xPosition, yPosition);
+            xTendencyBoard.setLabel(xTendencyBoard.getLabelAt(xPosition, yPosition) + xTendency, xPosition, yPosition);
+            yTendencyBoard.setLabel(yTendencyBoard.getLabelAt(xPosition, yPosition) + yTendency, xPosition, yPosition);
         }
 
         /**
@@ -1118,7 +1116,7 @@ public class RandomWalkersWorld {
          * @return
          */
         Vector getTendency(int xPosition, int yPosition) {
-            return new Vector(xTendencyBoard.getValueAt(xPosition, yPosition), yTendencyBoard.getValueAt(xPosition, yPosition));
+            return new Vector(xTendencyBoard.getLabelAt(xPosition, yPosition), yTendencyBoard.getLabelAt(xPosition, yPosition));
         }
 
     }
@@ -1134,16 +1132,16 @@ public class RandomWalkersWorld {
         ArrayList<Barrier> barriers;
         private int minCircularWalkerSize;
         private int minSquareWalkerSize;
-        public PositionValueBoard globalCollisionBoard;
+        public LabeledPositionsBoard globalCollisionBoard;
 
         /**
          * Store the value of the point where the last time
          * a collision was detected.
          */
-        private int lastCheckedCollisionValue = PositionValueBoard.EMPTY;
+        private int lastCheckedCollisionValue = LabeledPositionsBoard.EMPTY;
 
-        private final ArrayList<PositionValueBoard> squareWalkersCollisionBoards;
-        private final ArrayList<PositionValueBoard> circularWalkersCollisionBoards;
+        private final ArrayList<LabeledPositionsBoard> squareWalkersCollisionBoards;
+        private final ArrayList<LabeledPositionsBoard> circularWalkersCollisionBoards;
         private final ArrayList<Integer> squaredWalkerSizes;
         private final ArrayList<Integer> circularWalkerSizes;
 
@@ -1160,7 +1158,7 @@ public class RandomWalkersWorld {
             minSquareWalkerSize = Integer.MAX_VALUE;
 
             //EmptyBoard
-            PositionValueBoard emptyBoard = new PositionValueBoard(w, h);
+            LabeledPositionsBoard emptyBoard = new LabeledPositionsBoard(w, h);
             squareWalkersCollisionBoards.add(emptyBoard);
             circularWalkersCollisionBoards.add(emptyBoard);
             globalCollisionBoard = emptyBoard;
@@ -1236,13 +1234,13 @@ public class RandomWalkersWorld {
             //Adding
             if (targetShape == Constants.SQUARE_SHAPE) {
 
-                PositionValueBoard newBoard = new PositionValueBoard(w, h);
+                LabeledPositionsBoard newBoard = new LabeledPositionsBoard(w, h);
                 updateCollisionBoard(targetSize, targetShape, newBoard);
                 squareWalkersCollisionBoards.set(targetSize, newBoard);
 
             } else if (targetShape == Constants.CIRCULAR_SHAPE) {
 
-                PositionValueBoard newBoard = new PositionValueBoard(w, h);
+                LabeledPositionsBoard newBoard = new LabeledPositionsBoard(w, h);
                 updateCollisionBoard(targetSize, targetShape, newBoard);
                 circularWalkersCollisionBoards.set(targetSize, newBoard);
 
@@ -1257,7 +1255,7 @@ public class RandomWalkersWorld {
          * @param targetShape
          * @param board
          */
-        private void updateCollisionBoard(int targetSize, int targetShape, PositionValueBoard board) {
+        private void updateCollisionBoard(int targetSize, int targetShape, LabeledPositionsBoard board) {
 
             //Positioning barriers...
             putBarriersInBoard(board);
@@ -1275,17 +1273,17 @@ public class RandomWalkersWorld {
          *
          * @param board
          */
-        private void putBarriersInBoard(PositionValueBoard board) {
+        private void putBarriersInBoard(LabeledPositionsBoard board) {
 
             int index = 0;
             final int finalIndex = index;
 
-            //Setting OnIterationActionHandler
+            //Setting Iterations
             OnIterationActionHandler onIterationActionHandler = new OnIterationActionHandler() {
                 @Override
                 public void action(int x, int y) {
                     if (board.isWithinBoard(x, y))
-                        board.setValue(finalIndex, x, y);
+                        board.setLabel(finalIndex, x, y);
                 }
             };
 
@@ -1309,7 +1307,7 @@ public class RandomWalkersWorld {
 
         }
 
-        private void extendBarriersRestriction(int targetSize, int targetShape, PositionValueBoard board) {
+        private void extendBarriersRestriction(int targetSize, int targetShape, LabeledPositionsBoard board) {
 
             int index = 0;
             for (Barrier barrier : barriers) {
@@ -1364,12 +1362,12 @@ public class RandomWalkersWorld {
 
         }
 
-        private void addBorderRestriction(int targetSize, PositionValueBoard board) {
+        private void addBorderRestriction(int targetSize, LabeledPositionsBoard board) {
 
             //Upper line
             for (int y = 0; y < targetSize; y++) {
                 for (int x = 0; x < w; x++) {
-                    board.setValue(Constants.BORDER, x, y);
+                    board.setLabel(Constants.BORDER, x, y);
                 }
             }
 
@@ -1377,7 +1375,7 @@ public class RandomWalkersWorld {
             int lastY = h - targetSize;
             for (int x = 0; x < targetSize; x++) {
                 for (int y = targetSize; y < lastY; y++) {
-                    board.setValue(Constants.BORDER, x, y);
+                    board.setLabel(Constants.BORDER, x, y);
                 }
             }
 
@@ -1385,14 +1383,14 @@ public class RandomWalkersWorld {
             int lastX = w - targetSize;
             for (int x = lastX; x < w; x++) {
                 for (int y = targetSize; y < lastY; y++) {
-                    board.setValue(Constants.BORDER, x, y);
+                    board.setLabel(Constants.BORDER, x, y);
                 }
             }
 
             //Upper line
             for (int y = lastY; y < h; y++) {
                 for (int x = 0; x < w; x++) {
-                    board.setValue(Constants.BORDER, x, y);
+                    board.setLabel(Constants.BORDER, x, y);
                 }
             }
 
@@ -1419,16 +1417,16 @@ public class RandomWalkersWorld {
             int value;
             if (walker.getShape() == Constants.SQUARE_SHAPE) {
                 value = squareWalkersCollisionBoards.get(walker.getSize()).
-                        getValueAt(positionX, positionY);
-                if (value != PositionValueBoard.EMPTY) {
+                        getLabelAt(positionX, positionY);
+                if (value != LabeledPositionsBoard.EMPTY) {
                     lastCheckedCollisionValue = value;
                     return true;
                 }
                 return false;
             } else if (walker.getShape() == Constants.CIRCULAR_SHAPE) {
                 value = circularWalkersCollisionBoards.get(walker.getSize()).
-                        getValueAt(positionX, positionY);
-                if (value != PositionValueBoard.EMPTY) {
+                        getLabelAt(positionX, positionY);
+                if (value != LabeledPositionsBoard.EMPTY) {
                     lastCheckedCollisionValue = value;
                     return true;
                 }

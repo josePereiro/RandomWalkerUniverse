@@ -5,15 +5,6 @@ package Core.Engine.Vector;
  */
 public class Vector {
 
-    public static void main(String... args) {
-
-        Vector vector = new Vector(-10, -20);
-        Vector normal = Vector.getNormalVector(vector, 1);
-        System.out.println(vector);
-        System.out.println(normal);
-
-    }
-
     public int x;
     public int y;
 
@@ -30,6 +21,10 @@ public class Vector {
     @Override
     public boolean equals(Object obj) {
         return obj.getClass() == this.getClass() && ((Vector) obj).x == x && ((Vector) obj).y == y;
+    }
+
+    public Vector getCopy() {
+        return new Vector(x, y);
     }
 
     public Vector scalarMult(float factor) {
@@ -104,13 +99,27 @@ public class Vector {
         return (float) Math.sqrt(v.x * v.x + v.y * v.y);
     }
 
+    public static float getDistance(Vector v1, Vector v2) {
+        return getMagnitude(v1.x - v2.x, v1.y - v2.y);
+    }
+
+    public static float getDistance(int x1, int y1, int x2, int y2) {
+        return getMagnitude(x1 - x2, y1 - y2);
+    }
+
     public static float getMagnitude(int x, int y) {
         return (float) Math.sqrt(x * x + y * y);
     }
 
+    public static void setMagnitude(float targetMagnitude, Vector vector) {
+        float factor = targetMagnitude / vector.getMagnitude();
+        vector.x = Math.round(vector.x * factor);
+        vector.y = Math.round(vector.y * factor);
+    }
+
     @Override
     public String toString() {
-        return "Vector (x = " + x + ", y = " + y + ")";
+        return "(x = " + x + ", y = " + y + ")";
     }
 
     @Override
