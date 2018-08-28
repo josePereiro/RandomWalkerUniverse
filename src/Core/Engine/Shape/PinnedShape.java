@@ -410,16 +410,20 @@ public class PinnedShape {
         private static void setType(PinnedShape shape, Vector[] vertexes) {
 
             if (vertexes.length == 3) {
-                shape.type = Shape.Constants.TRIANGLE;
+                shape.type = Shape.Types.TRIANGLE;
             } else if (vertexes.length == 4) {
                 float dist1 = Vector.getDistance(vertexes[0], vertexes[2]);
                 float dist2 = Vector.getDistance(vertexes[1], vertexes[3]);
                 if (dist1 == dist2) {
-                    shape.type = Shape.Constants.SQUARE;
+                    dist1 = Vector.getDistance(vertexes[0], vertexes[1]);
+                    dist2 = Vector.getDistance(vertexes[1], vertexes[2]);
+                    if (dist1 == dist2)
+                        shape.type = Shape.Types.SQUARE;
+                    else shape.type = Shape.Types.RECTANGLE;
                 } else
-                    shape.type = Shape.Constants.POLYGON;
+                    shape.type = Shape.Types.POLYGON;
             } else {
-                shape.type = Shape.Constants.POLYGON;
+                shape.type = Shape.Types.POLYGON;
             }
 
         }

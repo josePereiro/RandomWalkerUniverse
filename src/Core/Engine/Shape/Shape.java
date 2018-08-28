@@ -20,7 +20,6 @@ public class Shape {
 
     //Shape Fields
     private final int rotationsCount;
-    private int currentRotation;
 
     //Pinned Shapes
     private final PinnedShape[] rotatedShapes;
@@ -29,30 +28,26 @@ public class Shape {
     private Shape() {
         rotationsCount = Constants.DEFAULT_ROTATIONS_COUNT;
         rotatedShapes = new PinnedShape[rotationsCount];
-        currentRotation = 0;
     }
 
     private Shape(int rotationsCount) {
         this.rotationsCount = rotationsCount;
         rotatedShapes = new PinnedShape[rotationsCount];
-        currentRotation = 0;
     }
 
-    public void rotate() {
-        if (currentRotation < rotationsCount - 1)
-            currentRotation++;
-        else currentRotation = 0;
-    }
-
-    public BufferedImage getFullColorImage() {
+    public BufferedImage getFullColorImage(int currentRotation) {
         return rotatedShapes[currentRotation].getFullColorImage();
     }
 
-    public BufferedImage getPerimeterImage() {
+    public BufferedImage getPerimeterImage(int currentRotation) {
         return rotatedShapes[currentRotation].getPerimeterImage();
     }
 
-    public static class Constants {
+    public int getRotationsCount() {
+        return rotationsCount;
+    }
+
+    public static class Types {
 
         public static final int CIRCLE = 561;
         public static final int TRIANGLE = 786;
@@ -60,6 +55,11 @@ public class Shape {
         public static final int SQUARE = 167;
         public static final int RECTANGLE = 449;
         public static final int POLYGON = 295;
+
+    }
+
+    public static class Constants {
+
 
         private static final int DEFAULT_ROTATIONS_COUNT = 30;
 

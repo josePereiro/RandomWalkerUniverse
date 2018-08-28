@@ -9,6 +9,8 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.event.MouseEvent;
 
+import java.util.Random;
+
 public class ProcessingTemplate extends PApplet {
 
     public static void main(String... args) {
@@ -23,11 +25,13 @@ public class ProcessingTemplate extends PApplet {
 
     Shape shape;
     PImage image;
+    int shapeCurrentRotation = 0;
 
     @Override
     public void setup() {
 
-        Vector[] vertexes = Tools.getClockDirectionVertexes(50, 10);
+        Random r = new Random();
+        Vector[] vertexes = Tools.getClockDirectionVertexes(100, r.nextInt(20) + 4);
 
         try {
             shape = Shape.createPolygonalShape(vertexes);
@@ -40,7 +44,7 @@ public class ProcessingTemplate extends PApplet {
         imageMode(CENTER);
         noFill();
 
-        image = ProcessingTools.createPImage(shape.getFullColorImage(), this);
+        image = ProcessingTools.createPImage(shape.getFullColorImage(shapeCurrentRotation), this);
 
 
     }
@@ -50,8 +54,14 @@ public class ProcessingTemplate extends PApplet {
 
         background(255);
         image(image, width / 2, height / 2);
-        shape.rotate();
-        image = ProcessingTools.createPImage(shape.getFullColorImage(), this);
+
+        //Rotate
+        if (shapeCurrentRotation < shape.getRotationsCount() - 1) {
+            shapeCurrentRotation++;
+        } else {
+            shapeCurrentRotation = 0;
+        }
+        image = ProcessingTools.createPImage(shape.getFullColorImage(shapeCurrentRotation), this);
 
         frameRate(map(mouseX, 0, width, 5, 60));
 
