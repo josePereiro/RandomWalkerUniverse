@@ -7,6 +7,7 @@ import Core.Engine.Iterations.Iterations;
 import Core.Engine.Iterations.OnIterationActionHandler;
 import Core.Engine.PositionValueBoard.LabeledPositionsBoard;
 import Core.Engine.Tools.Tools;
+import Core.Engine.Vector.Localizable;
 import Core.Engine.Vector.Vector;
 
 import java.awt.*;
@@ -18,37 +19,19 @@ import java.util.ArrayList;
  */
 public class PinnedShape {
 
-    public static void main(String... args) {
-
-        Vector[] vertexes = new Vector[]{
-                new Vector(-10, 10),
-                new Vector(5, 10),
-                new Vector(10, -10),
-                new Vector(-10, -8)
-        };
-
-
-        try {
-            PinnedShape shape = PolygonalShapeFactory.createShape(vertexes);
-            BufferedImage image = shape.getFullColorImage();
-            int i = 0;
-        } catch (IllegalVertexesCountException | IllegalVertexesPositionException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-    }
-
     //Vertexes
-    private ShapePoint[] vertexesPoints;
+    private ShapePoint[] vertexes;
 
     //Perimeter
     private ShapePoint[] perimeterPoints;
     private ShapePoint[] unsortedPerimeterPoints;
 
     //Area
-    private ShapePoint[] innerAreaPoints;
+    private ShapePoint[] innerPoints;
     private ShapePoint[] unsortedInnerAreaPoints;
+
+    //All points
+    private ShapePoint[] allPoints;
 
     //Center
     private ShapePoint center;
@@ -60,6 +43,11 @@ public class PinnedShape {
     private int w;
     private int h;
 
+    //IndexBoard
+    LabeledPositionsBoard indexBoard;
+    int xTranslation;
+    int yTranslation;
+
     public PinnedShape() {
     }
 
@@ -67,137 +55,70 @@ public class PinnedShape {
         return perimeterPoints;
     }
 
+    public ShapePoint[] getInnerPoints() {
+        return innerPoints;
+    }
+
+    public ShapePoint[] getVertexes() {
+        return vertexes;
+    }
+
+    public ShapePoint getCenter() {
+        return center;
+    }
+
+    public ShapePoint[] getAllPoints() {
+        return allPoints;
+    }
+
     public int getMaxSpinRadius() {
         return maxSpinRadius;
-    }
-
-    public void setMaxSpinRadius(int maxSpinRadius) {
-        this.maxSpinRadius = maxSpinRadius;
-    }
-
-    public int getMediumSpinRadius() {
-        return mediumSpinRadius;
-    }
-
-    public void setMediumSpinRadius(int mediumSpinRadius) {
-        this.mediumSpinRadius = mediumSpinRadius;
-    }
-
-    public int getType() {
-        return type;
     }
 
     public int getW() {
         return w;
     }
 
-    public void setW(int w) {
-        this.w = w;
-    }
-
     public int getH() {
         return h;
     }
 
-    public void setH(int h) {
-        this.h = h;
-    }
+    public static int getHashCode(Localizable[] vertexes) {
+        StringBuilder st = new StringBuilder();
 
-    public BufferedImage getFullColorImage() {
-
-        int perimeterPointsLabel = 1;
-        int vertexesPointsLabel = 2;
-        int normalVectorsPointsLabel = 3;
-        int innerPointsLabel = 4;
-
-
-        LabeledPositionsBoard board = new LabeledPositionsBoard(maxSpinRadius * 3, maxSpinRadius * 3);
-        int translation = board.getW() / 2;
-        int x, y;
-
-        //InnerPoints
-        if (innerAreaPoints[0] != null)
-            for (ShapePoint innerPoints : innerAreaPoints) {
-                x = innerPoints.x + translation;
-                y = innerPoints.y + translation;
-                board.setLabel(innerPointsLabel, x, y);
-            }
-
-        //Normal
-        Vector normal;
-        float normalMagnitude = maxSpinRadius * 0.1F;
-        if (perimeterPoints[0] != null)
-            for (ShapePoint perimeterPoint : perimeterPoints) {
-                x = perimeterPoint.x + translation;
-                y = perimeterPoint.y + translation;
-                normal = perimeterPoint.normal;
-                Vector.setMagnitude(normalMagnitude, normal);
-                board.setLabel(normalVectorsPointsLabel, x + normal.x, y + normal.y);
-            }
-
-        //Perimeter
-        if (perimeterPoints[0] != null)
-            for (ShapePoint perimeterPoint : perimeterPoints) {
-                x = perimeterPoint.x + translation;
-                y = perimeterPoint.y + translation;
-                board.setLabel(perimeterPointsLabel, x, y);
-            }
-
-        //Vertexes
-        if (vertexesPoints != null) {
-            for (ShapePoint vertex : vertexesPoints) {
-                x = vertex.x + translation;
-                y = vertex.y + translation;
-                board.setLabel(vertexesPointsLabel, x, y);
-            }
+        for (Localizable vertex : vertexes) {
+            st.append(vertex.getX());
+            st.append(",");
+            st.append(vertex.getY());
         }
 
-        //Displaying
-        int[] colors = new int[]{
-                Color.BLACK.getRGB(),//Perimeter Points
-                Color.BLUE.getRGB(),//Vertexes
-                Color.RED.getRGB(),//NormalVectorsPoints
-                Color.ORANGE.getRGB()//NormalVectorsPoints
-        };
-
-        int[] values = new int[]{
-                perimeterPointsLabel,
-                vertexesPointsLabel,
-                normalVectorsPointsLabel,
-                innerPointsLabel
-        };
-
-
-        return board.getImage(values, colors);
+        return st.toString().hashCode();
 
     }
 
-    public BufferedImage getPerimeterImage() {
+    public static int getHashCode(PinnedShape shape) {
 
-        int perimeterPointsLabel = 1;
-        int normalVectorsPointsLabel = 3;
+        if (shape == null) return 0;
 
+        if (shape.type == Shape.Types.POLYGON || shape.type == Shape.Types.SQUARE ||
+                shape.type == Shape.Types.RECTANGLE) {
 
-        LabeledPositionsBoard board = new LabeledPositionsBoard(maxSpinRadius * 3, maxSpinRadius * 3);
-        int translation = board.getW() / 2;
+            return getHashCode(shape.vertexes);
 
-        //Perimeter
-        int x, y;
-        Vector normal;
-        float normalMagnitude = maxSpinRadius * 0.1F;
-        for (int p = 0; p < perimeterPoints.length; p++) {
-            x = perimeterPoints[p].x + translation;
-            y = perimeterPoints[p].y + translation;
-            board.setLabel(perimeterPointsLabel, x, y);
-            normal = perimeterPoints[p].normal;
-            Vector.setMagnitude(normalMagnitude, normal);
-            board.setLabel(normalVectorsPointsLabel, x + normal.x, y + normal.y);
+        } else if (shape.type == Shape.Types.ELLIPSE) {
+            //TODO implement
+            return 0;
+        } else if (shape.type == Shape.Types.CIRCLE) {
+            //TODO implement
+            return 0;
+        } else {
+            return 0;
         }
-
-        return board.getImage();
-
     }
 
+    /**
+     * This class handler the creation of a single polygonal PinnedShape.
+     */
     public abstract static class PolygonalShapeFactory {
 
         public static PinnedShape createShape(Vector... vertexes) throws IllegalVertexesCountException, IllegalVertexesPositionException {
@@ -206,24 +127,21 @@ public class PinnedShape {
             checkVertexesPositions(vertexes);
             PinnedShape shape = new PinnedShape();
             setType(shape, vertexes);
-            translateVertexesToCenter(vertexes);
-            setMaxSpinRadius(shape, vertexes);
+            setSpinRadius(shape, vertexes);
             setWidthAndHeight(shape, vertexes);
             setPerimeterPointsAndVertexes(shape, vertexes);
             setInnerPointsAndTheCenterPoint(shape, vertexes);
-
-            //TODO Deb
-            BufferedImage image = shape.getFullColorImage();
+            setAllPoints(shape);
 
             return shape;
         }
 
         private static void checkVertexesCount(Vector[] vertexes) throws IllegalVertexesCountException {
             if (vertexes.length < Shape.Constants.MIN_LEGAL_VERTEXES)
-                throw new IllegalVertexesCountException("Not enough vertexesPoints to createShape a shape. VertexesCount: " +
+                throw new IllegalVertexesCountException("Not enough vertexes to createShape a shape. VertexesCount: " +
                         vertexes.length);
             if (vertexes.length > Shape.Constants.MAX_LEGAL_VERTEXES) {
-                throw new IllegalVertexesCountException("Too many vertexesPoints. " + Shape.Constants.MAX_LEGAL_VERTEXES +
+                throw new IllegalVertexesCountException("Too many vertexes. " + Shape.Constants.MAX_LEGAL_VERTEXES +
                         " is the legal max, performance reasons!!! VertexesCount: " +
                         vertexes.length);
             }
@@ -233,7 +151,7 @@ public class PinnedShape {
             for (int cv = 0; cv < vertexes.length; cv++) {
                 for (int v = cv + 1; v + 1 < vertexes.length; v++) {
                     if (vertexes[cv].equals(vertexes[v]))
-                        throw new IllegalVertexesPositionException("Two vertexesPoints can't have the same position!!!, VertexPosition " +
+                        throw new IllegalVertexesPositionException("Two vertexes can't have the same position!!!, VertexPosition " +
                                 vertexes[v]);
                 }
             }
@@ -241,7 +159,7 @@ public class PinnedShape {
 
         private static void setInnerPointsAndTheCenterPoint(PinnedShape shape, Vector[] vertexes) throws IllegalVertexesPositionException {
 
-            //HighResolutionBoard
+            //region HighResolutionBoard...
             int xFactor, yFactor, minFactor = 2;
             if (shape.getW() < shape.getH()) {
                 yFactor = minFactor;
@@ -254,13 +172,13 @@ public class PinnedShape {
                     new LabeledPositionsBoard(shape.getW() * xFactor + 1,
                             shape.getH() * yFactor + 1);
 
-            //Copy vertexesPoints
+            //Copy vertexes
             Vector[] vertexesCopy = new Vector[vertexes.length];
             for (int v = 0; v < vertexesCopy.length; v++) {
                 vertexesCopy[v] = vertexes[v].getCopy();
             }
 
-            //Translating vertexesPoints
+            //Translating vertexes
             int xTranslation = Integer.MAX_VALUE;
             int yTranslation = Integer.MAX_VALUE;
             for (Vector vector : vertexesCopy) {
@@ -282,22 +200,24 @@ public class PinnedShape {
             int perimeterPointLabel = ShapePoint.PERIMETER_POINT_LABEL;
             board.setPolygonalPerimeter(vertexesCopy, perimeterPointLabel);
 
-            //Fill InnerArea
+            //Get InnerArea
             int innerAreaLabel = ShapePoint.INNER_POINT_LABEL;
             Vector startPoint;
             for (int v = 0; v + 1 < vertexesCopy.length; v++) {
-                startPoint = Geometry.getMiddleRightPoint(vertexesCopy[v].x, vertexesCopy[v].y,
+                startPoint = Tools.getMiddleRightPoint(vertexesCopy[v].x, vertexesCopy[v].y,
                         vertexesCopy[v + 1].x, vertexesCopy[v + 1].y);
                 Tools.fillContinueArea(board, board.getEmptyLabel(),
                         innerAreaLabel, startPoint, null);
             }
-            startPoint = Geometry.getMiddleRightPoint(vertexesCopy[vertexesCopy.length - 1].x,
+            startPoint = Tools.getMiddleRightPoint(vertexesCopy[vertexesCopy.length - 1].x,
                     vertexesCopy[vertexesCopy.length - 1].y,
                     vertexesCopy[0].x, vertexesCopy[0].y);
             Tools.fillContinueArea(board, board.getEmptyLabel(),
                     innerAreaLabel, startPoint, null);
 
-            //To Normal resolution
+            //endregion HighResolutionBoard
+
+            //region NormalResolutionBoard...
             board = Tools.getLowerResolutionBoard(board,
                     xFactor, yFactor);
 
@@ -321,8 +241,8 @@ public class PinnedShape {
 
                         //checking innerPoints
                         if (x == 0 || y == 0 || x == board.getW() - 1 || y == board.getH() - 1)
-                            throw new IllegalVertexesPositionException("Shape building fails, check the vertexesPoints." +
-                                    " You must set them in clock sense!!!");
+                            throw new IllegalVertexesPositionException("Shape building fails, check the vertexes." +
+                                    " You must set them in clockwise!!!");
 
                         //Translate back
                         tx = x - xTranslation;
@@ -378,16 +298,36 @@ public class PinnedShape {
 
             //checking innerPoint
             if (innerPoints.size() == 0)
-                throw new IllegalVertexesPositionException("Shape building fails, check the vertexesPoints." +
-                        " You must set them in clock sense!!!");
+                throw new IllegalVertexesPositionException("Shape building fails, check the vertexes." +
+                        " You must set them in clockwise!!!");
 
-            //Setting innerAreaPoints
-            shape.innerAreaPoints = innerPoints.toArray(new ShapePoint[]{});
+            //Setting innerPoints
+            shape.innerPoints = innerPoints.toArray(new ShapePoint[]{});
 
             //unSorting innerPoints
             Tools.sortRandomly(innerPoints);
 
             shape.unsortedInnerAreaPoints = innerPoints.toArray(new ShapePoint[]{});
+
+            //endregion NormalResolutionBoard
+
+        }
+
+        private static void setAllPoints(PinnedShape shape) {
+
+            shape.allPoints = new ShapePoint[shape.perimeterPoints.length +
+                    shape.innerPoints.length];
+
+            int index = 0;
+            for (ShapePoint perimeterPoint : shape.perimeterPoints) {
+                shape.allPoints[index] = perimeterPoint;
+                index++;
+            }
+            for (ShapePoint innerAreaPoint : shape.innerPoints) {
+                shape.allPoints[index] = innerAreaPoint;
+                index++;
+            }
+
 
         }
 
@@ -451,7 +391,7 @@ public class PinnedShape {
             shape.h = h;
         }
 
-        private static void setMaxSpinRadius(PinnedShape shape, Vector[] vertexes) {
+        private static void setSpinRadius(PinnedShape shape, Vector[] vertexes) {
 
             int maxX = 0, maxY = 0, sumX = 0, sumY = 0;
             int absX, absY;
@@ -488,8 +428,8 @@ public class PinnedShape {
             //Temp list
             final ArrayList<ShapePoint> tempPerimeterPoints = new ArrayList<>();
 
-            //vertexesPoints
-            shape.vertexesPoints = new ShapePoint[vertexes.length];
+            //vertexes
+            shape.vertexes = new ShapePoint[vertexes.length];
 
             //Iteration Handler
             OnIterationActionHandler<Vector[], Void, Void> setPerimeterShapePointsActionHandler =
@@ -522,13 +462,13 @@ public class PinnedShape {
 
                             //Set Vertex
                             if (x == v1.x && y == v1.y) {
-                                shape.vertexesPoints[vertexesCount] = perimeterPoint;
+                                shape.vertexes[vertexesCount] = perimeterPoint;
                                 vertexesCount++;
                             }
                         }
                     };
 
-            //Copy vertexesPoints
+            //Copy vertexes
             Vector[] vertexesCopy = new Vector[vertexes.length];
             for (int v = 0; v < vertexes.length; v++) {
                 vertexesCopy[v] = vertexes[v].getCopy();
@@ -546,25 +486,6 @@ public class PinnedShape {
             //Setting unsortedPerimeterPoints
             shape.unsortedPerimeterPoints = tempPerimeterPoints.toArray(new ShapePoint[]{});
 
-        }
-
-        private static void translateVertexesToCenter(Vector[] vertexes) {
-            Vector center = getCenter(vertexes);
-            for (int v = 0; v < vertexes.length; v++) {
-                vertexes[v].sub(center);
-            }
-        }
-
-        private static Vector getCenter(Vector[] vertexes) {
-
-            int xSum = 0;
-            int ySum = 0;
-            for (int v = 0; v < vertexes.length; v++) {
-                xSum += vertexes[v].x;
-                ySum += vertexes[v].y;
-            }
-
-            return new Vector(Math.round(xSum / vertexes.length), Math.round(ySum / vertexes.length));
         }
 
     }

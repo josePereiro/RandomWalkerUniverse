@@ -6,7 +6,7 @@
       <root url="jar://$KOTLIN_BUNDLED$/lib/kotlin-test.jar!/" />
       <root url="jar://$KOTLIN_BUNDLED$/lib/kotlin-stdlib-jdk7.jar!/" />
       <root url="jar://$KOTLIN_BUNDLED$/lib/kotlin-stdlib-jdk8.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../../../3. Languages core/2. Java and Kotlin/Processing/processing-3.3.6-windows64/processing-3.3.6/core/library/core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../Programming Pack/Lenguage Core/Processing/processing-3.4/core/library/core.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

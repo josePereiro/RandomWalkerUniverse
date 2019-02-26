@@ -1,11 +1,12 @@
 package Core.Engine.Shape;
 
+import Core.Engine.Vector.Localizable;
 import Core.Engine.Vector.Vector;
 
 /**
  * Will hold all the information related with a given point of a PinnedShape.
  */
-public class ShapePoint {
+public class ShapePoint implements Localizable{
 
     //Constants
     public static final int PERIMETER_POINT_LABEL = 730;
@@ -44,5 +45,15 @@ public class ShapePoint {
     @Override
     public boolean equals(Object obj) {
         return obj.getClass() == this.getClass() && ((ShapePoint) obj).x == x && ((ShapePoint) obj).y == y;
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
     }
 }

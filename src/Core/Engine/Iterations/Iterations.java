@@ -168,42 +168,45 @@ public class Iterations {
      */
     public static void iterateCircularPerimeter(int centerX, int centerY, int radius,
                                                 OnIterationActionHandler onIterationActionHandler) {
-        //|x| = radius
-        if (onIterationActionHandler.break_) return;
-        onIterationActionHandler.action(centerX - radius, centerY);
-        if (onIterationActionHandler.break_) return;
-        onIterationActionHandler.action(centerX + radius, centerY);
 
-        int y, lastY = 0, dy;
-        for (int x = radius - 1; x >= 0; x--) {
+        int x = radius - 1;
+        int y = 0;
+        int dx = 1;
+        int dy = 1;
+        int err = dx - (radius * 2);
 
-            y = Tools.roundedSqrt(radius * radius - x * x);
-            dy = Math.abs(lastY - y);
+        while (x >= y) {
 
-            if (onIterationActionHandler.break_) return;
-            onIterationActionHandler.action(centerX + x, centerY - y);
             if (onIterationActionHandler.break_) return;
             onIterationActionHandler.action(centerX + x, centerY + y);
             if (onIterationActionHandler.break_) return;
-            onIterationActionHandler.action(centerX - x, centerY - y);
+            onIterationActionHandler.action(centerX + y, centerY + x);
+            if (onIterationActionHandler.break_) return;
+            onIterationActionHandler.action(centerX - y, centerY + x);
             if (onIterationActionHandler.break_) return;
             onIterationActionHandler.action(centerX - x, centerY + y);
+            if (onIterationActionHandler.break_) return;
+            onIterationActionHandler.action(centerX - x, centerY - y);
+            if (onIterationActionHandler.break_) return;
+            onIterationActionHandler.action(centerX - y, centerY - x);
+            if (onIterationActionHandler.break_) return;
+            onIterationActionHandler.action(centerX + y, centerY - x);
+            if (onIterationActionHandler.break_) return;
+            onIterationActionHandler.action(centerX + x, centerY - y);
 
-            for (int i = 1; i < dy; i++) {
-
-                if (onIterationActionHandler.break_) return;
-                onIterationActionHandler.action(centerX + x, centerY - y + i);
-                if (onIterationActionHandler.break_) return;
-                onIterationActionHandler.action(centerX + x, centerY + y - i);
-                if (onIterationActionHandler.break_) return;
-                onIterationActionHandler.action(centerX - x, centerY - y + i);
-                if (onIterationActionHandler.break_) return;
-                onIterationActionHandler.action(centerX - x, centerY + y - i);
-
+            if (err <= 0) {
+                y++;
+                err += dy;
+                dy += 2;
             }
-            lastY = y;
 
+            if (err > 0) {
+                x--;
+                dx += 2;
+                err += dx - (radius << 1);
+            }
         }
+
     }
 
     /**

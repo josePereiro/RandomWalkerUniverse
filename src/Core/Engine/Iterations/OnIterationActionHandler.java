@@ -7,25 +7,6 @@ import Core.Engine.Vector.Vector;
  */
 public abstract class OnIterationActionHandler<eT1, eT2, eT3> {
 
-    public static void main(String... args) {
-
-        OnIterationActionHandler onOnIterationActionHandler = new OnIterationActionHandler<Integer, Vector, Void>() {
-
-            int counter = 0;
-
-            @Override
-            public void action(int x, int y) {
-                setExtraOne(counter);
-                setExtraTwo(new Vector(x, y));
-                System.out.println(getExtraOne());
-                System.out.println(getExtraTwo());
-                counter++;
-            }
-        };
-
-        Iterations.iterateLine(0, 0, 0, 10, onOnIterationActionHandler);
-    }
-
     public boolean break_ = false;
     private eT1 extraOne;
     private eT2 extraTwo;

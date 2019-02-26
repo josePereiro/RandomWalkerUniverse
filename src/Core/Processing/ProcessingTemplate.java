@@ -2,6 +2,8 @@ package Core.Processing;
 
 import Core.Engine.Exceptions.IllegalVertexesCountException;
 import Core.Engine.Exceptions.IllegalVertexesPositionException;
+import Core.Engine.Iterations.Iterations;
+import Core.Engine.Iterations.OnIterationActionHandler;
 import Core.Engine.Shape.Shape;
 import Core.Engine.Tools.Tools;
 import Core.Engine.Vector.Vector;
@@ -23,29 +25,17 @@ public class ProcessingTemplate extends PApplet {
         size(500, 500);
     }
 
-    Shape shape;
-    PImage image;
-    int shapeCurrentRotation = 0;
+    OnIterationActionHandler onIterationActionHandler;
 
     @Override
     public void setup() {
 
-        Random r = new Random();
-        Vector[] vertexes = Tools.getClockDirectionVertexes(100, r.nextInt(20) + 4);
-
-        try {
-            shape = Shape.createPolygonalShape(vertexes);
-        } catch (IllegalVertexesCountException | IllegalVertexesPositionException e) {
-            e.printStackTrace();
-            setup();
-        }
-
-        stroke(0, 150);
-        imageMode(CENTER);
-        noFill();
-
-        image = ProcessingTools.createPImage(shape.getFullColorImage(shapeCurrentRotation), this);
-
+        onIterationActionHandler = new OnIterationActionHandler() {
+            @Override
+            public void action(int x, int y) {
+                point(x, y);
+            }
+        };
 
     }
 
@@ -53,33 +43,11 @@ public class ProcessingTemplate extends PApplet {
     public void draw() {
 
         background(255);
-        image(image, width / 2, height / 2);
-
-        //Rotate
-        if (shapeCurrentRotation < shape.getRotationsCount() - 1) {
-            shapeCurrentRotation++;
-        } else {
-            shapeCurrentRotation = 0;
-        }
-        image = ProcessingTools.createPImage(shape.getFullColorImage(shapeCurrentRotation), this);
-
-        frameRate(map(mouseX, 0, width, 5, 60));
-
+        stroke(0);
     }
 
-
-    @Override
-    public void mousePressed(MouseEvent event) {
-        super.mousePressed(event);
-
-        setup();
-
+    public void drawLine(){
+        
     }
 
-    @Override
-    public void keyPressed() {
-        super.keyPressed();
-
-
-    }
 }

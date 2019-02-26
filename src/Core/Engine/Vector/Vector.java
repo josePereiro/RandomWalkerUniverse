@@ -3,7 +3,7 @@ package Core.Engine.Vector;
 /**
  * Just a pair of values x,y and some tools methods...
  */
-public class Vector {
+public class Vector implements Localizable {
 
     public int x;
     public int y;
@@ -117,6 +117,11 @@ public class Vector {
         vector.y = Math.round(vector.y * factor);
     }
 
+    public static int getHashCode(int x, int y) {
+        String s = x + "," + y;
+        return s.hashCode();
+    }
+
     @Override
     public String toString() {
         return "(x = " + x + ", y = " + y + ")";
@@ -124,7 +129,16 @@ public class Vector {
 
     @Override
     public int hashCode() {
-        String s = x + "," + y;
-        return s.hashCode();
+        return getHashCode(x, y);
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
     }
 }

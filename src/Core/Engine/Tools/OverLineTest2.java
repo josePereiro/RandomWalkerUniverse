@@ -1,7 +1,7 @@
 package Core.Engine.Tools;
 
-import Core.Engine.Iterations.Iterations;
-import Core.Engine.Iterations.OnIterationActionHandler;
+import Core.Engine.OnIterationActionHandler.Iterations;
+import Core.Engine.OnIterationActionHandler.OnIterationActionHandler;
 import Core.Engine.Vector.Vector;
 
 import java.util.Random;
@@ -25,7 +25,7 @@ public class OverLineTest2 {
                         boolean ok = Tools.isOverLine(currentVector, getExtraOne()[0], getExtraOne()[1], getExtraTwo());
                         if (!ok) {
                             setExtraThree(true);
-                            break_ = true;
+                            iterate = false;
                         }
                     }
                 };

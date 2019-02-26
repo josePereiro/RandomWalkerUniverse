@@ -183,10 +183,6 @@ public class Tools {
             helperBoard.setLabel(perimeterPointLabel, translatedPerimeterPoint.x, translatedPerimeterPoint.y);
         }
 
-        //Area
-        BufferedImage image = helperBoard.getImage();
-
-
         return null;
     }
 
@@ -319,25 +315,31 @@ public class Tools {
 
     }
 
-    public static float getAngle(Vector point) {
+    /**
+     * Get the positive side angle of the vector and the x axis.
+     *
+     * @param vector
+     * @return
+     */
+    public static float getAngle(Vector vector) {
 
-        float angle = (float) Math.atan(point.y / (float) point.x);
+        float angle = (float) Math.atan(vector.y / (float) vector.x);
         float PI = (float) Math.PI;
 
-        if (point.x == 0 && point.y > 0) {
+        if (vector.x == 0 && vector.y > 0) {
             return PI / 2;
         }
 
         //I
-        else if ((point.x > 0 && point.y >= 0)) {
+        else if ((vector.x > 0 && vector.y >= 0)) {
             return angle;
         }
         //II
-        else if (point.x <= 0 && point.y > 0) {
+        else if (vector.x <= 0 && vector.y > 0) {
             return PI + angle;
         }
         //III
-        else if (point.x < 0) {
+        else if (vector.x < 0) {
             return PI + angle;
         }
         //IV
@@ -347,11 +349,69 @@ public class Tools {
 
     }
 
-    public static float rotate(Vector point, float angle) {
-        float initialAngle = getAngle(point);
-        float mag = point.getMagnitude();
-        point.x = (int) Math.round(Math.cos(initialAngle + angle) * mag);
-        point.y = (int) Math.round(Math.sin(initialAngle + angle) * mag);
-        return initialAngle + angle;
+    /**
+     * Rotate a given vector in a give angle.
+     *
+     * @param vector the vector
+     * @param angle  the angle in radiants
+     */
+    public static void rotate(Vector vector, float angle) {
+        double cos = Math.cos(angle);
+        double sin = Math.sin(angle);
+        int x = (int) Math.round(vector.x * cos - vector.y * sin);
+        vector.y = (int) Math.round(vector.x * sin + vector.y * cos);
+        vector.x = x;
+    }
+
+    public static void rotate(Vector vector, float angle, float targetMagnitude) {
+        double cos = Math.cos(angle);
+        double sin = Math.sin(angle);
+        int x = (int) Math.round(vector.x * cos - vector.y * sin);
+        vector.y = (int) Math.round(vector.x * sin + vector.y * cos);
+        vector.x = x;
+        Vector.setMagnitude(targetMagnitude, vector);
+    }
+
+    public static Vector getSegmentMiddlePoint(int x1, int y1, int x2, int y2) {
+        return new Vector(Math.round((x1 + x2) / 2), Math.round((y1 + y2) / 2));
+    }
+
+    public static Vector getMiddleRightPoint(int x1, int y1, int x2, int y2) {
+        Vector middle = getSegmentMiddlePoint(x1, y1, x2, y2);
+
+        if (Math.abs(x1 - x2) > Math.abs(y1 - y2)) {
+            //move in Y
+            if (x1 < x2) {
+                middle.y--;
+            } else {
+                middle.y++;
+            }
+        } else {
+            //move in X
+            if (y1 < y2) {
+                middle.x++;
+            } else {
+                middle.x--;
+            }
+        }
+
+        return middle;
+    }
+
+    /**
+     * Returns the index of the given element on the array, -1 otherwise.
+     *
+     * @param array
+     * @param element
+     * @return
+     */
+    public static int indexOf(int element, int[] array) {
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == element)
+                return i;
+        }
+
+        return -1;
     }
 }

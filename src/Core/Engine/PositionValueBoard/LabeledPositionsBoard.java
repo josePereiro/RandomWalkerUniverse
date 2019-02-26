@@ -3,26 +3,19 @@ package Core.Engine.PositionValueBoard;
 import Core.Engine.Iterations.Iterations;
 import Core.Engine.Iterations.OnIterationActionHandler;
 import Core.Engine.Vector.Vector;
-import Core.Engine.World.RandomWalkersWorld;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
- * This general class is used to relate a label with a position.
+ * This general class is used to relate an int label with a position.
  */
 public class LabeledPositionsBoard {
-
-    public static void main(String... args) {
-
-    }
 
     //Fields
     final int[][] board;
     private final int w;
     private final int h;
-    private int emptyValue;
+    private int emptyLabel;
 
     //IterationHandlers
     private OnIterationActionHandler<Vector[], Integer, Void> setterIterationHandler =
@@ -60,16 +53,16 @@ public class LabeledPositionsBoard {
         this.w = w;
         this.h = h;
         board = new int[w][h];
-        emptyValue = EMPTY;
-        fillBoard(emptyValue);
+        emptyLabel = EMPTY;
+        fillBoard(emptyLabel);
     }
 
-    public LabeledPositionsBoard(int w, int h, int emptyValue) {
+    public LabeledPositionsBoard(int w, int h, int emptyLabel) {
         this.w = w;
         this.h = h;
         board = new int[w][h];
-        this.emptyValue = emptyValue;
-        fillBoard(emptyValue);
+        this.emptyLabel = emptyLabel;
+        fillBoard(emptyLabel);
     }
 
     /**
@@ -148,11 +141,11 @@ public class LabeledPositionsBoard {
      * @return true if the position is EMPTY
      */
     public boolean isOccupied(int x, int y) {
-        return board[x][y] != emptyValue;
+        return board[x][y] != emptyLabel;
     }
 
     public boolean isOccupied(Vector v) {
-        return board[v.x][v.y] != emptyValue;
+        return board[v.x][v.y] != emptyLabel;
     }
 
     public int getW() {
@@ -177,76 +170,12 @@ public class LabeledPositionsBoard {
     }
 
     /**
-     * It will return a image representation of the data stored
-     * in the board, white pixels represent EMPTY values and black
-     * pixels any other label.
-     * This method has a debug propose and should not be used
-     * as a graphic tool.
-     */
-    public BufferedImage getImage() {
-
-        //TODO Deb
-        if (RandomWalkersWorld.enablePrompt) System.out.println("LabeledPositionsBoard getFullColorImage called!!!");
-
-        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        for (int d0 = 0; d0 < board.length; d0++) {
-            for (int d1 = 0; d1 < board[0].length; d1++) {
-                if (isOccupied(d0, d1))
-                    image.setRGB(d0, d1, Color.BLACK.getRGB());
-                else
-                    image.setRGB(d0, d1, Color.WHITE.getRGB());
-            }
-        }
-        return image;
-    }
-
-    /**
-     * It will return a image representation of the data stored
-     * in the board, if the params are null or a label wasn't specified,
-     * white pixels will represent EMPTY values and black pixels any other label.
-     * Otherwise the given values will have the give colors respectively.
-     * This method has a debug propose and should not be used
-     * as a graphic tool.
-     *
-     * @param values
-     * @param colors
-     * @return
-     */
-    public BufferedImage getImage(int[] values, int[] colors) {
-
-        if (values != null && colors != null) {
-            BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-            int label;
-            for (int d0 = 0; d0 < board.length; d0++) {
-                for (int d1 = 0; d1 < board[0].length; d1++) {
-                    int i = 0;
-                    label = board[d0][d1];
-                    while (i < values.length) {
-                        if (label == values[i]) {
-                            image.setRGB(d0, d1, colors[i]);
-                            break;
-                        }
-                        i++;
-                    }
-                    if (i == values.length) {
-                        if (isOccupied(d0, d1))
-                            image.setRGB(d0, d1, Color.BLACK.getRGB());
-                        else
-                            image.setRGB(d0, d1, Color.WHITE.getRGB());
-                    }
-                }
-            }
-            return image;
-        } else return getImage();
-    }
-
-    /**
      * Returns the current EMPTY representation of this Board.
      *
      * @return
      */
     public int getEmptyLabel() {
-        return emptyValue;
+        return emptyLabel;
     }
 
     /**
@@ -255,11 +184,11 @@ public class LabeledPositionsBoard {
      * @param emptyValue
      */
     public void setEmptyLabel(int emptyValue) {
-        this.emptyValue = emptyValue;
+        this.emptyLabel = emptyValue;
     }
 
     public void reset() {
-        fillBoard(emptyValue);
+        fillBoard(emptyLabel);
     }
 
     public Vector getCenter() {
