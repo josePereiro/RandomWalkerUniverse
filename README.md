@@ -9,3 +9,4 @@ what will be its next position, it is an stochastic movement. So, I want to crea
 those mentioned before, but based not on forces and accelerations but probability of chose a next step in one direction 
 or another.
 My goal is that this can be use for eductive proposes to explaind key processes of life.
+I repeat, I'm a biologist so any help to improve the code is most than welcome.  
