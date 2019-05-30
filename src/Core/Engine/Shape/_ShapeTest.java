@@ -6,16 +6,15 @@ import Core.Engine.Tools.Tools;
 import Core.Engine.Vector.Vector;
 import Core.Processing.ProcessingTools;
 import processing.core.PApplet;
-import processing.core.PImage;
 import processing.event.MouseEvent;
 
 import java.util.Random;
 
-public class ShapeTest extends PApplet {
+public class _ShapeTest extends PApplet {
 
     public static void main(String... args) {
         //Write your own main class path
-        PApplet.main("Core.Engine.Shape.ShapeTest");
+        PApplet.main("Core.Engine.Shape._ShapeTest");
     }
 
     @Override
@@ -24,8 +23,15 @@ public class ShapeTest extends PApplet {
     }
 
     Shape shape;
-    PImage image;
-    Random r = new Random();
+    float t = 0;
+    int drawMode;
+
+    //Modes
+    private static final int ALL_POINTS = 48;
+    private static final int PERIMETER = 56;
+    private static final int INNER_POINTS = 747;
+    private static final int NORMAL_POINTS = 852;
+    private static final int VERTEXES = 658;
 
     @Override
     public void setup() {
@@ -40,12 +46,10 @@ public class ShapeTest extends PApplet {
             setup();
         }
 
-        stroke(0, 150);
-        imageMode(CENTER);
-        noFill();
+        noCursor();
+        fill(0);
 
-        image = ProcessingTools.createPImage(shape.getFullColorImage(), this);
-
+        drawMode = ALL_POINTS;
 
     }
 
@@ -53,19 +57,48 @@ public class ShapeTest extends PApplet {
     public void draw() {
 
         background(255);
-        image(image, width / 2, height / 2);
 
         //Rotate
-        if (r.nextFloat() > 0.9F)
-            if (r.nextFloat() < 0.5F)
-                shape.rotateCounterClockWise();
-            else shape.rotateClockWise();
-        image = ProcessingTools.createPImage(shape.getFullColorImage(), this);
+        rotateShape();
+        if (drawMode == ALL_POINTS)
+            ProcessingTools.drawShapePoints(mouseX, mouseY, shape, this);
+        else if (drawMode == VERTEXES) {
+            for (ShapePoint vertex : shape.getVertexes()) {
+                ellipse(mouseX + vertex.x, mouseY + vertex.y, 1, 1);
+            }
+        } else if (drawMode == PERIMETER) {
+            for (ShapePoint perimeterPoint : shape.getPerimeterPoints()) {
+                point(mouseX + perimeterPoint.x, mouseY + perimeterPoint.y);
+            }
+        }
 
-        frameRate(map(mouseX, 0, width, 5, 60));
+        drawText();
+    }
+
+    public void rotateShape() {
+
+        float lastNoise = noise(t);
+        t += 0.05F;
+        float currentNoise = noise(t);
+        if (lastNoise < currentNoise)
+            shape.rotateClockWise();
+        else shape.rotateCounterClockWise();
 
     }
 
+    public void drawText() {
+        String text = "Shape: " + shape.toString();
+        text += "\n";
+        text += "TotalPointsCount: " + shape.getAllPoints().length;
+        text += "\n";
+        text += "PerimeterPointsCount: " + shape.getPerimeterPoints().length;
+        text += "\n";
+        text += "InnerPointsCount: " + shape.getInnerPoints().length;
+        text += "\n";
+        text += "maxSpinRadius: " + shape.getMaxSpinRadius();
+
+        text(text, 20, 20);
+    }
 
     @Override
     public void mousePressed(MouseEvent event) {
@@ -79,6 +112,14 @@ public class ShapeTest extends PApplet {
     public void keyPressed() {
         super.keyPressed();
 
+        if (key == 'v') {
+            drawMode = VERTEXES;
+        } else if (key == 'p'){
+            drawMode = PERIMETER;
+        }
+        else {
+            drawMode = ALL_POINTS;
+        }
 
     }
 }

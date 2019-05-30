@@ -5,11 +5,11 @@ import processing.core.PApplet;
 
 import java.awt.*;
 
-public class NormalTest extends PApplet {
+public class _NormalTest extends PApplet {
 
     public static void main(String... args) {
         //Write your own main class path
-        PApplet.main("Core.Engine.Vector.NormalTest");
+        PApplet.main("Core.Engine.Vector._NormalTest");
     }
 
     @Override

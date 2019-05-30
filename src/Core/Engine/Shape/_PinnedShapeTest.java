@@ -6,15 +6,14 @@ import Core.Engine.Tools.Tools;
 import Core.Engine.Vector.Vector;
 import Core.Processing.ProcessingTools;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 import java.util.Random;
 
-public class PinnedShapeTest extends PApplet {
+public class _PinnedShapeTest extends PApplet {
 
     public static void main(String... args) {
         //Write your own main class path
-        PApplet.main("Core.Engine.Shape.PinnedShapeTest");
+        PApplet.main("Core.Engine.Shape._PinnedShapeTest");
     }
 
     @Override
@@ -27,21 +26,25 @@ public class PinnedShapeTest extends PApplet {
     public void setup() {
 
         imageMode(CENTER);
+        noCursor();
 
+        //Create first shape
+        while (true) {
+            setNewShape();
+            if (shape != null)
+                break;
+        }
     }
 
-    PImage pImage;
-    int millis = 0;
+    PinnedShape shape;
 
     @Override
     public void draw() {
 
-        delay(500);
         background(255);
-        createShapeAndPImage();
 
-        if (pImage != null)
-            image(pImage, width / 2, height / 2);
+        if (shape != null)
+            ProcessingTools.drawShapePoints(mouseX, mouseY, shape, this);
 
 
     }
@@ -50,16 +53,15 @@ public class PinnedShapeTest extends PApplet {
     public void mousePressed() {
         super.mousePressed();
 
-        createShapeAndPImage();
+        setNewShape();
     }
 
-    private void createShapeAndPImage() {
+    private void setNewShape() {
         Random r = new Random();
         Vector[] vertexes = Tools.getClockDirectionVertexes(r.nextInt(100) + 100,
                 r.nextInt(47) + 3);
         try {
-            PinnedShape shape = PinnedShape.PolygonalShapeFactory.createShape(vertexes);
-            pImage = ProcessingTools.createPImage(shape.getFullColorImage(), this);
+            shape = PinnedShape.PolygonalShapeFactory.createShape(vertexes);
             System.out.println(shape);
         } catch (IllegalVertexesCountException | IllegalVertexesPositionException e) {
             System.out.println(e.getMessage());
