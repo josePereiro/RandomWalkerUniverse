@@ -2,20 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6e7d990-07d4-48dd-8c04-7f3cb938864b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/core.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/OnIterationActionHandler$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/OnIterationActionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/OnIterationActionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Engine/Shape/PinnedShapeTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Engine/Shape/_PinnedShapeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/_PinnedShapeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Engine/Shape/_ShapeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/_ShapeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Engine/Vector/_NormalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Engine/Vector/_NormalTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Exceptions/AreaNotSupportedException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Exceptions/IllegalVertexesCountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Exceptions/IllegalVertexesPositionException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Geometry/Geometry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Iterations/Iterations.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Iterations/OnIterationActionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Iterations/_IterateCircularPerimeterTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Iterations/_IterateLineTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Iterations/_PolygonPerimeterIterationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/OnIterationActionHandler/Iterations.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/OnIterationActionHandler/OnIterationActionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/PositionValueBoard/LabeledPositionsBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/PositionValueBoard/PositionValueBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/RandomWalker/RandomWalker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/PinnedShape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/Shape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/ShapePoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/ShapesHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/Transformations.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/_PinnedShapeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Shape/_ShapeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/OverLineTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/OverLineTest2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/Tools.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/_GetAngleTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/_MiddleRightPointTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/_OverLineTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/_OverLineTest2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/_RotateAndEnsureMagnitudeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Tools/_RotateTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Vector/Localizable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Vector/NormalTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Vector/Vector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/Vector/_NormalTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Engine/World/RandomWalkersWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Processing/ProcessingTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Processing/ProcessingTools.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Processing/Simulations/Diffusion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Processing/_SinTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,151 +55,7 @@
     </SUITE>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Processing/_SinTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/Iterations/_PolygonPerimeterIterationTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/Shape/_ShapeTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="852">
-              <caret line="77" column="30" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
-              <folding>
-                <element signature="method#main#0;class#_ShapeTest#0" />
-                <element signature="method#rotateShape#0;class#_ShapeTest#0" />
-                <element signature="method#drawText#0;class#_ShapeTest#0" />
-                <element signature="method#mousePressed#0;class#_ShapeTest#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/Shape/ShapesHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/World/RandomWalkersWorld.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="573">
-              <caret line="914" column="11" lean-forward="true" selection-start-line="869" selection-start-column="10" selection-end-line="914" selection-end-column="11" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/Shape/Transformations.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/PositionValueBoard/LabeledPositionsBoard.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2205">
-              <caret line="182" column="5" selection-start-line="182" selection-start-column="5" selection-end-line="182" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/RandomWalker/RandomWalker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/Tools/Tools.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="990">
-              <caret line="371" column="24" selection-start-line="371" selection-start-column="24" selection-end-line="371" selection-end-column="24" />
-              <folding>
-                <element signature="docComment;method#roundedSqrt#0;class#Tools#0" />
-                <element signature="method#sortRandomly#0;class#Tools#0" />
-                <element signature="method#deleteDuplicates#0;class#Tools#0" />
-                <element signature="method#getPolygonalPerimeter#0;class#Tools#0" />
-                <element signature="method#getMaxSpinRadius#0;class#Tools#0" />
-                <element signature="method#translate#0;class#Tools#0" />
-                <element signature="docComment;method#getHigherResolutionBoard#0;class#Tools#0" />
-                <element signature="method#getHigherResolutionBoard#0;class#Tools#0" />
-                <element signature="docComment;method#getLowerResolutionBoard#0;class#Tools#0" />
-                <element signature="method#getLowerResolutionBoard#0;class#Tools#0" />
-                <element signature="method#getInnerArea#0;class#Tools#0" />
-                <element signature="method#getClockDirectionVertexes#0;class#Tools#0" />
-                <element signature="docComment;method#getTriangleHeight#0;class#Tools#0" />
-                <element signature="method#getTriangleHeight#0;class#Tools#0" />
-                <element signature="docComment;method#isOverLine#0;class#Tools#0" />
-                <element signature="method#isOverLine#0;class#Tools#0" />
-                <element signature="docComment;method#getCenter#0;class#Tools#0" />
-                <element signature="method#getCenter#0;class#Tools#0" />
-                <element signature="method#fillContinueArea#0;class#Tools#0" />
-                <element signature="docComment;method#getAngle#0;class#Tools#0" />
-                <element signature="method#getAngle#0;class#Tools#0" />
-                <element signature="docComment;method#rotate#0;class#Tools#0" />
-                <element signature="method#getSegmentMiddlePoint#0;class#Tools#0" />
-                <element signature="method#getMiddleRightPoint#0;class#Tools#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Engine/Vector/Vector.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="115" column="49" selection-start-line="115" selection-start-column="49" selection-end-line="115" selection-end-column="49" />
-              <folding>
-                <element signature="docComment;class#Vector#0" />
-                <element signature="method#Vector#0;class#Vector#0" />
-                <element signature="method#equals#1;class#Vector#0" />
-                <element signature="method#scalarMult#0;class#Vector#0" />
-                <element signature="method#add#0;class#Vector#0" />
-                <element signature="method#add#1;class#Vector#0" />
-                <element signature="method#sub#0;class#Vector#0" />
-                <element signature="docComment;method#getNormalVector#0;class#Vector#0" />
-                <element signature="method#getNormalVector#0;class#Vector#0" />
-                <element signature="docComment;method#getNormalVector#1;class#Vector#0" />
-                <element signature="docComment;method#getNormalVector#2;class#Vector#0" />
-                <element signature="method#getNormalVector#2;class#Vector#0" />
-                <element signature="method#getHashCode#0;class#Vector#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -226,6 +107,11 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="OldVersion" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -589,17 +475,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="777" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <layout>
-      <window_info id="Learn" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28756058" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29288027" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Image Layers" order="6" />
+      <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3296" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4969743" weight="0.26861313" />
@@ -611,8 +496,6 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.494705" weight="0.3270073" />
-      <window_info anchor="right" id="JuliaSciView" />
-      <window_info anchor="right" id="Maven" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24962178" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -623,6 +506,8 @@
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info anchor="right" id="Coverage" order="8" side_tool="true" weight="0.32980332" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
+      <window_info anchor="right" id="Maven" order="10" />
+      <window_info anchor="right" id="JuliaSciView" order="11" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
@@ -971,18 +856,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Engine/Shape/PinnedShapeTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#491#492#0" expanded="true" />
-            <element signature="e#521#522#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Engine/Shape/PinnedShapeTest.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Engine/Shape/_ShapeTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="852">
