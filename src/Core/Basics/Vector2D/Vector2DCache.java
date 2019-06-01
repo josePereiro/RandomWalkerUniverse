@@ -3,15 +3,15 @@ package Core.Basics.Vector2D;
 import Core.Boards.Board;
 
 /**
- * TODO implement a cache for Vector2D!!!
+ * TODO implement a cache for Vector2DTest!!!
  * Why caching?:
  * Vectors will be very commonly used... It is very possible
  * that a lot of operations or a lot of objects will use the same Vector,
  * so I wanna cached!!!
- * I will do Vector2D
+ * I will do Vector2DTest
  * immutable so any operation that returns (2,2) will be returning
  * the same object in memory. Now, knowing that, I can store in
- * Vector2D other useful information like the magnitude, and the
+ * Vector2DTest other useful information like the magnitude, and the
  * reference to other related vectors, like the perpendiculars, the inverse,
  * etc.
  */

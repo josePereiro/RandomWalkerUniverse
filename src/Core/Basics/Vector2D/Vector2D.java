@@ -15,7 +15,7 @@ public final class Vector2D {
     public final float mg;
     public final Vector2D cwNormal;
     public final Vector2D acwNormal;
-//    public final Vector2D inverse;
+    public final Vector2D inverse;
 
     public Vector2D(int x, int y) {
         this.x = x;
@@ -23,6 +23,7 @@ public final class Vector2D {
         mg = magnitude(0, 0, x, y);
         cwNormal = this;
         acwNormal = this;
+        inverse = null;
     }
 
     public static float magnitude(int x1, int y1, int x2, int y2) {
@@ -31,9 +32,9 @@ public final class Vector2D {
         return (float) Math.sqrt(x1 * x1 + y1 * y1);
     }
 
-//    public static Vector2D cwNormal(Vector2D vector) {
-//         return World.vector2Dcache.getPositive()
-//    }
+    public static Vector2D cwNormal(Vector2D vector) {
+        return World.vector2Dcache.get(vector.x, -vector.y);
+    }
 
 
     @Override

@@ -1,87 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f6e7d990-07d4-48dd-8c04-7f3cb938864b" name="Default" comment="new start!!!">
-      <change afterPath="$PROJECT_DIR$/src/Core/Basics/Collections/CircularFloatSet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Basics/Collections/CircularIntSet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Basics/RandomnessHandler/RandomnessHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2DCache.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Basics/bla.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Boards/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Boards/DistanceBoard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Boards/FloatBoard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/RandomWalkers/RandomWalker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/World.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/AssertionsTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/JUnit/StandardTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/BoolenTester.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/MemoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/MemoryTester.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/RandomnessHandler/_BufferingRandomNumbers_Vs_RandomClass_TimeTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/TimeTester.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_AllWaysToGetCached_TimeTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachedMgVsComputingIt_TimeTes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_SameValuePoints_vs_Vector2d_Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="f6e7d990-07d4-48dd-8c04-7f3cb938864b" name="Default" comment="Including JUnit test... Working on Vector2DCache">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RandomWalkersUniverse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/RandomWalkersUniverse.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Exceptions/AreaNotSupportedException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Exceptions/IllegalVertexesCountException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Exceptions/IllegalVertexesPositionException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Geometry/Geometry.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/Iterations$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/Iterations.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/OnIterationActionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/_IterateCircularPerimeterTest$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/_IterateCircularPerimeterTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/_IterateLineTest$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/_IterateLineTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/_PolygonPerimeterIterationTest$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Iterations/_PolygonPerimeterIterationTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/OnIterationActionHandler/Iterations.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/OnIterationActionHandler/OnIterationActionHandler$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/OnIterationActionHandler/OnIterationActionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/PositionValueBoard/LabeledPositionsBoard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/RandomWalker/RandomWalker.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/PinnedShape$PolygonalShapeFactory$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/PinnedShape$PolygonalShapeFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/PinnedShape.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/Shape$Constants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/Shape$Types.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/Shape.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/ShapePoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/ShapesHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/Transformations.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/_PinnedShapeTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Shape/_ShapeTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/OverLineTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/OverLineTest2$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/OverLineTest2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/Tools$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/Tools.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/_GetAngleTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/_MiddleRightPointTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/_OverLineTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/_OverLineTest2$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/_OverLineTest2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/_RotateAndEnsureMagnitudeTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Tools/_RotateTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Vector/Localizable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Vector/NormalTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Vector/Vector.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/Vector/_NormalTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Engine/World/RandomWalkersWorld.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Processing/ProcessingTemplate$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Processing/ProcessingTemplate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Processing/ProcessingTools.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Processing/Simulations/Diffusion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RandomWalkersUniverse/Core/Processing/_SinTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Basics/RandomnessHandler/RandomnessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Basics/RandomnessHandler/RandomnessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2DCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2DCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Basics/bla.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bla.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/AssertionsTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/MyTests/BoolenTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/MyTests/RandomnessHandler/_BufferingRandomNumbers_Vs_RandomClass_TimeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/MyTests/RandomnessHandler/_BufferingRandomNumbers_Vs_RandomClass_TimeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/MyTests/TimeTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/JUnit/WallTimeTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_AllWaysToGetCached_TimeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_AllWaysToGetCached_TimeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachedMgVsComputingIt_TimeTes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachedMgVsComputingIt_TimeTes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/MyTests/Vector2D/_SameValuePoints_vs_Vector2d_Test.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -102,17 +38,47 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java">
+        <entry file="file://$PROJECT_DIR$/src/test/JUnit/WallTimeTester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            <state relative-caret-position="139">
+              <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
               <folding>
-                <element signature="e#531#532#0" expanded="true" />
-                <element signature="e#598#599#0" expanded="true" />
-                <element signature="e#737#738#0" expanded="true" />
-                <element signature="e#797#798#0" expanded="true" />
-                <element signature="e#935#936#0" expanded="true" />
-                <element signature="e#994#995#0" expanded="true" />
+                <element signature="e#2059#2098#1" />
+                <element signature="e#2224#2225#0" expanded="true" />
+                <element signature="e#2260#2261#0" expanded="true" />
+                <element signature="method#runTests#1;class#WallTimeTester#0" />
+                <element signature="method#runTests#2;class#WallTimeTester#0" />
+                <element signature="method#reset#0;class#WallTimeTester#0" />
+                <element signature="e#2379#2462#1" />
+                <element signature="n#!!block;n#getTotalTime#0;n#TimeTester#0" />
+                <element signature="n#!!block;n#getTotalTime#1;n#TimeTester#0" />
+                <element signature="n#!!block;n#getTotalTime#2;n#TimeTester#0" />
+                <element signature="e#3841#3842#0" expanded="true" />
+                <element signature="docComment;method#addTest#0;class#TimeTester#0" />
+                <element signature="method#addTest#0;class#WallTimeTester#0" />
+                <element signature="class#TimeInterval#0;class#TimeTester#0" />
+                <element signature="docComment;method#initInterval#0;class#TimeInterval#0;class#TimeTester#0" />
+                <element signature="method#initInterval#0;class#TimeInterval#0;class#TimeTester#0" />
+                <element signature="method#getInterval#0;class#TimeInterval#0;class#TimeTester#0" />
+                <element signature="e#3647#3821#1" />
+                <element signature="e#3827#3904#1" />
+                <element signature="method#printElapsed#0;class#TimeInterval#0;class#TimeTester#0" />
+                <element signature="method#printAndInitInterval#0;class#TimeInterval#0;class#TimeTester#0" />
+                <element signature="class#UninitializedIntervalException#0;class#TimeInterval#0;class#TimeTester#0" />
+                <element signature="method#sortData#0;class#WallTimeTester#0" />
+                <element signature="e#4813#5322#1" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachedMgVsComputingIt_TimeTes.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="34" column="56" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="34" selection-end-column="56" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,26 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_AllWaysToGetCached_TimeTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="39" column="46" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
-              <folding>
-                <element signature="e#733#734#0" expanded="true" />
-                <element signature="e#793#794#0" expanded="true" />
-                <element signature="e#931#932#0" expanded="true" />
-                <element signature="e#990#991#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_SameValuePoints_vs_Vector2d_Test.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="165">
+              <caret line="12" column="69" selection-start-line="12" selection-start-column="69" selection-end-line="12" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -148,46 +96,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2DCache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="22" column="46" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2D.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+            <state relative-caret-position="146">
+              <caret line="49" selection-start-line="49" selection-end-line="49" />
               <folding>
-                <element signature="e#891#892#0" expanded="true" />
-                <element signature="e#971#972#0" expanded="true" />
+                <element signature="e#1476#1477#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/JUnit/StandardTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#213#214#0" expanded="true" />
-                <element signature="e#251#252#0" expanded="true" />
-                <element signature="e#741#742#0" expanded="true" />
-                <element signature="e#807#808#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/AssertionsTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="30" column="7" lean-forward="true" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -195,8 +108,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="57" column="64" lean-forward="true" selection-start-line="57" selection-start-column="64" selection-end-line="57" selection-end-column="64" />
+            <state relative-caret-position="317">
+              <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="94" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -205,10 +118,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2D.java">
+        <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
+            <state relative-caret-position="209">
+              <caret line="41" selection-start-line="41" selection-end-line="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -217,13 +130,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Basics/RandomnessHandler/RandomnessHandler.java">
+        <entry file="jar://$PROJECT_DIR$/lib/junit-jupiter-api-5.5.0-M1.jar!/org/junit/jupiter/api/TestInfo.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="150">
+              <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/bla.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/lib/junit-jupiter-api-5.5.0-M1.jar!/org/junit/jupiter/api/function/Executable.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/MyTests/RandomnessHandler/_BufferingRandomNumbers_Vs_RandomClass_TimeTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="338">
+              <caret line="25" column="22" selection-start-column="2" selection-end-line="42" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -289,13 +226,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Core/Engine/Shape/Shape.java" />
-        <option value="$PROJECT_DIR$/src/Core/Engine/Tools/_RotateAndEnsureMagnitudeTest.java" />
-        <option value="$PROJECT_DIR$/src/Core/Engine/Shape/PinnedShape.java" />
-        <option value="$PROJECT_DIR$/src/Core/Engine/Shape/_ShapeTest.java" />
-        <option value="$PROJECT_DIR$/src/Core/Engine/Iterations/OnIterationActionHandler.java" />
-        <option value="$PROJECT_DIR$/src/Core/Engine/Iterations/_IterateCircularPerimeterTest.java" />
-        <option value="$PROJECT_DIR$/src/Core/Engine/Iterations/Iterations.java" />
         <option value="$PROJECT_DIR$/src/Core/Processing/ProcessingTemplate.java" />
         <option value="$PROJECT_DIR$/src/Core/Processing/ProcessingTools.java" />
         <option value="$PROJECT_DIR$/src/Core/Engine/Tools/_OverLineTest.java" />
@@ -309,7 +239,6 @@
         <option value="$PROJECT_DIR$/src/Core/Basics/Vector2D.java" />
         <option value="$PROJECT_DIR$/src/Core/Basics/Vector2DCache.java" />
         <option value="$PROJECT_DIR$/src/MemoryTest.java" />
-        <option value="$PROJECT_DIR$/src/Core/World.java" />
         <option value="$PROJECT_DIR$/src/Core/Tests/Crono.java" />
         <option value="$PROJECT_DIR$/src/Core/Tests/MemoryTest.java" />
         <option value="$PROJECT_DIR$/src/Core/Basics/Tendency/RandomnessHandler.java" />
@@ -329,16 +258,24 @@
         <option value="$PROJECT_DIR$/src/Core/Tests/Vector2D/_AllWaysToGetCached_TimeTest.java" />
         <option value="$PROJECT_DIR$/src/Core/Tests/TimeTester.java" />
         <option value="$PROJECT_DIR$/src/Core/Tests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java" />
-        <option value="$PROJECT_DIR$/src/test/MyTests/TimeTester.java" />
         <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTests.java" />
-        <option value="$PROJECT_DIR$/src/Core/Basics/RandomnessHandler/RandomnessHandler.java" />
-        <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java" />
         <option value="$PROJECT_DIR$/src/test/JUnit/bla.java" />
         <option value="$PROJECT_DIR$/src/test/JUnit/StandardTests.java" />
         <option value="$PROJECT_DIR$/src/test/AssertionsTests.java" />
-        <option value="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2D.java" />
         <option value="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2DCache.java" />
         <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2D.java" />
+        <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java" />
+        <option value="$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2D.java" />
+        <option value="$PROJECT_DIR$/src/Core/Basics/RandomnessHandler/RandomnessHandler.java" />
+        <option value="$PROJECT_DIR$/src/Core/World.java" />
+        <option value="$PROJECT_DIR$/src/bla.java" />
+        <option value="$PROJECT_DIR$/src/test/MyTests/RandomnessHandler/_BufferingRandomNumbers_Vs_RandomClass_TimeTest.java" />
+        <option value="$PROJECT_DIR$/src/test/MyTests/TimeTester.java" />
+        <option value="$PROJECT_DIR$/src/test/MyTests/WallTimeTester.java" />
+        <option value="$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachedMgVsComputingIt_TimeTes.java" />
+        <option value="$PROJECT_DIR$/src/test/MyTests/Vector2D/_AllWaysToGetCached_TimeTest.java" />
+        <option value="$PROJECT_DIR$/src/test/JUnit/WallTimeTester.java" />
+        <option value="$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java" />
         <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java" />
       </list>
     </option>
@@ -393,6 +330,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Core" type="462c0819:PsiDirectoryNode" />
               <item name="Basics" type="462c0819:PsiDirectoryNode" />
+              <item name="RandomnessHandler" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RandomWalkersUniverse" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RandomWalkersUniverse" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Core" type="462c0819:PsiDirectoryNode" />
+              <item name="Basics" type="462c0819:PsiDirectoryNode" />
               <item name="Vector2D" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -422,6 +367,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="MyTests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RandomWalkersUniverse" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RandomWalkersUniverse" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="MyTests" type="462c0819:PsiDirectoryNode" />
+              <item name="RandomnessHandler" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RandomWalkersUniverse" type="b2602c69:ProjectViewProjectNode" />
@@ -454,6 +407,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="test.JUnit" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="Core.Tests.Vector2D" />
       <recent name="Core.Tests" />
@@ -474,9 +430,51 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.test in RandomWalkersUniverse">
+  <component name="RunManager" selected="JUnit.Vector2DCacheTest">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="_AllWaysToGetCached_TimeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.MyTests.Vector2D._AllWaysToGetCached_TimeTest" />
+      <module name="RandomWalkersUniverse" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.MyTests.Vector2D.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="_CachedMgVsComputingIt_TimeTes" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.MyTests.Vector2D._CachedMgVsComputingIt_TimeTes" />
+      <module name="RandomWalkersUniverse" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.MyTests.Vector2D.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="_CachingVectorVsNewOnes_TimeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.MyTests.Vector2D._CachingVectorVsNewOnes_TimeTest" />
+      <module name="RandomWalkersUniverse" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.MyTests.Vector2D.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -503,7 +501,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Vector2DCacheTest.getAndCheck_ThrowException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Vector2DCacheTest.cachingVsNew" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="RandomWalkersUniverse" />
       <extension name="coverage">
         <pattern>
@@ -513,41 +511,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="test.JUnit.Vector2D" />
       <option name="MAIN_CLASS_NAME" value="test.JUnit.Vector2D.Vector2DCacheTest" />
-      <option name="METHOD_NAME" value="getAndCheck_ThrowException" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Vector2DCacheTest.getAndCheck_sameCoordinates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="RandomWalkersUniverse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.JUnit.Vector2D.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.JUnit.Vector2D" />
-      <option name="MAIN_CLASS_NAME" value="test.JUnit.Vector2D.Vector2DCacheTest" />
-      <option name="METHOD_NAME" value="getAndCheck_sameCoordinates" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Vector2DCacheTest.get_sameCoordinates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="RandomWalkersUniverse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.JUnit.Vector2D.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.JUnit.Vector2D" />
-      <option name="MAIN_CLASS_NAME" value="test.JUnit.Vector2D.Vector2DCacheTest" />
-      <option name="METHOD_NAME" value="get_sameCoordinates" />
+      <option name="METHOD_NAME" value="cachingVsNew" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -556,21 +520,6 @@
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="test in RandomWalkersUniverse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="RandomWalkersUniverse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="TEST_OBJECT" value="package" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -595,19 +544,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application._AllWaysToGetCached_TimeTest" />
+      <item itemvalue="Application._CachedMgVsComputingIt_TimeTes" />
+      <item itemvalue="Application._CachingVectorVsNewOnes_TimeTest" />
       <item itemvalue="JUnit.Vector2DCacheTest" />
-      <item itemvalue="JUnit.Vector2DCacheTest.getAndCheck_sameCoordinates" />
-      <item itemvalue="JUnit.Vector2DCacheTest.get_sameCoordinates" />
-      <item itemvalue="JUnit.Vector2DCacheTest.getAndCheck_ThrowException" />
-      <item itemvalue="JUnit.test in RandomWalkersUniverse" />
+      <item itemvalue="JUnit.Vector2DCacheTest.cachingVsNew" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.test in RandomWalkersUniverse" />
         <item itemvalue="JUnit.Vector2DCacheTest" />
-        <item itemvalue="JUnit.Vector2DCacheTest.getAndCheck_ThrowException" />
-        <item itemvalue="JUnit.Vector2DCacheTest.get_sameCoordinates" />
-        <item itemvalue="JUnit.Vector2DCacheTest.getAndCheck_sameCoordinates" />
+        <item itemvalue="JUnit.Vector2DCacheTest.cachingVsNew" />
+        <item itemvalue="Application._AllWaysToGetCached_TimeTest" />
+        <item itemvalue="Application._CachingVectorVsNewOnes_TimeTest" />
+        <item itemvalue="Application._CachedMgVsComputingIt_TimeTes" />
       </list>
     </recent_temporary>
   </component>
@@ -671,38 +620,45 @@
       <option name="project" value="LOCAL" />
       <updated>1559185796220</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Including JUnit test... Working on Vector2DCache">
+      <created>1559376544871</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1559376544871</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Vector2DCacheTest - 2019.06.01 at 03h 13m 19s.xml">
+    <history-entry file="Vector2DCacheTest_cachingVsNew - 2019.06.01 at 06h 05m 14s.xml">
+      <configuration name="Vector2DCacheTest.cachingVsNew" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Vector2DCacheTest_cachingVsNew - 2019.06.01 at 06h 05m 51s.xml">
+      <configuration name="Vector2DCacheTest.cachingVsNew" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Vector2DCacheTest_cachingVsNew - 2019.06.01 at 06h 06m 44s.xml">
+      <configuration name="Vector2DCacheTest.cachingVsNew" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Vector2DCacheTest_cachingVsNew - 2019.06.01 at 06h 07m 50s.xml">
+      <configuration name="Vector2DCacheTest.cachingVsNew" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Vector2DCacheTest_cachingVsNew - 2019.06.01 at 06h 13m 06s.xml">
+      <configuration name="Vector2DCacheTest.cachingVsNew" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Vector2DCacheTest_cachingVsNew - 2019.06.01 at 06h 20m 57s.xml">
+      <configuration name="Vector2DCacheTest.cachingVsNew" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Vector2DCacheTest - 2019.06.01 at 06h 21m 30s.xml">
       <configuration name="Vector2DCacheTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Vector2DCacheTest - 2019.06.01 at 03h 14m 27s.xml">
+    <history-entry file="Vector2DCacheTest - 2019.06.01 at 06h 22m 25s.xml">
       <configuration name="Vector2DCacheTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Vector2DCacheTest - 2019.06.01 at 03h 30m 40s.xml">
-      <configuration name="Vector2DCacheTest" configurationId="JUnit" />
+    <history-entry file="Vector2DCacheTest_cachingVsNew - 2019.06.01 at 06h 23m 41s.xml">
+      <configuration name="Vector2DCacheTest.cachingVsNew" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Vector2DCacheTest - 2019.06.01 at 03h 34m 24s.xml">
-      <configuration name="Vector2DCacheTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Vector2DCacheTest - 2019.06.01 at 03h 35m 06s.xml">
-      <configuration name="Vector2DCacheTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Vector2DCacheTest - 2019.06.01 at 03h 36m 14s.xml">
-      <configuration name="Vector2DCacheTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Vector2DCacheTest - 2019.06.01 at 03h 49m 32s.xml">
-      <configuration name="Vector2DCacheTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Vector2DCacheTest_getAndCheck_sameCoordinates - 2019.06.01 at 03h 50m 24s.xml">
-      <configuration name="Vector2DCacheTest.getAndCheck_sameCoordinates" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Vector2DCacheTest_get_sameCoordinates - 2019.06.01 at 03h 50m 39s.xml">
-      <configuration name="Vector2DCacheTest.get_sameCoordinates" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Vector2DCacheTest - 2019.06.01 at 03h 51m 41s.xml">
+    <history-entry file="Vector2DCacheTest - 2019.06.01 at 06h 24m 24s.xml">
       <configuration name="Vector2DCacheTest" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -729,14 +685,14 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32876712" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4969743" visible="true" weight="0.3479452" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4969743" visible="true" weight="0.36438355" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49546143" weight="0.37123287" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3296" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.505295" side_tool="true" weight="0.3296" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32876712" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.494705" weight="0.32465753" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49579832" weight="0.24959612" />
@@ -802,7 +758,8 @@
     <MESSAGE value="Shape implemented!!!" />
     <MESSAGE value="Attaching Shape to Walker" />
     <MESSAGE value="new start!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="new start!!!" />
+    <MESSAGE value="Including JUnit test... Working on Vector2DCache" />
+    <option name="LAST_COMMIT_MESSAGE" value="Including JUnit test... Working on Vector2DCache" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -835,11 +792,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Core/Engine/Iterations/Iterations.java" />
-    <entry file="file://$PROJECT_DIR$/src/Core/Processing/ProcessingTemplate.java" />
-    <entry file="file://$PROJECT_DIR$/src/Core/Engine/Vector/_NormalTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/Core/Processing/ProcessingTools.java" />
-    <entry file="file://$PROJECT_DIR$/src/Core/Engine/Exceptions/AreaNotSupportedException.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Engine/Tools/_OverLineTest2.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Engine/Tools/_OverLineTest.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Engine/Iterations/_IterateCircularPerimeterTest.java" />
@@ -882,16 +834,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/World.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -977,30 +919,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachedMgVsComputingIt_TimeTes.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="e#820#821#0" expanded="true" />
-            <element signature="e#887#888#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/MyTests/RandomnessHandler/_BufferingRandomNumbers_Vs_RandomClass_TimeTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="e#735#736#0" expanded="true" />
-            <element signature="e#809#810#0" expanded="true" />
-            <element signature="e#948#949#0" expanded="true" />
-            <element signature="e#1005#1006#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/MyTests/BoolenTester.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1025,45 +943,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/MyTests/TimeTester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding>
-            <element signature="method#TimeTester#0;class#TimeTester#0" />
-            <element signature="e#1128#1183#1" />
-            <element signature="e#1986#2238#1" />
-            <element signature="method#resetTimes#0;class#TimeTester#0" />
-            <element signature="e#2325#2408#1" />
-            <element signature="docComment;method#addTest#0;class#TimeTester#0" />
-            <element signature="method#addTest#0;class#TimeTester#0" />
-            <element signature="class#Test#0;class#TimeTester#0" />
-            <element signature="docComment;method#runTest#0;class#Test#0;class#TimeTester#0" />
-            <element signature="class#TimeInterval#0;class#TimeTester#0" />
-            <element signature="docComment;method#initInterval#0;class#TimeInterval#0;class#TimeTester#0" />
-            <element signature="method#initInterval#0;class#TimeInterval#0;class#TimeTester#0" />
-            <element signature="method#getInterval#0;class#TimeInterval#0;class#TimeTester#0" />
-            <element signature="e#3593#3767#1" />
-            <element signature="e#3773#3850#1" />
-            <element signature="method#printElapsed#0;class#TimeInterval#0;class#TimeTester#0" />
-            <element signature="method#printAndInitInterval#0;class#TimeInterval#0;class#TimeTester#0" />
-            <element signature="class#UninitializedIntervalException#0;class#TimeInterval#0;class#TimeTester#0" />
-            <element signature="method#sortData#0;class#TimeTester#0" />
-            <element signature="e#4759#5268#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Basics/RandomnessHandler/RandomnessHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/JUnit/StandardTests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="443">
@@ -1081,41 +960,105 @@
     <entry file="file://$PROJECT_DIR$/src/test/AssertionsTests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="341">
-          <caret line="30" column="7" lean-forward="true" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
+          <caret line="30" column="7" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_AllWaysToGetCached_TimeTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="39" column="46" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
+        <state relative-caret-position="324">
+          <caret line="29" column="1" lean-forward="true" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
           <folding>
-            <element signature="e#733#734#0" expanded="true" />
-            <element signature="e#793#794#0" expanded="true" />
-            <element signature="e#931#932#0" expanded="true" />
-            <element signature="e#990#991#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#656#657#0" expanded="true" />
+            <element signature="e#754#755#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2D.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        <state relative-caret-position="295">
+          <caret line="35" column="50" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="50" />
           <folding>
-            <element signature="e#531#532#0" expanded="true" />
-            <element signature="e#598#599#0" expanded="true" />
-            <element signature="e#737#738#0" expanded="true" />
-            <element signature="e#797#798#0" expanded="true" />
-            <element signature="e#935#936#0" expanded="true" />
-            <element signature="e#994#995#0" expanded="true" />
+            <element signature="method#main#0;class#Vector2D#0" />
+            <element signature="method#Vector2D#0;class#Vector2D#0" />
+            <element signature="method#magnitude#0;class#Vector2D#0" />
+            <element signature="e#812#813#0" expanded="true" />
+            <element signature="e#868#869#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Basics/RandomnessHandler/RandomnessHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/World.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/junit-jupiter-api-5.5.0-M1.jar!/org/junit/jupiter/api/Assertions.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="1489" column="23" selection-start-line="1489" selection-start-column="23" selection-end-line="1489" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/junit-jupiter-api-5.5.0-M1.jar!/org/junit/jupiter/api/AssertAll.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="51" column="17" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
+          <folding>
+            <element signature="e#625#626#0" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/junit-jupiter-api-5.5.0-M1.jar!/org/junit/jupiter/api/function/Executable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/MyTests/RandomnessHandler/_BufferingRandomNumbers_Vs_RandomClass_TimeTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="25" column="22" selection-start-column="2" selection-end-line="42" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bla.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/junit-jupiter-api-5.5.0-M1.jar!/org/junit/jupiter/api/TestInfo.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_SameValuePoints_vs_Vector2d_Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
+        <state relative-caret-position="239">
           <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1123,38 +1066,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2D.java">
+    <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_AllWaysToGetCached_TimeTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-          <folding>
-            <element signature="e#891#892#0" expanded="true" />
-            <element signature="e#971#972#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="165">
+          <caret line="12" column="69" selection-start-line="12" selection-start-column="69" selection-end-line="12" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2DCache.java">
+    <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachedMgVsComputingIt_TimeTes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="22" column="46" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2D.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
+        <state relative-caret-position="221">
+          <caret line="34" column="56" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="34" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/MyTests/Vector2D/_CachingVectorVsNewOnes_TimeTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Basics/Vector2D/Vector2DCache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+          <folding>
+            <element signature="e#1476#1477#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/JUnit/WallTimeTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+          <folding>
+            <element signature="e#2059#2098#1" />
+            <element signature="e#2224#2225#0" expanded="true" />
+            <element signature="e#2260#2261#0" expanded="true" />
+            <element signature="method#runTests#1;class#WallTimeTester#0" />
+            <element signature="method#runTests#2;class#WallTimeTester#0" />
+            <element signature="method#reset#0;class#WallTimeTester#0" />
+            <element signature="e#2379#2462#1" />
+            <element signature="n#!!block;n#getTotalTime#0;n#TimeTester#0" />
+            <element signature="n#!!block;n#getTotalTime#1;n#TimeTester#0" />
+            <element signature="n#!!block;n#getTotalTime#2;n#TimeTester#0" />
+            <element signature="e#3841#3842#0" expanded="true" />
+            <element signature="docComment;method#addTest#0;class#TimeTester#0" />
+            <element signature="method#addTest#0;class#WallTimeTester#0" />
+            <element signature="class#TimeInterval#0;class#TimeTester#0" />
+            <element signature="docComment;method#initInterval#0;class#TimeInterval#0;class#TimeTester#0" />
+            <element signature="method#initInterval#0;class#TimeInterval#0;class#TimeTester#0" />
+            <element signature="method#getInterval#0;class#TimeInterval#0;class#TimeTester#0" />
+            <element signature="e#3647#3821#1" />
+            <element signature="e#3827#3904#1" />
+            <element signature="method#printElapsed#0;class#TimeInterval#0;class#TimeTester#0" />
+            <element signature="method#printAndInitInterval#0;class#TimeInterval#0;class#TimeTester#0" />
+            <element signature="class#UninitializedIntervalException#0;class#TimeInterval#0;class#TimeTester#0" />
+            <element signature="method#sortData#0;class#WallTimeTester#0" />
+            <element signature="e#4813#5322#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="57" column="64" lean-forward="true" selection-start-line="57" selection-start-column="64" selection-end-line="57" selection-end-column="64" />
+        <state relative-caret-position="317">
+          <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="94" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

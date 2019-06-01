@@ -1,39 +1,47 @@
-package test.MyTests;
+package test.JUnit;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TimeTester {
+import org.junit.jupiter.api.function.Executable;
 
-    private final ArrayList<Test> tests;
+public class WallTimeTester {
+
+    private final ArrayList<Executable> tests;
+    private final ArrayList<String> testNames;
     private final ArrayList<Long> totalTimes;
-    private final ArrayList<Long> averageTimes;
+    private final ArrayList<Long> meanTimes;
     private TimeInterval interval;
+    private long lastRunTotalTests = 0;
+    private final String testsName;
 
-    public TimeTester() {
+    public WallTimeTester(String testsName) {
         tests = new ArrayList<>();
         totalTimes = new ArrayList<>();
-        averageTimes = new ArrayList<>();
+        meanTimes = new ArrayList<>();
+        testNames = new ArrayList<>();
+        this.testsName = testsName;
     }
 
-    public void runTests(int rounds, int itrsPerTest, boolean verbose, boolean randomize) {
+    public void runTests(int rounds, int itrsPerTest,
+                         boolean verbose, boolean randomize) throws Throwable {
         interval = new TimeInterval();
 
         for (int round = 0; round < rounds; round++) {
 
             if (randomize) sortData();
-            System.out.println("Round " + round + " of " + rounds);
+            if (verbose) System.out.println("Round " + round + " of " + rounds);
 
             long testTime;
             long testAve;
             for (int t = 0; t < tests.size(); t++) {
-                Test test = tests.get(t);
-                if (verbose) System.out.println("Testing " + test.testName + "  " + itrsPerTest + " times...");
+                Executable test = tests.get(t);
+                if (verbose) System.out.println("Testing " + testNames.get(t) + "  " + itrsPerTest + " times...");
 
                 //Running test
                 interval.initInterval();
                 for (int i = 0; i < itrsPerTest; i++) {
-                    test.runTest();
+                    test.execute();
                 }
                 testTime = interval.getUncheckedInterval();
 
@@ -47,31 +55,74 @@ public class TimeTester {
                 if (verbose) System.out.println("Average(ms) " + testAve);
 
                 //Updating time data
-                averageTimes.set(t, testAve);
+                meanTimes.set(t, testAve);
             }
 
             if (verbose) System.out.println();
         }
 
-        //Final Info
-        System.out.println("###########################");
-        System.out.println("### TEST RESULTS ##########");
-        System.out.println("###########################");
-        System.out.println("TotalTest " + ((long)rounds * (long)itrsPerTest));
-        for (int t = 0; t < tests.size(); t++) {
-            System.out.println("Test " + tests.get(t).testName);
-            System.out.println("Total Time(ms) " + totalTimes.get(t));
-            System.out.println("Ave Time(ms) " + averageTimes.get(t));
-            System.out.println();
-        }
+        lastRunTotalTests = rounds * itrsPerTest;
 
+        //Final Info
+        if (verbose) {
+            printResults();
+        }
+    }
+
+    public void printResults() {
+        System.out.println(getPrintableResults());
+    }
+
+    public String getPrintableResults() {
+        StringBuffer st = new StringBuffer();
+        st.append(testsName + " Results");
+        st.append("\n");
+        st.append("TotalTest " + lastRunTotalTests);
+        st.append("\n");
+        for (int t = 0; t < tests.size(); t++) {
+            st.append("Test " + testNames.get(t));
+            st.append("\n");
+            st.append("Total Time(ms) " + totalTimes.get(t));
+            st.append("\n");
+            st.append("Ave Time(ms) " + meanTimes.get(t));
+            st.append("\n");
+        }
+        return st.toString();
+    }
+
+    public long getLastRunTotalTests() {
+        return lastRunTotalTests;
+    }
+
+    public void runTests(int rounds, int itrsPerTest, boolean randomize) throws Throwable {
+        runTests(rounds, itrsPerTest, false, randomize);
+    }
+
+    public void runTests(int rounds, int itrsPerTest) throws Throwable {
+        runTests(rounds, itrsPerTest, false, true);
     }
 
     public void reset() {
         for (int t = 0; t < tests.size(); t++) {
             totalTimes.set(t, 0L);
-            averageTimes.set(t, 0L);
+            meanTimes.set(t, 0L);
         }
+    }
+
+    public long getTotalTime(Executable test) {
+        return totalTimes.get(tests.indexOf(test));
+    }
+
+    public long getTotalTime(String testName) {
+        return totalTimes.get(testNames.indexOf(testName));
+    }
+
+    public long getMeanTime(Executable test) {
+        return meanTimes.get(tests.indexOf(test));
+    }
+
+    public long getMeanTime(String testName) {
+        return meanTimes.get(testNames.indexOf(testName));
     }
 
     /**
@@ -80,24 +131,11 @@ public class TimeTester {
      *
      * @param test
      */
-    public void addTest(Test test) {
+    public void addTest(String testName, Executable test) {
         tests.add(test);
+        testNames.add(testName);
         totalTimes.add(0L);
-        averageTimes.add(0L);
-    }
-
-    public abstract static class Test {
-
-        String testName;
-
-        public Test(String testName) {
-            this.testName = testName;
-        }
-
-        /**
-         * Override this method and run inside the code that you want to test.
-         */
-        public abstract void runTest();
+        meanTimes.add(0L);
     }
 
     private static class TimeInterval {
@@ -149,24 +187,30 @@ public class TimeTester {
     private void sortData() {
 
         Random r = new Random();
-        int newrl;
-        Test tempTest;
+        int ri;
+        Executable tempTest;
         Long tempLong;
+        String tempName;
         for (int i = 0; i < tests.size(); i++) {
-            newrl = r.nextInt(tests.size());
+            ri = r.nextInt(tests.size());
 
             //Test
             tempTest = tests.get(i);
-            tests.set(i, tests.get(newrl));
-            tests.set(newrl, tempTest);
+            tests.set(i, tests.get(ri));
+            tests.set(ri, tempTest);
+
+            //Names
+            tempName = testNames.get(i);
+            testNames.set(i, testNames.get(ri));
+            testNames.set(ri, tempName);
 
             //Times
             tempLong = totalTimes.get(i);
-            totalTimes.set(i, totalTimes.get(newrl));
-            totalTimes.set(newrl, tempLong);
-            tempLong = averageTimes.get(i);
-            averageTimes.set(i, averageTimes.get(newrl));
-            averageTimes.set(newrl, tempLong);
+            totalTimes.set(i, totalTimes.get(ri));
+            totalTimes.set(ri, tempLong);
+            tempLong = meanTimes.get(i);
+            meanTimes.set(i, meanTimes.get(ri));
+            meanTimes.set(ri, tempLong);
 
         }
     }
