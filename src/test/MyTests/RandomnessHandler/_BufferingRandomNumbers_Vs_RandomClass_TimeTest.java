@@ -2,7 +2,7 @@
 //
 //import Core.Basics.Collections.CircularIntSet;
 //import Core.Basics.RandomnessHandler.RandomnessHandler;
-//import test.JUnit.WallTimeTester;
+//import test.JUnit.MyTestCalsses.WallTimeTester;
 //
 //import java.util.Random;
 //

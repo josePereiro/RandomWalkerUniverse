@@ -1,4 +1,4 @@
-package test.JUnit;
+package test.JUnit.MyTestCalsses;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,7 +10,7 @@ public class WallTimeTester {
     private final ArrayList<Executable> tests;
     private final ArrayList<String> testNames;
     private final ArrayList<Long> totalTimes;
-    private final ArrayList<Long> meanTimes;
+    private final ArrayList<Double> meanTimes;
     private TimeInterval interval;
     private long lastRunTotalTests = 0;
     private final String testsName;
@@ -33,7 +33,7 @@ public class WallTimeTester {
             if (verbose) System.out.println("Round " + round + " of " + rounds);
 
             long testTime;
-            long testAve;
+            double testAve;
             for (int t = 0; t < tests.size(); t++) {
                 Executable test = tests.get(t);
                 if (verbose) System.out.println("Testing " + testNames.get(t) + "  " + itrsPerTest + " times...");
@@ -51,7 +51,7 @@ public class WallTimeTester {
                 totalTimes.set(t, totalTimes.get(t) + testTime);
 
                 //Ave
-                testAve = totalTimes.get(t) / (round + 1);
+                testAve = totalTimes.get(t) * 1.0 / (round + 1);
                 if (verbose) System.out.println("Average(ms) " + testAve);
 
                 //Updating time data
@@ -105,7 +105,7 @@ public class WallTimeTester {
     public void reset() {
         for (int t = 0; t < tests.size(); t++) {
             totalTimes.set(t, 0L);
-            meanTimes.set(t, 0L);
+            meanTimes.set(t, 0.0);
         }
     }
 
@@ -117,11 +117,11 @@ public class WallTimeTester {
         return totalTimes.get(testNames.indexOf(testName));
     }
 
-    public long getMeanTime(Executable test) {
+    public double getMeanTime(Executable test) {
         return meanTimes.get(tests.indexOf(test));
     }
 
-    public long getMeanTime(String testName) {
+    public double getMeanTime(String testName) {
         return meanTimes.get(testNames.indexOf(testName));
     }
 
@@ -135,7 +135,7 @@ public class WallTimeTester {
         tests.add(test);
         testNames.add(testName);
         totalTimes.add(0L);
-        meanTimes.add(0L);
+        meanTimes.add(0.0);
     }
 
     private static class TimeInterval {
@@ -190,6 +190,7 @@ public class WallTimeTester {
         int ri;
         Executable tempTest;
         Long tempLong;
+        Double tempDouble;
         String tempName;
         for (int i = 0; i < tests.size(); i++) {
             ri = r.nextInt(tests.size());
@@ -208,9 +209,9 @@ public class WallTimeTester {
             tempLong = totalTimes.get(i);
             totalTimes.set(i, totalTimes.get(ri));
             totalTimes.set(ri, tempLong);
-            tempLong = meanTimes.get(i);
+            tempDouble = meanTimes.get(i);
             meanTimes.set(i, meanTimes.get(ri));
-            meanTimes.set(ri, tempLong);
+            meanTimes.set(ri, tempDouble);
 
         }
     }

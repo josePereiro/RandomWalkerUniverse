@@ -1,8 +1,7 @@
 package test.MyTests.Vector2D;
 
 import Core.Basics.Vector2D.Vector2DCache;
-import org.junit.jupiter.api.Test;
-import test.JUnit.WallTimeTester;
+import test.JUnit.MyTestCalsses.WallTimeTester;
 
 import java.awt.*;
 

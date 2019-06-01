@@ -2,9 +2,8 @@ package test.JUnit.Vector2D;
 
 import Core.Basics.Vector2D.Vector2D;
 import Core.Basics.Vector2D.Vector2DCache;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.*;
-import test.JUnit.WallTimeTester;
+import test.JUnit.MyTestCalsses.WallTimeTester;
 
 import java.awt.*;
 import java.util.Random;
@@ -65,9 +64,9 @@ public class Vector2DCacheTest {
         );
     }
 
-    @Disabled("Hard to test: Just run it to print the results...")
+    @Disabled("cachingVsNew is =hard to test: Just run it to print the results...")
     @Test
-    @DisplayName("Caching must take approximately the same time as creating new Point")
+    @DisplayName("Caching must take approximately the same time as creating a new Point")
     void cachingVsNew() throws Throwable {
         timeTester = new WallTimeTester("CachingVsNew");
 
