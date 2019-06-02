@@ -3,7 +3,6 @@ package Core.World;
 import static Core.World.World.Statics.*;
 
 /**
- * TODO implement a cache for Vector2DTest!!!
  * Why caching?:
  * Vectors will be very commonly used... It is very possible
  * that a lot of operations or a lot of objects will use the same Vector,
@@ -115,7 +114,7 @@ public class Vector2DCache {
             }
 
             //Right
-            if (vector2D.x == vector2Dcache.yb) {
+            if (vector2D.x == vector2Dcache.xb) {
                 neighbors[RIGHT_NEIGHBORHOOD_INDEX] = vector2Dcache.get(vector2D.x, vector2D.y);
             } else {
                 neighbors[RIGHT_NEIGHBORHOOD_INDEX] = vector2Dcache.get(vector2D.x + 1, vector2D.y);

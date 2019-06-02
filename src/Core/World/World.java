@@ -1,7 +1,5 @@
 package Core.World;
 
-import Core.Boards.Board;
-
 public class World {
 
     private final Vector2DCache vector2DCache;
@@ -16,7 +14,7 @@ public class World {
         this.h = h;
         vector2DCache = new Vector2DCache(this);
         randomNumbersCache = new RandomNumbersCache(Statics.Defaults.DEFAULT_RANDOM_CACHE_LENGTH);
-        neighborhoodsCache = new NeighborhoodsCache(this, Math.min(w, h) / 15);
+        neighborhoodsCache = new NeighborhoodsCache(this, Math.min(w, h) / 9);
     }
 
     public Vector2DCache getVector2DCache() {
@@ -41,11 +39,10 @@ public class World {
 
         public static class Defaults {
 
-            private static final int DEFAULT_RANDOM_CACHE_LENGTH = 1000000;
+            private static final int DEFAULT_RANDOM_CACHE_LENGTH = 10000000;
 
         }
 
     }
-
 
 }

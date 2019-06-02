@@ -10,6 +10,8 @@ public class RandomNumbersCache {
     private int index;
     private int lastIndex;
 
+    private Random rand = new Random();
+
     public RandomNumbersCache(int length) {
         cache = new float[length];
         index = 0;
@@ -19,7 +21,7 @@ public class RandomNumbersCache {
 
     public float getNextFloat() {
         if (index == lastIndex) {
-            index = 0;
+            index = rand.nextInt(lastIndex);
         } else index++;
         return cache[index];
     }
@@ -32,7 +34,7 @@ public class RandomNumbersCache {
         return Tools.CollectionsOps.mean(cache);
     }
 
-    public void randomize() {
+    private void randomize() {
         Random r = new Random();
         for (int i = 0; i < cache.length; i++) {
             cache[i] = r.nextFloat();
