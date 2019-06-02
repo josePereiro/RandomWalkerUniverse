@@ -1,7 +1,4 @@
-package test.MyTests;
-
-import Core.Basics.Vector2D.Vector2DCache;
-import Core.RandomWalkers.RandomWalker;
+package test.NotJUnitTests;
 
 import java.util.Random;
 

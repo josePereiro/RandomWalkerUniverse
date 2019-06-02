@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ProcessingTools.Common">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../MyProcessingTools/out/artifacts/ProcessingTools_Common_jar/ProcessingTools.Common.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

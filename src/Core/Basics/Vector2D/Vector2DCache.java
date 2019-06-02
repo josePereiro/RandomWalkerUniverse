@@ -23,13 +23,13 @@ public class Vector2DCache extends Board {
         System.out.println(cache.getAndCheck(9,-12));
     }
 
-    Vector2D[][] vectors;
+    Vector2D[][] cache;
     private final int xb;
     private final int yb;
 
     public Vector2DCache(int w, int h) {
         super(w, h);
-        vectors = new Vector2D[w * 2 - 1][h * 2 - 1];
+        cache = new Vector2D[w * 2 - 1][h * 2 - 1];
         xb = w - 1;
         yb = h - 1;
         fillCache();
@@ -37,21 +37,21 @@ public class Vector2DCache extends Board {
 
     private void fillCache() {
         int vx, vy;
-        for (int x = 0; x < vectors.length; x++) {
+        for (int x = 0; x < cache.length; x++) {
             vx = x > xb ? xb - x : x;
-            for (int y = 0; y < vectors[x].length; y++) {
+            for (int y = 0; y < cache[x].length; y++) {
                 vy = y > yb ? yb - y : y;
-                vectors[x][y] = new Vector2D(vx, vy);
+                cache[x][y] = new Vector2D(vx, vy);
             }
         }
     }
 
     public Vector2D getPositive(int x, int y) {
-        return vectors[x][y];
+        return cache[x][y];
     }
 
     public Vector2D get(int x, int y) {
-        return vectors[x < 0 ? xb - x : x][y < 0 ? yb - y : y];
+        return cache[x < 0 ? xb - x : x][y < 0 ? yb - y : y];
     }
 
     public Vector2D getAndCheck(int x, int y){

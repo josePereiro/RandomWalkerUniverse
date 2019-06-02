@@ -1,10 +1,7 @@
 package test.JUnit.Vector2D;
 
 import Core.Basics.Vector2D.Vector2D;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.*;
 
 import java.awt.*;
 import java.util.Random;
@@ -23,8 +20,9 @@ public class Vector2DTest {
     }
 
     @RepeatedTest(REPEAT)
-    @DisplayName("comparing Vector2D.mg with computed mg")
-    void vectorMg(){
+    @DisplayName("comparing values of Vector2D.mg with computed mg")
+    void vectorMg_valueTest(){
         Assertions.assertTrue(new Vector2D(x,y).mg == (float)new Point(x,y).distance(0,0));
     }
+
 }

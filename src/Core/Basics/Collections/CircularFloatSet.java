@@ -1,11 +1,12 @@
 package Core.Basics.Collections;
 
+import sun.lwawt.macosx.CImage;
+
 /**
  * And implementation of a circular set... It has two indexes, one for reading and one for writing.
  * Its can be move forward and backward without concerning about getting out of range. If any index
  * become bigger than the dimensions of the array it is set to zero, and if any index become lower than zero y
  * will point to the last position in the array.
- *
  */
 public class CircularFloatSet {
 
@@ -15,8 +16,15 @@ public class CircularFloatSet {
     public final int length;
 
     public CircularFloatSet(float[] data) {
-        this.length = data.length;
         this.data = data;
+        this.length = data.length;
+        readIndex = 0;
+        writeIndex = 0;
+    }
+
+    public CircularFloatSet(int length) {
+        data = new float[length];
+        this.length = length;
         readIndex = 0;
         writeIndex = 0;
     }
