@@ -1,6 +1,4 @@
-package Core.Basics.NeighborhoodsBoard;
-
-import Core.Basics.Vector2D.Vector2D;
+package Core.World;
 
 public class Neighborhood {
 

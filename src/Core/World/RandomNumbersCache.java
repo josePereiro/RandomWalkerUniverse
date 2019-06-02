@@ -1,7 +1,6 @@
-package Core.Basics.Random;
+package Core.World;
 
 import Core.Basics.Tools.Tools;
-import Core.Basics.Vector2D.Vector2D;
 
 import java.util.Random;
 
@@ -44,14 +43,14 @@ public class RandomNumbersCache {
 
         float rn = getNextFloat();
         float[] td = tendency.tendDistribution;
-        if (rn <= td[Vector2D.UP_INDEX]) {
-            return position.fourNeighbors[Vector2D.UP_INDEX];
-        } else if (rn <= td[Vector2D.DOWN_INDEX]) {
-            return position.fourNeighbors[Vector2D.DOWN_INDEX];
-        } else if (rn <= td[Vector2D.RIGHT_INDEX]) {
-            return position.fourNeighbors[Vector2D.RIGHT_INDEX];
+        if (rn <= td[World.Statics.UP_NEIGHBORHOOD_INDEX]) {
+            return position.fourNeighbors[World.Statics.UP_NEIGHBORHOOD_INDEX];
+        } else if (rn <= td[World.Statics.DOWN_NEIGHBORHOOD_INDEX]) {
+            return position.fourNeighbors[World.Statics.DOWN_NEIGHBORHOOD_INDEX];
+        } else if (rn <= td[World.Statics.RIGHT_NEIGHBORHOOD_INDEX]) {
+            return position.fourNeighbors[World.Statics.RIGHT_NEIGHBORHOOD_INDEX];
         } else {
-            return position.fourNeighbors[Vector2D.LEFT_INDEX];
+            return position.fourNeighbors[World.Statics.LEFT_NEIGHBORHOOD_INDEX];
         }
     }
 }

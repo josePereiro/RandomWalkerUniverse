@@ -1,6 +1,6 @@
 package test.JUnit.Random;
 
-import Core.Basics.Random.RandomNumbersCache;
+import Core.World.RandomNumbersCache;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 import test.JUnit.TestSupport.Support;

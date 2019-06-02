@@ -1,17 +1,17 @@
 package test.NotJUnitTests.ProcessingTests;
 
-import Core.Basics.NeighborhoodsBoard.Neighborhood;
-import Core.Basics.NeighborhoodsBoard.NeighborhoodsBoard;
-import Core.Basics.Vector2D.Vector2D;
-import Core.World;
-import Core.World.Statics.Caches;
+import Core.World.Neighborhood;
+import Core.World.NeighborhoodsCache;
+import Core.World.Vector2D;
+import Core.World.World;
 import processing.core.PApplet;
 
 import java.util.Random;
 
 public class NeighborhoodTestField extends PApplet {
 
-    NeighborhoodsBoard board;
+    NeighborhoodsCache board;
+    World world;
 
     public static void main(String[] args) {
         PApplet.main("test.NotJUnitTests.ProcessingTests.NeighborhoodTestField");
@@ -24,10 +24,8 @@ public class NeighborhoodTestField extends PApplet {
 
     @Override
     public void setup() {
-        World.Statics.worldH = 191;
-        World.Statics.worldW = 491;
-        Caches.initCaches();
-        board = new NeighborhoodsBoard(191, 491, 30);
+        world = new World(201, 401);
+        board = world.getNeighborhoodsCache();
         frameRate(1);
     }
 
@@ -40,8 +38,8 @@ public class NeighborhoodTestField extends PApplet {
         int offset = 50;
         fill(200);
         stroke(0);
-        rect(offset, offset, board.w, board.h);
-        stroke(100,155);
+        rect(offset, offset, world.w, world.h);
+        stroke(100, 155);
         noFill();
         Neighborhood[] neighborhoods = board.getNeighborhoods();
         Neighborhood neighborhood;
@@ -51,7 +49,7 @@ public class NeighborhoodTestField extends PApplet {
             r = neighborhood.getR();
             rect(center.x - r + offset,
                     center.y - r + offset, r + r, r + r);
-            ellipse(center.x + offset, center.y + offset, 5,5);
+            ellipse(center.x + offset, center.y + offset, 5, 5);
         }
 
 
@@ -63,7 +61,7 @@ public class NeighborhoodTestField extends PApplet {
         rect(center.x - r + offset,
                 center.y - r + offset, r + r, r + r);
 
-        text(neighborhoods.length + " neighborhoods",20,20);
+        text(neighborhoods.length + " neighborhoods", 20, 20);
 
     }
 }
