@@ -1,10 +1,8 @@
 package Core;
 
-import Core.Basics.Collections.CircularIntSet;
+import Core.Basics.Random.RandomNumbersCache;
 import Core.Basics.Vector2D.Vector2DCache;
 import Core.Boards.Board;
-
-import java.util.Random;
 
 public class World extends Board {
 
@@ -17,34 +15,27 @@ public class World extends Board {
 
         public static class Defaults {
 
-            private static final int DEFAULT_RANDOM_BUFFER_LENGTH = 1000000;
+            private static final int DEFAULT_RANDOM_CACHE_LENGTH = 1000000;
             private static final int DEFAULT_RANDOM_BUFFER_UPPER_BOUND = 1000;
+            private static final int DEFAULT_WORLD_WIDTH = 100;
+            private static final int DEFAULT_WORLD_HEIGHT = 150;
 
         }
 
         public static class Caches {
 
             public static Vector2DCache vector2Dcache;
-            public static CircularIntSet randomFloatCache;
+            public static RandomNumbersCache randomFloatCache;
 
-            private static void initRandomCache(int bufferLength, int rBound) {
-
-                Random r = new Random();
-                int[] data = new int[bufferLength];
-                for (int i = 0; i < data.length; i++) {
-                    data[i] = r.nextInt(rBound);
-                }
-
-                randomFloatCache = new CircularIntSet(data);
-            }
-
-            public static void initCaches(int w, int h) {
-                vector2Dcache = new Vector2DCache(w, h);
-                initRandomCache(Defaults.DEFAULT_RANDOM_BUFFER_LENGTH,
-                        Defaults.DEFAULT_RANDOM_BUFFER_UPPER_BOUND);
+            public static void initCaches() {
+                vector2Dcache = new Vector2DCache(worldW, worldH);
+                randomFloatCache = new RandomNumbersCache(randomCacheLength);
             }
         }
 
+        public static int worldW = Defaults.DEFAULT_WORLD_WIDTH;
+        public static int worldH = Defaults.DEFAULT_WORLD_HEIGHT;
+        public static int randomCacheLength = Defaults.DEFAULT_RANDOM_CACHE_LENGTH;
 
     }
 

@@ -1,23 +1,23 @@
 package test.JUnit.Random;
 
-import Core.Basics.Random.RandomCache;
+import Core.Basics.Random.RandomNumbersCache;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 import test.JUnit.TestSupport.Support;
 
 import java.util.Random;
 
-public class RandomCacheTest {
+public class RandomNumbersCacheTest {
 
     private static final int REPEAT = 100;
     private static final int BUFFER_LENGTH = 1000000;
-    private static RandomCache randomBuffer;
+    private static RandomNumbersCache randomBuffer;
     private static Random r = new Random();
     private final static float[] temp = new float[1];
 
     @BeforeEach
     void setUpAll() {
-        randomBuffer = new RandomCache(BUFFER_LENGTH);
+        randomBuffer = new RandomNumbersCache(BUFFER_LENGTH);
     }
 
     @RepeatedTest(REPEAT)
@@ -30,7 +30,7 @@ public class RandomCacheTest {
     @DisplayName("Pick a cached random number must be several times faster than using Random class")
     void pickCachedVsRandomClass() throws Throwable {
 
-        Support.WallTimeTester timeTester = new Support.WallTimeTester("RandomCache vs Random Time Test");
+        Support.WallTimeTester timeTester = new Support.WallTimeTester("RandomNumbersCache vs Random Time Test");
         int rbound = 1000;
 
         Executable cacheGetFloatTest = timeTester.addTest("randomBuffer.getNextFloat()",

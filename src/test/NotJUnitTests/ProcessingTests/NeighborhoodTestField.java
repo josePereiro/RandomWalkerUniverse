@@ -4,6 +4,7 @@ import Core.Basics.NeighborhoodsBoard.Neighborhood;
 import Core.Basics.NeighborhoodsBoard.NeighborhoodsBoard;
 import Core.Basics.Vector2D.Vector2D;
 import Core.World;
+import Core.World.Statics.Caches;
 import processing.core.PApplet;
 
 import java.util.Random;
@@ -23,7 +24,9 @@ public class NeighborhoodTestField extends PApplet {
 
     @Override
     public void setup() {
-        World.Statics.Caches.initCaches(191, 491);
+        World.Statics.worldH = 191;
+        World.Statics.worldW = 491;
+        Caches.initCaches();
         board = new NeighborhoodsBoard(191, 491, 30);
         frameRate(1);
     }
