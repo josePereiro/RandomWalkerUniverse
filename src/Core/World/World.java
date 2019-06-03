@@ -5,16 +5,15 @@ public class World {
     private final Vector2DCache vector2DCache;
     private final RandomNumbersCache randomNumbersCache;
     private final NeighborhoodsCache neighborhoodsCache;
-    public final int w;
-    public final int h;
+    public final int width;
+    public final int height;
 
-
-    public World(int w, int h) {
-        this.w = w;
-        this.h = h;
+    public World(int width, int height) {
+        this.width = width;
+        this.height = height;
         vector2DCache = new Vector2DCache(this);
         randomNumbersCache = new RandomNumbersCache(Statics.Defaults.DEFAULT_RANDOM_CACHE_LENGTH);
-        neighborhoodsCache = new NeighborhoodsCache(this, Math.min(w, h) / 9);
+        neighborhoodsCache = new NeighborhoodsCache(this, Math.min(width, height) / 9);
     }
 
     public Vector2DCache getVector2DCache() {

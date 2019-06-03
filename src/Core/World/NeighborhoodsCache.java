@@ -16,28 +16,28 @@ public class NeighborhoodsCache {
     }
 
     private void createNeighborhoods() {
-        int wMid = (world.w - 1) / 2;
-        int hMid = (world.h - 1) / 2;
+        int wMid = (world.width - 1) / 2;
+        int hMid = (world.height - 1) / 2;
         ArrayList<Neighborhood> neighborhoods = new ArrayList<>();
-//        Vector2DCache cache = world.
+        Vector2DCache cache = world.getVector2DCache();
         for (int i = 0; i < wMid; i += r) {
             for (int j = 0; j < hMid; j += r) {
                 if (i == 0) {
                     if (j == 0) {
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid, hMid), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid, hMid), r));
                     } else {
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid, hMid - j), r));
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid, hMid + j), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid, hMid - j), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid, hMid + j), r));
                     }
                 } else {
                     if (j == 0) {
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid - i, hMid), r));
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid + i, hMid), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid - i, hMid), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid + i, hMid), r));
                     } else {
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid - i, hMid + j), r));
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid - i, hMid - j), r));
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid + i, hMid + j), r));
-                        neighborhoods.add(new Neighborhood(new Vector2D(wMid + i, hMid - j), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid - i, hMid + j), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid - i, hMid - j), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid + i, hMid + j), r));
+                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid + i, hMid - j), r));
                     }
                 }
             }

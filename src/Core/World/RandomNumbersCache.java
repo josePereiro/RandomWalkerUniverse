@@ -1,6 +1,6 @@
 package Core.World;
 
-import Core.Basics.Tools.Tools;
+import Core.Tools.Tools;
 
 import java.util.Random;
 
@@ -9,6 +9,7 @@ public class RandomNumbersCache {
     private float[] cache;
     private int index;
     private int lastIndex;
+    private int restartBound;
 
     private Random rand = new Random();
 
@@ -16,12 +17,13 @@ public class RandomNumbersCache {
         cache = new float[length];
         index = 0;
         lastIndex = length - 1;
+        restartBound = lastIndex / 4;
         randomize(new Random());
     }
 
     public float getNextFloat() {
         if (index == lastIndex) {
-            index = rand.nextInt(lastIndex);
+            index = rand.nextInt(restartBound);
         } else index++;
         return cache[index];
     }
@@ -52,5 +54,9 @@ public class RandomNumbersCache {
         } else {
             return position.fourNeighbors[World.Statics.LEFT_NEIGHBORHOOD_INDEX];
         }
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

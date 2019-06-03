@@ -19,6 +19,8 @@ public final class Vector2D {
      */
     final float[] tendDistribution;
     final Vector2D[] fourNeighbors;
+    Vector2D maxCollinear;
+//    final Neighborhood[] neighborhoods;
 
     Vector2D(int x, int y) {
         this.x = x;
@@ -32,12 +34,14 @@ public final class Vector2D {
 
     }
 
-
-
     private static float magnitude(int x1, int y1, int x2, int y2) {
         x1 -= x2;
         y1 -= y2;
         return (float) Math.sqrt(x1 * x1 + y1 * y1);
+    }
+
+    public Vector2D getMaxCollinear() {
+        return maxCollinear;
     }
 
     @Override

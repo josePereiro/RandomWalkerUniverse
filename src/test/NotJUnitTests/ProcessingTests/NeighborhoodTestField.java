@@ -38,7 +38,7 @@ public class NeighborhoodTestField extends PApplet {
         int offset = 50;
         fill(200);
         stroke(0);
-        rect(offset, offset, world.w, world.h);
+        rect(offset, offset, world.width, world.height);
         stroke(100, 155);
         noFill();
         Neighborhood[] neighborhoods = board.getNeighborhoods();
