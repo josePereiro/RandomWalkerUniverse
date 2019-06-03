@@ -16,7 +16,7 @@ public class RandomNumbersCache {
         cache = new float[length];
         index = 0;
         lastIndex = length - 1;
-        randomize();
+        randomize(new Random());
     }
 
     public float getNextFloat() {
@@ -34,15 +34,13 @@ public class RandomNumbersCache {
         return Tools.CollectionsOps.mean(cache);
     }
 
-    private void randomize() {
-        Random r = new Random();
+    private void randomize(Random r) {
         for (int i = 0; i < cache.length; i++) {
             cache[i] = r.nextFloat();
         }
     }
 
     public Vector2D getNextStep(Vector2D position, Vector2D tendency) {
-
         float rn = getNextFloat();
         float[] td = tendency.tendDistribution;
         if (rn <= td[World.Statics.UP_NEIGHBORHOOD_INDEX]) {
