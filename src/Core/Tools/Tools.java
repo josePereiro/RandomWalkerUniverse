@@ -1,5 +1,7 @@
 package Core.Tools;
 
+import java.util.ArrayList;
+
 public class Tools {
 
     public static class CollectionsOps {
@@ -500,6 +502,22 @@ public class Tools {
                 return tg;
             } else return -tg;
         }
+    }
+
+    public static int[] multiples(int n) {
+        ArrayList<Integer> temp = new ArrayList<>();
+        temp.add(1);
+        for (int i = 2; i < n / 2; i++) {
+            if (n % i == 0) {
+                temp.add(i);
+            }
+        }
+        temp.add(n);
+        int[] multiples = new int[temp.size()];
+        for (int i = 0; i < temp.size(); i++) {
+            multiples[i] = temp.get(i);
+        }
+        return multiples;
     }
 
 }

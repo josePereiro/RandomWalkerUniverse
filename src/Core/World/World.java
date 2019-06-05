@@ -4,16 +4,34 @@ public class World {
 
     private final Vector2DCache vector2DCache;
     private final RandomNumbersCache randomNumbersCache;
-    private final NeighborhoodsCache neighborhoodsCache;
+    private NeighborhoodsCache neighborhoodsCache;
     public final int width;
     public final int height;
+    private int neighborsRadius;
 
     public World(int width, int height) {
+        checkParameters(width, height);
+
         this.width = width;
         this.height = height;
         vector2DCache = new Vector2DCache(this);
         randomNumbersCache = new RandomNumbersCache(Statics.Defaults.DEFAULT_RANDOM_CACHE_LENGTH);
-        neighborhoodsCache = new NeighborhoodsCache(this, Math.min(width, height) / 9);
+        neighborsRadius = Math.max(width, height) / 9;
+        setNeighborhoodsCache(neighborsRadius);
+    }
+
+    private void setNeighborhoodsCache(int nr) {
+        neighborhoodsCache = new NeighborhoodsCache(this, nr);
+    }
+
+    public int getNeighborsRadius() {
+        return neighborsRadius;
+    }
+
+    private void checkParameters(int width, int height) {
+        if (width % 2 == 0 || height % 2 == 0) {
+            throw new Exceptions.IllegalValueException("width and height must be odd...");
+        }
     }
 
     public Vector2DCache getVector2DCache() {

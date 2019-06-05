@@ -8,13 +8,13 @@ import processing.core.PApplet;
 
 import java.util.Random;
 
-public class NeighborhoodTestField extends PApplet {
+public class NeighborhoodCacheTests extends PApplet {
 
     NeighborhoodsCache board;
     World world;
 
     public static void main(String[] args) {
-        PApplet.main("test.NotJUnitTests.ProcessingTests.NeighborhoodTestField");
+        PApplet.main("test.NotJUnitTests.ProcessingTests.NeighborhoodCacheTests");
     }
 
     @Override
@@ -24,18 +24,19 @@ public class NeighborhoodTestField extends PApplet {
 
     @Override
     public void setup() {
-        world = new World(201, 401);
-        board = world.getNeighborhoodsCache();
-        frameRate(1);
     }
 
     @Override
     public void draw() {
+
+        //Setting World
+        world = new World(279, 569);
+        board = world.getNeighborhoodsCache();
         background(255);
         Random rand = new Random();
         Vector2D center;
         int r;
-        int offset = 50;
+        int offset = 10;
         fill(200);
         stroke(0);
         rect(offset, offset, world.width, world.height);
@@ -45,7 +46,7 @@ public class NeighborhoodTestField extends PApplet {
         Neighborhood neighborhood;
         for (int i = 0; i < neighborhoods.length; i++) {
             neighborhood = neighborhoods[i];
-            center = neighborhood.getCenter();
+            center = neighborhood.getOrigin();
             r = neighborhood.getR();
             rect(center.x - r + offset,
                     center.y - r + offset, r + r, r + r);
@@ -53,8 +54,9 @@ public class NeighborhoodTestField extends PApplet {
         }
 
 
+
         neighborhood = neighborhoods[rand.nextInt(neighborhoods.length)];
-        center = neighborhood.getCenter();
+        center = neighborhood.getOrigin();
         r = neighborhood.getR();
         noStroke();
         fill(0, 155);

@@ -5,44 +5,59 @@ import java.util.ArrayList;
 public class NeighborhoodsCache {
 
     private final World world;
-    private final int r;
+    private final Vector2DCache vector2DCache;
+    private final int dRadius;
     private Neighborhood[] neighborhoods;
 
 
-    public NeighborhoodsCache(World world, int r) {
+    public NeighborhoodsCache(World world, int dRadius) {
+        this.dRadius = dRadius;
+        checkParameters(world, dRadius);
         this.world = world;
-        this.r = r;
+        vector2DCache = world.getVector2DCache();
         createNeighborhoods();
     }
 
     private void createNeighborhoods() {
-        int wMid = (world.width - 1) / 2;
-        int hMid = (world.height - 1) / 2;
-        ArrayList<Neighborhood> neighborhoods = new ArrayList<>();
-        Vector2DCache cache = world.getVector2DCache();
-        for (int i = 0; i < wMid; i += r) {
-            for (int j = 0; j < hMid; j += r) {
-                if (i == 0) {
-                    if (j == 0) {
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid, hMid), r));
-                    } else {
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid, hMid - j), r));
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid, hMid + j), r));
-                    }
-                } else {
-                    if (j == 0) {
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid - i, hMid), r));
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid + i, hMid), r));
-                    } else {
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid - i, hMid + j), r));
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid - i, hMid - j), r));
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid + i, hMid + j), r));
-                        neighborhoods.add(new Neighborhood(cache.getPositive(wMid + i, hMid - j), r));
-                    }
-                }
+
+
+    }
+
+    private Vector2D[] getDimProjections(int dimLength, int dRadius) {
+
+        //Setting up
+        ArrayList<Vector2D> projections = new ArrayList<>();
+        int midIndex = (dimLength - 1) / 2;
+
+        if (dimLength % 2 == 0) {
+            return null;
+        } else {
+            //First
+            int center = midIndex - dRadius;
+            if (center < 0) {
+                projections.add(vector2DCache.get(0, dimLength));
+            } else {
+                projections.add(vector2DCache.get(center - dRadius, 2 * dRadius + 1));
             }
+
+            for (int dr = dRadius; dr < dimLength; dr += dRadius) {
+                center = midIndex - dr;
+                if (center < 0) {
+                    projections.add(vector2DCache.get(0, dimLength));
+                }
+
+            }
+
         }
-        this.neighborhoods = neighborhoods.toArray(new Neighborhood[neighborhoods.size()]);
+
+        return projections.toArray(new Vector2D[projections.size()]);
+    }
+
+
+    private void checkParameters(World world, int r) {
+        if (r < 2) {
+            throw new Exceptions.IllegalValueException("r must be bigger than 1");
+        }
     }
 
     public Neighborhood[] getNeighborhoods() {

@@ -2,17 +2,16 @@ package Core.World;
 
 public class Neighborhood {
 
-    private final Vector2D center;
+    private final Vector2D origin;
     private final int r;
 
-    Neighborhood(Vector2D center, int r) {
-
-        this.center = center;
-        this.r = r;
+    Neighborhood(Vector2D origin, int width, int heigth) {
+        this.origin = origin;
+        this.r = width;
     }
 
-    public Vector2D getCenter() {
-        return center;
+    public Vector2D getOrigin() {
+        return origin;
     }
 
     public int getR() {
