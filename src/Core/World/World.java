@@ -37,6 +37,7 @@ public class World {
 
             private static final int DEFAULT_RANDOM_CACHE_LENGTH = 10000000;
             private static final int DEFAULT_NEIGHBORHOOD_DRADIUS = 20;
+            private static final int DEFAULT_NEIGHBORHOOD_OFFSET = 5;
 
         }
 
@@ -50,6 +51,7 @@ public class World {
         private final int wHeight;
         //Neighborhoods
         private int neighDRadius;
+        private int neighOffset;
         //RandomNumbersCache
         private int randNumbersCacheLength;
 
@@ -62,6 +64,7 @@ public class World {
         private void setDefaults() {
             //Neighborhoods
             neighDRadius = Statics.Defaults.DEFAULT_NEIGHBORHOOD_DRADIUS;
+            neighOffset = Statics.Defaults.DEFAULT_NEIGHBORHOOD_OFFSET;
 
             //RandomNumbersCache
             randNumbersCacheLength = Statics.Defaults.DEFAULT_RANDOM_CACHE_LENGTH;
@@ -74,7 +77,7 @@ public class World {
 
             //NeighborhoodCache
             NeighborhoodsCache neighborhoodsCache = new NeighborhoodsCache(wWidth,
-                    wHeight, neighDRadius, vector2DCache);
+                    wHeight, neighDRadius, neighOffset, vector2DCache);
 
             //RandomNu
             RandomNumbersCache randomNumbersCache = new RandomNumbersCache(randNumbersCacheLength);
@@ -102,6 +105,22 @@ public class World {
 
         public void setRandNumbersCacheLength(int randNumbersCacheLength) {
             this.randNumbersCacheLength = randNumbersCacheLength;
+        }
+
+        public void setNeighOffset(int neighOffset) {
+            this.neighOffset = neighOffset;
+        }
+
+        public int getwWidth() {
+            return wWidth;
+        }
+
+        public int getwHeight() {
+            return wHeight;
+        }
+
+        public int getNeighOffset() {
+            return neighOffset;
         }
     }
 

@@ -66,6 +66,7 @@ public class NeighborhoodCacheTests extends PApplet {
         World.WorldFactory factory =
                 new World.WorldFactory(width - 2 * offset, height - 2 * offset);
         factory.setNeighDRadius((int) map(mouseX, 0, width, 10, 50));
+        factory.setNeighOffset(factory.getNeighDRadius() / 3);
         world = factory.createNewWorld();
     }
 }

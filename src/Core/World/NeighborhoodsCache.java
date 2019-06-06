@@ -8,24 +8,27 @@ public class NeighborhoodsCache {
     private final int wWidth;
     private final int wHeight;
     private final int dRadius;
+    private final int offset;
     private Neighborhood[] neighborhoods;
 
 
-    public NeighborhoodsCache(int wWidth, int wHeight, int dRadius, Vector2DCache vector2DCache) {
+    public NeighborhoodsCache(int wWidth, int wHeight, int dRadius, int offset, Vector2DCache vector2DCache) {
         this.wWidth = wWidth;
         this.wHeight = wHeight;
         this.dRadius = dRadius;
+        this.offset = offset;
         this.vector2DCache = vector2DCache;
         createNeighborhoods();
     }
 
-    private static Vector2D getOriginAndSize(int index, ArrayList<Integer> centers, int dimLength, int dRadius,
+    private static Vector2D getOriginAndSize(int index, ArrayList<Integer> centers, int dimLength,
+                                             int dRadius, int offset,
                                              Vector2DCache cache) {
         int origin, size;
         if (index == 0) {
             if (centers.size() > 1) {
-                origin = centers.get(0) - dRadius;
-                size = centers.get(2) - centers.get(1) + 1;
+                origin = centers.get(0) - dRadius + offset;
+                size = centers.get(2) - centers.get(1) + 1 - 2 * offset;
             } else {
                 origin = 0;
                 size = dimLength;
@@ -34,9 +37,10 @@ public class NeighborhoodsCache {
             origin = centers.get(index) - dRadius;
             if (origin < 0) {
                 origin = 0;
-                size = dRadius + centers.get(index) + 1;
+                size = dRadius + centers.get(index) + 1 - offset;
             } else {
-                size = 2 * dRadius + 1;
+                origin += offset;
+                size = 2 * dRadius + 1 - 2 * offset;
                 if (centers.get(index) + dRadius >= dimLength) {
                     size = dimLength - origin;
                 }
@@ -55,11 +59,11 @@ public class NeighborhoodsCache {
         Vector2D xOriSize, yOriSize;
         int ni = 0;
         for (int cx = 0; cx < centerXs.size(); cx++) {
-            xOriSize = getOriginAndSize(cx, centerXs, wWidth, dRadius,
+            xOriSize = getOriginAndSize(cx, centerXs, wWidth, dRadius, offset,
                     vector2DCache);
             for (int cy = 0; cy < centerYs.size(); cy++) {
 
-                yOriSize = getOriginAndSize(cy, centerYs, wHeight, dRadius,
+                yOriSize = getOriginAndSize(cy, centerYs, wHeight, dRadius, offset,
                         vector2DCache);
                 neighborhoods[ni] = new Neighborhood(vector2DCache.getPositive(xOriSize.x, yOriSize.x),
                         xOriSize.y, yOriSize.y);
@@ -97,6 +101,7 @@ public class NeighborhoodsCache {
     public static void main(String[] args) {
         int dimLength = 10;
         int dRadius = 3;
+        int offset = 1;
         Vector2DCache cache = new Vector2DCache(20, 20);
         ArrayList<Integer> centers = getCentersProjectionCoors(dimLength, dRadius);
         for (int i = 0; i < dimLength; i++) {
@@ -109,6 +114,6 @@ public class NeighborhoodsCache {
         System.out.println(centers);
         int index = 2;
         System.out.println("Cheking: " + index);
-        System.out.println(getOriginAndSize(index, centers, dimLength, dRadius, cache));
+        System.out.println(getOriginAndSize(index, centers, dimLength, dRadius, offset, cache));
     }
 }
