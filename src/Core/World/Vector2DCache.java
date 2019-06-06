@@ -31,21 +31,17 @@ public class Vector2DCache {
 
 
     final Vector2D[][] cache;
-    private final int xb;
-    private final int yb;
-    private final int width;
-    private final int height;
+    final int size;
+    final int lastIndex;
 
-    public Vector2DCache(int width, int height) {
-        this.width = width;
-        this.height = height;
-        cache = new Vector2D[width * 2 - 1][height * 2 - 1];
-        xb = width - 1;
-        yb = height - 1;
-        fillCache();
+    public Vector2DCache(int wWidth, int wHeight) {
+        size = Math.max(wWidth, wHeight);
+        cache = new Vector2D[size][size];
+        lastIndex = size - 1;
+        fillCache(wWidth, wHeight);
     }
 
-    private void fillCache() {
+    private void fillCache(int wWidth, int wHeight) {
         int vx, vy;
         Vector2D vector2D;
 
@@ -53,9 +49,9 @@ public class Vector2DCache {
 
         //Creating partials
         for (int x = 0; x < cache.length; x++) {
-            vx = x > xb ? xb - x : x;
+            vx = x > lastIndex ? lastIndex - x : x;
             for (int y = 0; y < cache[x].length; y++) {
-                vy = y > yb ? yb - y : y;
+                vy = y > lastIndex ? lastIndex - y : y;
                 vector2D = factory.getPartialVector2D(vx, vy);
                 cache[x][y] = vector2D;
             }
@@ -65,7 +61,8 @@ public class Vector2DCache {
         for (int x = 0; x < cache.length; x++) {
             for (int y = 0; y < cache[x].length; y++) {
                 vector2D = cache[x][y];
-                factory.setFourNeighbors(vector2D);
+                factory.setFourNeighbors(vector2D, wWidth - 1,
+                        wHeight - 1);
                 factory.setTendDistribution(vector2D);
                 factory.setMaxCollinear(vector2D);
             }
@@ -77,18 +74,18 @@ public class Vector2DCache {
     }
 
     public Vector2D get(int x, int y) {
-        return cache[x < 0 ? xb - x : x][y < 0 ? yb - y : y];
+        return cache[x < 0 ? lastIndex - x : x][y < 0 ? lastIndex - y : y];
     }
 
     public Vector2D getAndCheck(int x, int y) {
-        if (x > xb) {
-            throw new IndexOutOfBoundsException("x = " + x + " is too big for a cache with w = " + width);
-        } else if (x < -xb) {
-            throw new IndexOutOfBoundsException("x = " + x + " is too small for a cache with w = " + width);
-        } else if (y > yb) {
-            throw new IndexOutOfBoundsException("y = " + y + " is too big for a cache with h = " + height);
-        } else if (y < -yb) {
-            throw new IndexOutOfBoundsException("y = " + y + " is too small for a cache with h = " + height);
+        if (x > lastIndex) {
+            throw new IndexOutOfBoundsException("x = " + x + " is too big for a cache with size = " + size);
+        } else if (x < -lastIndex) {
+            throw new IndexOutOfBoundsException("x = " + x + " is too small for a cache with size = " + size);
+        } else if (y > lastIndex) {
+            throw new IndexOutOfBoundsException("y = " + y + " is too big for a cache with size = " + size);
+        } else if (y < -lastIndex) {
+            throw new IndexOutOfBoundsException("y = " + y + " is too small for a cache with size = " + size);
         }
         return get(x, y);
     }
@@ -106,15 +103,16 @@ public class Vector2DCache {
     }
 
     public Vector2D getMaxCollinear(Vector2D v) {
-        float rb = (float) yb / xb;
         if (v.x == 0) {
-            return get(0, Tools.toSameSign(v.y, yb));
+            return get(0, Tools.toSameSign(v.y, lastIndex));
         } else {
             float rv = Math.abs(((float) v.y) / v.x);
-            if (rv < rb) {
-                return get(Tools.toSameSign(v.x, xb), Tools.toSameSign(v.y, Math.round(rv * xb)));
+            if (rv < 1F) {
+                return get(Tools.toSameSign(v.x, lastIndex),
+                        Tools.toSameSign(v.y, Math.round(rv * lastIndex)));
             } else {
-                return get(Tools.toSameSign(v.x, Math.round(yb / rv)), Tools.toSameSign(v.y, yb));
+                return get(Tools.toSameSign(v.x, Math.round(lastIndex / rv)),
+                        Tools.toSameSign(v.y, lastIndex));
             }
         }
     }
@@ -136,7 +134,7 @@ public class Vector2DCache {
             return new Vector2D(x, y);
         }
 
-        private void setFourNeighbors(Vector2D vector2D) {
+        private void setFourNeighbors(Vector2D vector2D, int lastX, int lastY) {
             if (vector2D.x < 0 || vector2D.y < 0)
                 return;
 
@@ -151,14 +149,14 @@ public class Vector2DCache {
             }
 
             //Down
-            if (vector2D.y == yb) {
+            if (vector2D.y == lastY) {
                 neighbors[DOWN_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y);
             } else {
                 neighbors[DOWN_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y + 1);
             }
 
             //Right
-            if (vector2D.x == xb) {
+            if (vector2D.x == lastX) {
                 neighbors[RIGHT_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y);
             } else {
                 neighbors[RIGHT_NEIGHBORHOOD_INDEX] = get(vector2D.x + 1, vector2D.y);
@@ -174,13 +172,12 @@ public class Vector2DCache {
         }
 
         private void setTendDistribution(Vector2D vector2D) {
-            float axm = 4 * (width - 1);
-            float aym = 4 * (height - 1);
+            float max = 4 * (size - 1);
             float[] tendDist = vector2D.tendDistribution;
             assert tendDist != null;
-            tendDist[UP_NEIGHBORHOOD_INDEX] = 0.25F - vector2D.y / aym;
-            tendDist[DOWN_NEIGHBORHOOD_INDEX] = tendDist[UP_NEIGHBORHOOD_INDEX] + 0.25F + vector2D.y / aym;
-            tendDist[RIGHT_NEIGHBORHOOD_INDEX] = tendDist[DOWN_NEIGHBORHOOD_INDEX] + 0.25F + vector2D.x / axm;
+            tendDist[UP_NEIGHBORHOOD_INDEX] = 0.25F - vector2D.y / max;
+            tendDist[DOWN_NEIGHBORHOOD_INDEX] = tendDist[UP_NEIGHBORHOOD_INDEX] + 0.25F + vector2D.y / max;
+            tendDist[RIGHT_NEIGHBORHOOD_INDEX] = tendDist[DOWN_NEIGHBORHOOD_INDEX] + 0.25F + vector2D.x / max;
         }
 
         private void setMaxCollinear(Vector2D vector2D) {
