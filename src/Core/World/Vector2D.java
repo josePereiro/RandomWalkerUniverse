@@ -20,7 +20,7 @@ public final class Vector2D {
     final float[] tendDistribution;
     final Vector2D[] fourNeighbors;
     Vector2D maxCollinear;
-//    final Neighborhood[] neighborhoods;
+    Neighborhood[] neighborhoods;
 
     Vector2D(int x, int y) {
         this.x = x;

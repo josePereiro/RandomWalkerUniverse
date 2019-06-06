@@ -33,8 +33,9 @@ public class Vector2DCache {
     final Vector2D[][] cache;
     final int size;
     final int lastIndex;
+    Vector2DFactory factory;
 
-    public Vector2DCache(int wWidth, int wHeight) {
+    Vector2DCache(int wWidth, int wHeight) {
         size = Math.max(wWidth, wHeight);
         cache = new Vector2D[2 * size - 1][2 * size - 1];
         lastIndex = size - 1;
@@ -45,7 +46,7 @@ public class Vector2DCache {
         int vx, vy;
         Vector2D vector2D;
 
-        Vector2DFactory factory = new Vector2DFactory();
+        factory = new Vector2DFactory();
 
         //Creating partials
         for (int x = 0; x < cache.length; x++) {

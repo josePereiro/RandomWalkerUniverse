@@ -21,7 +21,8 @@ public class MaxCollinearTest extends PApplet {
 
     @Override
     public void setup() {
-        world = new World(width, height);
+        World.WorldFactory factory = new World.WorldFactory(width, height);
+        world = factory.createNewWorld();
         cache = world.getVector2DCache();
 
         fill(0);

@@ -17,7 +17,8 @@ public class Vector2DTest {
 
     @BeforeAll
     static void beforeAll() {
-        World world = new World(RBOUND, RBOUND);
+        World.WorldFactory factory = new World.WorldFactory(RBOUND, RBOUND);
+        World world = factory.createNewWorld();
         cache = world.getVector2DCache();
     }
 

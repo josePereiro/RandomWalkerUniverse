@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f6e7d990-07d4-48dd-8c04-7f3cb938864b" name="Default" comment="neighborhoods are symmetrically sparse in the NeighborhoodCache!!!">
+    <list default="true" id="f6e7d990-07d4-48dd-8c04-7f3cb938864b" name="Default" comment="Vector2DCache is square now!!!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/World/Neighborhood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/Neighborhood.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/World/Vector2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/Vector2D.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/World/Vector2DCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/Vector2DCache.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/World/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/MaxCollinearTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/MaxCollinearTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTests.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,59 +38,120 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="98" column="43" selection-start-line="98" selection-start-column="43" selection-end-line="98" selection-end-column="43" />
+            <state relative-caret-position="270">
+              <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+              <folding>
+                <element signature="e#2820#2821#0" expanded="true" />
+                <element signature="e#2856#2857#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Core/World/PointyWalker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Core/World/Vector2DCache.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="507">
+              <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
+              <folding>
+                <element signature="docComment;class#Vector2DCache#0" />
+                <element signature="docComment;field#cache#0;class#Vector2DCache#0" />
+                <element signature="method#getAndCheck#0;class#Vector2DCache#0" />
+                <element signature="method#getMaxCollinear#0;class#Vector2DCache#0" />
+                <element signature="docComment;method#getPartialVector2D#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
+                <element signature="method#setFourNeighbors#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
+                <element signature="method#setTendDistribution#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Core/World/Vector2DCache.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="40" column="35" lean-forward="true" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="35" />
-              <folding>
-                <element signature="e#2303#2304#0" expanded="true" />
-                <element signature="e#2371#2372#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/World/Neighborhood.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
-              <folding>
-                <element signature="e#124#125#0" expanded="true" />
-                <element signature="e#147#148#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/IndexOutOfBoundsException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/World/World.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+            <state relative-caret-position="168">
+              <caret line="38" column="71" selection-start-line="38" selection-start-column="71" selection-end-line="38" selection-end-column="71" />
               <folding>
-                <element signature="e#700#701#0" expanded="true" />
-                <element signature="e#765#766#0" expanded="true" />
-                <element signature="e#804#805#0" expanded="true" />
-                <element signature="e#842#843#0" expanded="true" />
-                <element signature="e#1334#1335#0" expanded="true" />
-                <element signature="e#1375#1376#0" expanded="true" />
+                <element signature="e#2869#2870#0" expanded="true" />
+                <element signature="e#2912#2913#0" expanded="true" />
+                <element signature="e#2969#2970#0" expanded="true" />
+                <element signature="e#3025#3026#0" expanded="true" />
+                <element signature="e#3075#3076#0" expanded="true" />
+                <element signature="e#3128#3129#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="311">
+              <caret line="38" column="1" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTests.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="37" column="41" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="878">
+              <caret line="68" column="21" lean-forward="true" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="223">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1783#1784#0" expanded="true" />
+                <element signature="e#1806#1807#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/MaxCollinearTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,119 +160,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="37" column="20" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Tools/Tools.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="522" column="1" selection-start-line="522" selection-start-column="1" selection-end-line="522" selection-end-column="1" />
-              <folding>
-                <element signature="class#CollectionsOps#0;class#Tools#0" />
-                <element signature="method#mean#0;class#CollectionsOps#0;class#Tools#0" />
-                <element signature="docComment;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="method#CircularFloatSet#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="method#CircularFloatSet#1;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#readPrevious#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#read#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#readNext#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveReadIndexToNext#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveReadIndexToPrevious#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveReadIndexTo#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="method#moveReadIndexTo#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#hasPrevious#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#hasNext#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#writePrevious#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#write#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#writeNext#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveWriteIndexToNext#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveWriteIndexToPrevious#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveWriteIndexTo#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="method#moveWriteIndexTo#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveWriteIndexToReadIndex#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveReadIndexToWriteIndex#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="method#clear#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;method#getArray#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="method#getNext#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="method#getPrevious#0;class#CircularFloatSet#0;class#Tools#0" />
-                <element signature="docComment;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="class#CircularIntSet#0;class#Tools#0" />
-                <element signature="method#CircularIntSet#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#readPrevious#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#read#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#readAndMoveForward#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="method#readAndMoveForward#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#readNext#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveReadIndexToNext#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveReadIndexToPrevious#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveReadIndexTo#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="method#moveReadIndexTo#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#isPreviousNonZero#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#isNextNonZero#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#writePrevious#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#write#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#writeAndMoveForward#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="method#writeAndMoveForward#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#writeNext#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveWriteIndexToNext#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveWriteIndexToPrevious#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveWriteIndexTo#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="method#moveWriteIndexTo#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveWriteIndexToReadIndex#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#moveReadIndexToWriteIndex#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="method#clear#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#getArray#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="method#getNext#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="method#getPrevious#0;class#CircularIntSet#0;class#Tools#0" />
-                <element signature="docComment;method#toSameSign#0;class#Tools#0" />
-                <element signature="method#toSameSign#0;class#Tools#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/World/RandomNumbersCache.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1806#1807#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/World/Rectangle.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="38" column="1" lean-forward="true" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
-              <folding>
-                <element signature="e#351#352#0" expanded="true" />
-                <element signature="e#382#383#0" expanded="true" />
-                <element signature="e#464#465#0" expanded="true" />
-                <element signature="e#492#493#0" expanded="true" />
-                <element signature="e#529#530#0" expanded="true" />
-                <element signature="e#558#559#0" expanded="true" />
-                <element signature="e#560#561#0" expanded="true" />
-                <element signature="e#635#636#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="363">
+              <caret line="45" column="20" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -248,9 +207,12 @@
       <find>tryDirec</find>
       <find>float</find>
       <find>item</find>
-      <find>world.width</find>
       <find>world.height</find>
+      <find>world.width</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -293,33 +255,33 @@
         <option value="$PROJECT_DIR$/src/Core/Basics/NeighborhoodsBoard/NeighborhoodsCache.java" />
         <option value="$PROJECT_DIR$/src/Core/World/World/Statics/Defaults/Neighborhoods.java" />
         <option value="$PROJECT_DIR$/src/Core/Basics/Walkers/PointyWalker.java" />
-        <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java" />
-        <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java" />
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/RandomWalkerTests.java" />
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/ReproducingRandomArtifact.java" />
-        <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTests.java" />
         <option value="$PROJECT_DIR$/src/Core/Collections/CircularFloatSet.java" />
         <option value="$PROJECT_DIR$/src/Core/Collections/CircularIntSet.java" />
         <option value="$PROJECT_DIR$/src/Core/World/PointyWalker.java" />
         <option value="$PROJECT_DIR$/src/Core/World/RandomNumbersCache.java" />
-        <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java" />
         <option value="$PROJECT_DIR$/src/test/JUnit/SilyTest.java" />
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/TestingMaxCoolinear.java" />
         <option value="$PROJECT_DIR$/src/test/JUnit/TestSupport/Support.java" />
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/MaxColinnearTest.java" />
-        <option value="$PROJECT_DIR$/src/Core/World/Vector2D.java" />
-        <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/MaxCollinearTest.java" />
         <option value="$PROJECT_DIR$/src/Core/World/Exceptions.java" />
         <option value="$PROJECT_DIR$/src/Core/Tools/Tools.java" />
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodTestField.java" />
         <option value="$PROJECT_DIR$/src/Processing/ProcessingTools.java" />
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/ProcessingTools.java" />
-        <option value="$PROJECT_DIR$/src/Core/World/Neighborhood.java" />
         <option value="$PROJECT_DIR$/src/Core/World/Rectangle.java" />
-        <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java" />
-        <option value="$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java" />
-        <option value="$PROJECT_DIR$/src/Core/World/World.java" />
+        <option value="$PROJECT_DIR$/src/Core/World/Vector2D.java" />
+        <option value="$PROJECT_DIR$/src/Core/World/Neighborhood.java" />
         <option value="$PROJECT_DIR$/src/Core/World/Vector2DCache.java" />
+        <option value="$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java" />
+        <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java" />
+        <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTests.java" />
+        <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/MaxCollinearTest.java" />
+        <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java" />
+        <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java" />
+        <option value="$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java" />
+        <option value="$PROJECT_DIR$/src/Core/World/World.java" />
       </list>
     </option>
   </component>
@@ -342,6 +304,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -385,6 +348,21 @@
               <item name="RandomWalkersUniverse" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="JUnit" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RandomWalkersUniverse" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RandomWalkersUniverse" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="JUnit" type="462c0819:PsiDirectoryNode" />
+              <item name="Vector2D" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RandomWalkersUniverse" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RandomWalkersUniverse" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="NotJUnitTests" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -408,7 +386,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -457,15 +434,15 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.PreliminaryRandomWalkerTendencyTests">
+  <component name="RunManager" selected="Application.NeighborhoodCacheTests">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NeighborhoodCacheTests" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.NotJUnitTests.ProcessingTests.NeighborhoodCacheTests" />
+    <configuration name="MaxCollinearTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.NotJUnitTests.ProcessingTests.MaxCollinearTest" />
       <module name="RandomWalkersUniverse" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -478,13 +455,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NeighborhoodsCache" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Core.World.NeighborhoodsCache" />
+    <configuration name="NeighborhoodCacheTests" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.NotJUnitTests.ProcessingTests.NeighborhoodCacheTests" />
       <module name="RandomWalkersUniverse" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Core.World.*" />
+          <option name="PATTERN" value="test.NotJUnitTests.ProcessingTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -506,22 +483,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReproducingRandomArtifact" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.NotJUnitTests.ProcessingTests.ReproducingRandomArtifact" />
-      <module name="RandomWalkersUniverse" />
+    <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.NotJUnitTests.ProcessingTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <configuration name="Vector2DCacheTest.getAndCheck_ThrowException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="RandomWalkersUniverse" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.JUnit.Vector2D.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.JUnit.Vector2D" />
+      <option name="MAIN_CLASS_NAME" value="test.JUnit.Vector2D.Vector2DCacheTest" />
+      <option name="METHOD_NAME" value="getAndCheck_ThrowException" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -567,19 +547,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ReproducingRandomArtifact" />
-      <item itemvalue="Application.NeighborhoodsCache" />
       <item itemvalue="Application.NeighborhoodCacheTests" />
-      <item itemvalue="JUnit.test in RandomWalkersUniverse" />
       <item itemvalue="Application.PreliminaryRandomWalkerTendencyTests" />
+      <item itemvalue="JUnit.test in RandomWalkersUniverse" />
+      <item itemvalue="JUnit.Vector2DCacheTest.getAndCheck_ThrowException" />
+      <item itemvalue="Application.MaxCollinearTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.PreliminaryRandomWalkerTendencyTests" />
         <item itemvalue="Application.NeighborhoodCacheTests" />
-        <item itemvalue="Application.NeighborhoodsCache" />
+        <item itemvalue="Application.MaxCollinearTest" />
+        <item itemvalue="JUnit.Vector2DCacheTest.getAndCheck_ThrowException" />
         <item itemvalue="JUnit.test in RandomWalkersUniverse" />
-        <item itemvalue="Application.ReproducingRandomArtifact" />
+        <item itemvalue="Application.PreliminaryRandomWalkerTendencyTests" />
       </list>
     </recent_temporary>
   </component>
@@ -727,16 +707,17 @@
       <option name="project" value="LOCAL" />
       <updated>1559788239944</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Vector2DCache is square now!!!">
+      <created>1559788694943</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1559788694943</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="RandomCacheTest_pickCachedVsRandomClass - 2019.06.01 at 16h 21m 04s.xml">
-      <configuration name="RandomCacheTest.pickCachedVsRandomClass" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RandomCacheTest_pickCachedVsRandomClass - 2019.06.01 at 16h 22m 50s.xml">
-      <configuration name="RandomCacheTest.pickCachedVsRandomClass" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="test_in_RandomWalkersUniverse - 2019.06.01 at 16h 57m 07s.xml">
       <configuration name="test in RandomWalkersUniverse" configurationId="JUnit" />
     </history-entry>
@@ -761,6 +742,12 @@
     <history-entry file="test_in_RandomWalkersUniverse - 2019.06.03 at 23h 51m 38s.xml">
       <configuration name="test in RandomWalkersUniverse" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="test_in_RandomWalkersUniverse - 2019.06.06 at 18h 59m 31s.xml">
+      <configuration name="test in RandomWalkersUniverse" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Vector2DCacheTest_getAndCheck_ThrowException - 2019.06.06 at 19h 00m 20s.xml">
+      <configuration name="Vector2DCacheTest.getAndCheck_ThrowException" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -775,7 +762,7 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31796116" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32362458" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="3" />
@@ -785,7 +772,7 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32739726" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4969743" visible="true" weight="0.24087591" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4969743" visible="true" weight="0.24087591" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49546143" weight="0.30218977" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -870,7 +857,8 @@
     <MESSAGE value="Trying to make neighborhoods symmetrical" />
     <MESSAGE value="neighborhoods are symmetrically sparse in the NeighborhoodCache!!!" />
     <MESSAGE value="changing Vector2DCache tp squared!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="changing Vector2DCache tp squared!!!" />
+    <MESSAGE value="Vector2DCache is square now!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Vector2DCache is square now!!!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -883,7 +871,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java</url>
-          <line>23</line>
+          <line>24</line>
           <properties />
           <option name="timeStamp" value="353" />
         </line-breakpoint>
@@ -1016,16 +1004,6 @@
     <entry file="file://$PROJECT_DIR$/src/Core/Boards/FloatBoard.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/World/World/Statics/Defaults/Neighborhoods.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Boards/DistanceBoard.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="56" selection-start-line="34" selection-start-column="56" selection-end-line="34" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/JUnit/Random/RandomNumbersCacheTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1036,28 +1014,8 @@
     <entry file="file://$PROJECT_DIR$/src/Core/Collections/CircularFloatSet.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Collections/CircularIntSet.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Boards/Board.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/JUnit/SilyTest.java" />
     <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/TestingMaxCoolinear.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/MaxCollinearTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/JUnit/TestSupport/Support.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -1087,36 +1045,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="61" column="9" selection-start-line="61" selection-start-column="9" selection-end-line="61" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/ReproducingRandomArtifact.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="39">
           <caret line="42" selection-start-line="42" selection-end-line="42" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/World/Vector2D.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="22" column="41" lean-forward="true" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
-          <folding>
-            <element signature="docComment;field#tendDistribution#0;class#Vector2D#0" />
-            <element signature="method#Vector2D#0;class#Vector2D#0" />
-            <element signature="method#magnitude#0;class#Vector2D#0" />
-            <element signature="e#1117#1118#0" expanded="true" />
-            <element signature="e#1152#1153#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1147,16 +1081,6 @@
             <element signature="e#1304#1305#0" expanded="true" />
             <element signature="e#1355#1356#0" expanded="true" />
             <element signature="e#1409#1410#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/World/PointyWalker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1247,88 +1171,151 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/World/RandomNumbersCache.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/World/Neighborhood.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
-          <folding>
-            <element signature="e#124#125#0" expanded="true" />
-            <element signature="e#147#148#0" expanded="true" />
-          </folding>
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/World/RandomNumbersCache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/World/Rectangle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="38" column="1" lean-forward="true" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+        <state relative-caret-position="180">
+          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
           <folding>
-            <element signature="e#351#352#0" expanded="true" />
-            <element signature="e#382#383#0" expanded="true" />
-            <element signature="e#464#465#0" expanded="true" />
-            <element signature="e#492#493#0" expanded="true" />
-            <element signature="e#529#530#0" expanded="true" />
-            <element signature="e#558#559#0" expanded="true" />
+            <element signature="e#517#518#0" expanded="true" />
             <element signature="e#560#561#0" expanded="true" />
+            <element signature="e#591#592#0" expanded="true" />
             <element signature="e#635#636#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/World/Vector2D.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
+        <state relative-caret-position="420">
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+          <folding>
+            <element signature="docComment;field#tendDistribution#0;class#Vector2D#0" />
+            <element signature="method#magnitude#0;class#Vector2D#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/World/PointyWalker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1806#1807#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="98" column="43" selection-start-line="98" selection-start-column="43" selection-end-line="98" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="37" column="20" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/World/World.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+        <state relative-caret-position="270">
+          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
           <folding>
-            <element signature="e#700#701#0" expanded="true" />
-            <element signature="e#765#766#0" expanded="true" />
-            <element signature="e#804#805#0" expanded="true" />
-            <element signature="e#842#843#0" expanded="true" />
-            <element signature="e#1334#1335#0" expanded="true" />
-            <element signature="e#1375#1376#0" expanded="true" />
+            <element signature="e#2820#2821#0" expanded="true" />
+            <element signature="e#2856#2857#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/World/Vector2DCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="40" column="35" lean-forward="true" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="35" />
+        <state relative-caret-position="507">
+          <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
           <folding>
-            <element signature="e#2303#2304#0" expanded="true" />
-            <element signature="e#2371#2372#0" expanded="true" />
+            <element signature="docComment;class#Vector2DCache#0" />
+            <element signature="docComment;field#cache#0;class#Vector2DCache#0" />
+            <element signature="method#getAndCheck#0;class#Vector2DCache#0" />
+            <element signature="method#getMaxCollinear#0;class#Vector2DCache#0" />
+            <element signature="docComment;method#getPartialVector2D#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
+            <element signature="method#setFourNeighbors#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
+            <element signature="method#setTendDistribution#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="38" column="1" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="37" column="41" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/JUnit/Vector2D/Vector2DCacheTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="878">
+          <caret line="68" column="21" lean-forward="true" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="45" column="20" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/MaxCollinearTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1783#1784#0" expanded="true" />
+            <element signature="e#1806#1807#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/World/World.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="38" column="71" selection-start-line="38" selection-start-column="71" selection-end-line="38" selection-end-column="71" />
+          <folding>
+            <element signature="e#2869#2870#0" expanded="true" />
+            <element signature="e#2912#2913#0" expanded="true" />
+            <element signature="e#2969#2970#0" expanded="true" />
+            <element signature="e#3025#3026#0" expanded="true" />
+            <element signature="e#3075#3076#0" expanded="true" />
+            <element signature="e#3128#3129#0" expanded="true" />
           </folding>
         </state>
       </provider>

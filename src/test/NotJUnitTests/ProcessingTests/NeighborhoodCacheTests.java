@@ -20,13 +20,14 @@ public class NeighborhoodCacheTests extends PApplet {
 
     @Override
     public void settings() {
-        size(600, 600);
+        size(300, 600);
     }
 
     @Override
     public void setup() {
-        world = new World(width - 2 * offset, height - 2 * offset);
-        world.setNeighborsRadius((int) map(mouseX, 0, width, 10, 50));
+        World.WorldFactory factory =
+                new World.WorldFactory(width - 2 * offset, height - 2 * offset);
+        world = factory.createNewWorld();
     }
 
     @Override
@@ -62,6 +63,9 @@ public class NeighborhoodCacheTests extends PApplet {
 
     @Override
     public void mouseClicked() {
-        setup();
+        World.WorldFactory factory =
+                new World.WorldFactory(width - 2 * offset, height - 2 * offset);
+        factory.setNeighDRadius((int) map(mouseX, 0, width, 10, 50));
+        world = factory.createNewWorld();
     }
 }

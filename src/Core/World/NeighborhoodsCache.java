@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 public class NeighborhoodsCache {
 
-    private final World world;
     private final Vector2DCache vector2DCache;
+    private final int wWidth;
+    private final int wHeight;
     private final int dRadius;
     private Neighborhood[] neighborhoods;
 
 
-    public NeighborhoodsCache(World world) {
-        this.dRadius = world.getNeighborsRadius();
-        checkParameters(world, dRadius);
-        this.world = world;
-        vector2DCache = world.getVector2DCache();
+    public NeighborhoodsCache(int wWidth, int wHeight, int dRadius, Vector2DCache vector2DCache) {
+        this.wWidth = wWidth;
+        this.wHeight = wHeight;
+        this.dRadius = dRadius;
+        this.vector2DCache = vector2DCache;
         createNeighborhoods();
     }
 
@@ -47,18 +48,18 @@ public class NeighborhoodsCache {
 
     private void createNeighborhoods() {
 
-        ArrayList<Integer> centerXs = getCentersProjectionCoors(world.width, dRadius);
-        ArrayList<Integer> centerYs = getCentersProjectionCoors(world.height, dRadius);
+        ArrayList<Integer> centerXs = getCentersProjectionCoors(wWidth, dRadius);
+        ArrayList<Integer> centerYs = getCentersProjectionCoors(wHeight, dRadius);
 
         neighborhoods = new Neighborhood[centerXs.size() * centerYs.size()];
         Vector2D xOriSize, yOriSize;
         int ni = 0;
         for (int cx = 0; cx < centerXs.size(); cx++) {
-            xOriSize = getOriginAndSize(cx, centerXs, world.width, dRadius,
+            xOriSize = getOriginAndSize(cx, centerXs, wWidth, dRadius,
                     vector2DCache);
             for (int cy = 0; cy < centerYs.size(); cy++) {
 
-                yOriSize = getOriginAndSize(cy, centerYs, world.height, dRadius,
+                yOriSize = getOriginAndSize(cy, centerYs, wHeight, dRadius,
                         vector2DCache);
                 neighborhoods[ni] = new Neighborhood(vector2DCache.getPositive(xOriSize.x, yOriSize.x),
                         xOriSize.y, yOriSize.y);

@@ -34,7 +34,8 @@ public class PreliminaryRandomWalkerTests extends PApplet {
 
     @Override
     public void setup() {
-        world = new World(width, height);
+        World.WorldFactory factory = new World.WorldFactory(width,height);
+        world = factory.createNewWorld();
         vector2DCache = world.getVector2DCache();
         randomNumbersCache = world.getRandomNumbersCache();
         walkers = new ArrayList<>();

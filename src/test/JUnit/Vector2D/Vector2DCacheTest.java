@@ -25,7 +25,8 @@ public class Vector2DCacheTest {
 
     @BeforeAll
     static void beforeAll() {
-        World world = new World(DEFAULT_W, DEFAULT_H);
+        World.WorldFactory factory = new World.WorldFactory(DEFAULT_H, DEFAULT_H);
+        World world = factory.createNewWorld();
         cache = world.getVector2DCache();
     }
 
@@ -60,15 +61,17 @@ public class Vector2DCacheTest {
     @Test
     @DisplayName("cache.getAndCheck most throw an Exception if indexes are wrong")
     void getAndCheck_ThrowException() {
+        int outOfRangeIndex = Math.max(DEFAULT_H, DEFAULT_W);
+
         Assertions.assertAll(
                 () -> Assertions.assertThrows(IndexOutOfBoundsException.class,
-                        () -> cache.getAndCheck(DEFAULT_W, y)),
+                        () -> cache.getAndCheck(outOfRangeIndex, y)),
                 () -> Assertions.assertThrows(IndexOutOfBoundsException.class,
-                        () -> cache.getAndCheck(x, DEFAULT_H)),
+                        () -> cache.getAndCheck(x, outOfRangeIndex)),
                 () -> Assertions.assertThrows(IndexOutOfBoundsException.class,
-                        () -> cache.getAndCheck(-DEFAULT_W, y)),
+                        () -> cache.getAndCheck(-outOfRangeIndex, y)),
                 () -> Assertions.assertThrows(IndexOutOfBoundsException.class,
-                        () -> cache.getAndCheck(x, -DEFAULT_H))
+                        () -> cache.getAndCheck(x, -outOfRangeIndex))
         );
     }
 
