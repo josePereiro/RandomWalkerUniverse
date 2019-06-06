@@ -36,7 +36,7 @@ public class Vector2DCache {
 
     public Vector2DCache(int wWidth, int wHeight) {
         size = Math.max(wWidth, wHeight);
-        cache = new Vector2D[size][size];
+        cache = new Vector2D[2 * size - 1][2 * size - 1];
         lastIndex = size - 1;
         fillCache(wWidth, wHeight);
     }

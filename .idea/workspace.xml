@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f6e7d990-07d4-48dd-8c04-7f3cb938864b" name="Default" comment="Trying to make neighborhoods symmetrical">
+    <list default="true" id="f6e7d990-07d4-48dd-8c04-7f3cb938864b" name="Default" comment="neighborhoods are symmetrically sparse in the NeighborhoodCache!!!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/World/Neighborhood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/Neighborhood.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/World/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/Rectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/World/Vector2DCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/Vector2DCache.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/World/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/World/World.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,28 +26,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="60" column="79" selection-start-line="60" selection-start-column="79" selection-end-line="60" selection-end-column="79" />
+            <state relative-caret-position="224">
+              <caret line="98" column="43" selection-start-line="98" selection-start-column="43" selection-end-line="98" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Core/World/Vector2DCache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+            <state relative-caret-position="246">
+              <caret line="40" column="35" lean-forward="true" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="35" />
               <folding>
-                <element signature="docComment;class#Vector2DCache#0" />
-                <element signature="method#fillCache#0;class#Vector2DCache#0" />
-                <element signature="e#2228#2229#0" expanded="true" />
-                <element signature="e#2262#2263#0" expanded="true" />
-                <element signature="method#getMaxCollinear#0;class#Vector2DCache#0" />
-                <element signature="docComment;method#getPartialVector2D#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
-                <element signature="method#setFourNeighbors#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
+                <element signature="e#2303#2304#0" expanded="true" />
+                <element signature="e#2371#2372#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -71,19 +62,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/World/Exceptions.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-              <folding>
-                <element signature="e#175#176#0" expanded="true" />
-                <element signature="e#213#214#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/IndexOutOfBoundsException.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
@@ -95,8 +73,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/World/World.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+            <state relative-caret-position="157">
+              <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
               <folding>
                 <element signature="e#700#701#0" expanded="true" />
                 <element signature="e#765#766#0" expanded="true" />
@@ -105,6 +83,15 @@
                 <element signature="e#1334#1335#0" expanded="true" />
                 <element signature="e#1375#1376#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="37" column="20" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -327,12 +314,12 @@
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodTestField.java" />
         <option value="$PROJECT_DIR$/src/Processing/ProcessingTools.java" />
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/ProcessingTools.java" />
-        <option value="$PROJECT_DIR$/src/Core/World/Vector2DCache.java" />
-        <option value="$PROJECT_DIR$/src/Core/World/World.java" />
         <option value="$PROJECT_DIR$/src/Core/World/Neighborhood.java" />
         <option value="$PROJECT_DIR$/src/Core/World/Rectangle.java" />
         <option value="$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/NeighborhoodCacheTests.java" />
         <option value="$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java" />
+        <option value="$PROJECT_DIR$/src/Core/World/World.java" />
+        <option value="$PROJECT_DIR$/src/Core/World/Vector2DCache.java" />
       </list>
     </option>
   </component>
@@ -470,23 +457,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.NeighborhoodCacheTests">
+  <component name="RunManager" selected="Application.PreliminaryRandomWalkerTendencyTests">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MaxCollinearTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.NotJUnitTests.ProcessingTests.MaxCollinearTest" />
-      <module name="RandomWalkersUniverse" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.NotJUnitTests.ProcessingTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -512,6 +485,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Core.World.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PreliminaryRandomWalkerTendencyTests" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.NotJUnitTests.ProcessingTests.PreliminaryRandomWalkerTendencyTests" />
+      <module name="RandomWalkersUniverse" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.NotJUnitTests.ProcessingTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -580,19 +567,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.MaxCollinearTest" />
       <item itemvalue="Application.ReproducingRandomArtifact" />
       <item itemvalue="Application.NeighborhoodsCache" />
       <item itemvalue="Application.NeighborhoodCacheTests" />
       <item itemvalue="JUnit.test in RandomWalkersUniverse" />
+      <item itemvalue="Application.PreliminaryRandomWalkerTendencyTests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PreliminaryRandomWalkerTendencyTests" />
         <item itemvalue="Application.NeighborhoodCacheTests" />
         <item itemvalue="Application.NeighborhoodsCache" />
         <item itemvalue="JUnit.test in RandomWalkersUniverse" />
         <item itemvalue="Application.ReproducingRandomArtifact" />
-        <item itemvalue="Application.MaxCollinearTest" />
       </list>
     </recent_temporary>
   </component>
@@ -726,7 +713,21 @@
       <option name="project" value="LOCAL" />
       <updated>1559774798190</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="neighborhoods are symmetrically sparse in the NeighborhoodCache!!!">
+      <created>1559787359332</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1559787359332</updated>
+    </task>
+    <task id="LOCAL-00019" summary="changing Vector2DCache tp squared!!!">
+      <created>1559788239943</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1559788239944</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -784,13 +785,13 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32739726" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4969743" visible="true" weight="0.4481752" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4969743" visible="true" weight="0.24087591" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49546143" weight="0.30218977" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32846716" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.505295" side_tool="true" weight="0.3296" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.77534246" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.34744525" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32876712" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.494705" weight="0.3240876" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -867,7 +868,9 @@
     <MESSAGE value="Random Artifact reproduced!!!" />
     <MESSAGE value="Max Collinear added to Vector2D!!!" />
     <MESSAGE value="Trying to make neighborhoods symmetrical" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trying to make neighborhoods symmetrical" />
+    <MESSAGE value="neighborhoods are symmetrically sparse in the NeighborhoodCache!!!" />
+    <MESSAGE value="changing Vector2DCache tp squared!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="changing Vector2DCache tp squared!!!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1040,13 +1043,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="93" column="68" selection-start-line="93" selection-start-column="68" selection-end-line="93" selection-end-column="68" />
         </state>
       </provider>
     </entry>
@@ -1258,37 +1254,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/World/Vector2DCache.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-          <folding>
-            <element signature="docComment;class#Vector2DCache#0" />
-            <element signature="method#fillCache#0;class#Vector2DCache#0" />
-            <element signature="e#2228#2229#0" expanded="true" />
-            <element signature="e#2262#2263#0" expanded="true" />
-            <element signature="method#getMaxCollinear#0;class#Vector2DCache#0" />
-            <element signature="docComment;method#getPartialVector2D#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
-            <element signature="method#setFourNeighbors#0;class#Vector2DFactory#0;class#Vector2DCache#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/World/World.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
-          <folding>
-            <element signature="e#700#701#0" expanded="true" />
-            <element signature="e#765#766#0" expanded="true" />
-            <element signature="e#804#805#0" expanded="true" />
-            <element signature="e#842#843#0" expanded="true" />
-            <element signature="e#1334#1335#0" expanded="true" />
-            <element signature="e#1375#1376#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/World/Neighborhood.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -1330,8 +1295,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/World/NeighborhoodsCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="60" column="79" selection-start-line="60" selection-start-column="79" selection-end-line="60" selection-end-column="79" />
+        <state relative-caret-position="224">
+          <caret line="98" column="43" selection-start-line="98" selection-start-column="43" selection-end-line="98" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/NotJUnitTests/ProcessingTests/PreliminaryRandomWalkerTendencyTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="37" column="20" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/World/World.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+          <folding>
+            <element signature="e#700#701#0" expanded="true" />
+            <element signature="e#765#766#0" expanded="true" />
+            <element signature="e#804#805#0" expanded="true" />
+            <element signature="e#842#843#0" expanded="true" />
+            <element signature="e#1334#1335#0" expanded="true" />
+            <element signature="e#1375#1376#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/World/Vector2DCache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="40" column="35" lean-forward="true" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="35" />
+          <folding>
+            <element signature="e#2303#2304#0" expanded="true" />
+            <element signature="e#2371#2372#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

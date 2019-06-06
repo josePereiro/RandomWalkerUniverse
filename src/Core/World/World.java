@@ -12,7 +12,7 @@ public class World {
     public World(int width, int height) {
         this.width = width;
         this.height = height;
-        vector2DCache = new Vector2DCache(width, height);
+        vector2DCache = new Vector2DCache(width,height);
         randomNumbersCache = new RandomNumbersCache(Statics.Defaults.DEFAULT_RANDOM_CACHE_LENGTH);
         neighborsRadius = Math.max(width, height) / 9;
         setNeighborhoodsCache();
