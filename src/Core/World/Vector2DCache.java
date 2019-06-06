@@ -31,15 +31,17 @@ public class Vector2DCache {
 
 
     final Vector2D[][] cache;
-    private final World world;
     private final int xb;
     private final int yb;
+    private final int width;
+    private final int height;
 
-    public Vector2DCache(World world) {
-        this.world = world;
-        cache = new Vector2D[world.width * 2 - 1][world.height * 2 - 1];
-        xb = world.width - 1;
-        yb = world.height - 1;
+    public Vector2DCache(int width, int height) {
+        this.width = width;
+        this.height = height;
+        cache = new Vector2D[width * 2 - 1][height * 2 - 1];
+        xb = width - 1;
+        yb = height - 1;
         fillCache();
     }
 
@@ -80,13 +82,13 @@ public class Vector2DCache {
 
     public Vector2D getAndCheck(int x, int y) {
         if (x > xb) {
-            throw new IndexOutOfBoundsException("x = " + x + " is too big for a cache with w = " + world.width);
+            throw new IndexOutOfBoundsException("x = " + x + " is too big for a cache with w = " + width);
         } else if (x < -xb) {
-            throw new IndexOutOfBoundsException("x = " + x + " is too small for a cache with w = " + world.width);
+            throw new IndexOutOfBoundsException("x = " + x + " is too small for a cache with w = " + width);
         } else if (y > yb) {
-            throw new IndexOutOfBoundsException("y = " + y + " is too big for a cache with h = " + world.height);
+            throw new IndexOutOfBoundsException("y = " + y + " is too big for a cache with h = " + height);
         } else if (y < -yb) {
-            throw new IndexOutOfBoundsException("y = " + y + " is too small for a cache with h = " + world.height);
+            throw new IndexOutOfBoundsException("y = " + y + " is too small for a cache with h = " + height);
         }
         return get(x, y);
     }
@@ -172,8 +174,8 @@ public class Vector2DCache {
         }
 
         private void setTendDistribution(Vector2D vector2D) {
-            float axm = 4 * (world.width - 1);
-            float aym = 4 * (world.height - 1);
+            float axm = 4 * (width - 1);
+            float aym = 4 * (height - 1);
             float[] tendDist = vector2D.tendDistribution;
             assert tendDist != null;
             tendDist[UP_NEIGHBORHOOD_INDEX] = 0.25F - vector2D.y / aym;

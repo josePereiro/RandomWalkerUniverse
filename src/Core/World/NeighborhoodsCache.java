@@ -10,47 +10,76 @@ public class NeighborhoodsCache {
     private Neighborhood[] neighborhoods;
 
 
-    public NeighborhoodsCache(World world, int dRadius) {
-        this.dRadius = dRadius;
+    public NeighborhoodsCache(World world) {
+        this.dRadius = world.getNeighborsRadius();
         checkParameters(world, dRadius);
         this.world = world;
         vector2DCache = world.getVector2DCache();
         createNeighborhoods();
     }
 
-    private void createNeighborhoods() {
-
-
-    }
-
-    private Vector2D[] getDimProjections(int dimLength, int dRadius) {
-
-        //Setting up
-        ArrayList<Vector2D> projections = new ArrayList<>();
-        int midIndex = (dimLength - 1) / 2;
-
-        if (dimLength % 2 == 0) {
-            return null;
-        } else {
-            //First
-            int center = midIndex - dRadius;
-            if (center < 0) {
-                projections.add(vector2DCache.get(0, dimLength));
+    private static Vector2D getOriginAndSize(int index, ArrayList<Integer> centers, int dimLength, int dRadius,
+                                             Vector2DCache cache) {
+        int origin, size;
+        if (index == 0) {
+            if (centers.size() > 1) {
+                origin = centers.get(0) - dRadius;
+                size = centers.get(2) - centers.get(1) + 1;
             } else {
-                projections.add(vector2DCache.get(center - dRadius, 2 * dRadius + 1));
+                origin = 0;
+                size = dimLength;
             }
-
-            for (int dr = dRadius; dr < dimLength; dr += dRadius) {
-                center = midIndex - dr;
-                if (center < 0) {
-                    projections.add(vector2DCache.get(0, dimLength));
+        } else {
+            origin = centers.get(index) - dRadius;
+            if (origin < 0) {
+                origin = 0;
+                size = dRadius + centers.get(index) + 1;
+            } else {
+                size = 2 * dRadius + 1;
+                if (centers.get(index) + dRadius >= dimLength) {
+                    size = dimLength - origin;
                 }
-
             }
-
         }
 
-        return projections.toArray(new Vector2D[projections.size()]);
+        return cache.getPositive(origin, size);
+    }
+
+    private void createNeighborhoods() {
+
+        ArrayList<Integer> centerXs = getCentersProjectionCoors(world.width, dRadius);
+        ArrayList<Integer> centerYs = getCentersProjectionCoors(world.height, dRadius);
+
+        neighborhoods = new Neighborhood[centerXs.size() * centerYs.size()];
+        Vector2D xOriSize, yOriSize;
+        int ni = 0;
+        for (int cx = 0; cx < centerXs.size(); cx++) {
+            xOriSize = getOriginAndSize(cx, centerXs, world.width, dRadius,
+                    vector2DCache);
+            for (int cy = 0; cy < centerYs.size(); cy++) {
+
+                yOriSize = getOriginAndSize(cy, centerYs, world.height, dRadius,
+                        vector2DCache);
+                neighborhoods[ni] = new Neighborhood(vector2DCache.getPositive(xOriSize.x, yOriSize.x),
+                        xOriSize.y, yOriSize.y);
+                ni++;
+            }
+        }
+    }
+
+    private static ArrayList<Integer> getCentersProjectionCoors(int dimLength, int dRadius) {
+        int midIndex = (dimLength - 1) / 2;
+        ArrayList<Integer> neighs = new ArrayList<>();
+        int offset = dimLength % 2 == 0 ? 1 : 0;
+        for (int dr = 0; dr < midIndex; dr += dRadius) {
+            if (dr == 0) {
+                neighs.add(midIndex);
+            } else {
+                neighs.add(midIndex - dr);
+                neighs.add(midIndex + dr + offset);
+            }
+        }
+        return neighs;
     }
 
 
@@ -62,5 +91,23 @@ public class NeighborhoodsCache {
 
     public Neighborhood[] getNeighborhoods() {
         return neighborhoods;
+    }
+
+    public static void main(String[] args) {
+        int dimLength = 10;
+        int dRadius = 3;
+        Vector2DCache cache = new Vector2DCache(20, 20);
+        ArrayList<Integer> centers = getCentersProjectionCoors(dimLength, dRadius);
+        for (int i = 0; i < dimLength; i++) {
+            if (centers.contains(i)) {
+                System.out.println(i + "**");
+            } else {
+                System.out.println(i);
+            }
+        }
+        System.out.println(centers);
+        int index = 2;
+        System.out.println("Cheking: " + index);
+        System.out.println(getOriginAndSize(index, centers, dimLength, dRadius, cache));
     }
 }

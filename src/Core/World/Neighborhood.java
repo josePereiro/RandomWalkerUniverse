@@ -1,20 +1,8 @@
 package Core.World;
 
-public class Neighborhood {
+public class Neighborhood extends Rectangle{
 
-    private final Vector2D origin;
-    private final int r;
-
-    Neighborhood(Vector2D origin, int width, int heigth) {
-        this.origin = origin;
-        this.r = width;
-    }
-
-    public Vector2D getOrigin() {
-        return origin;
-    }
-
-    public int getR() {
-        return r;
+    Neighborhood(Vector2D origin, int width, int height) {
+        super(origin, width, height);
     }
 }

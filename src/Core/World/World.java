@@ -10,28 +10,28 @@ public class World {
     private int neighborsRadius;
 
     public World(int width, int height) {
-        checkParameters(width, height);
-
         this.width = width;
         this.height = height;
-        vector2DCache = new Vector2DCache(this);
+        vector2DCache = new Vector2DCache(width, height);
         randomNumbersCache = new RandomNumbersCache(Statics.Defaults.DEFAULT_RANDOM_CACHE_LENGTH);
         neighborsRadius = Math.max(width, height) / 9;
-        setNeighborhoodsCache(neighborsRadius);
+        setNeighborhoodsCache();
     }
 
-    private void setNeighborhoodsCache(int nr) {
-        neighborhoodsCache = new NeighborhoodsCache(this, nr);
+    //TODO delete
+    private void setNeighborhoodsCache() {
+        neighborhoodsCache = new NeighborhoodsCache(this);
     }
 
     public int getNeighborsRadius() {
         return neighborsRadius;
     }
 
-    private void checkParameters(int width, int height) {
-        if (width % 2 == 0 || height % 2 == 0) {
-            throw new Exceptions.IllegalValueException("width and height must be odd...");
-        }
+
+    //TODO delete
+    public void setNeighborsRadius(int neighborsRadius) {
+        this.neighborsRadius = neighborsRadius;
+        setNeighborhoodsCache();
     }
 
     public Vector2DCache getVector2DCache() {
