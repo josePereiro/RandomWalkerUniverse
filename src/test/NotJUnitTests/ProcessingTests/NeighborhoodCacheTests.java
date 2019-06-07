@@ -1,16 +1,16 @@
 package test.NotJUnitTests.ProcessingTests;
 
-import Core.World.Neighborhood;
-import Core.World.NeighborhoodsCache;
-import Core.World.SpacePoint;
-import Core.World.World;
+import Core.World.*;
 import processing.core.PApplet;
 import processing.core.PVector;
+import test.JUnit.Vector2D.SpacePointCacheTest;
+
+import java.awt.*;
 
 public class NeighborhoodCacheTests extends PApplet {
 
-    NeighborhoodsCache board;
     World world;
+    SpacePointsCache spacePointsCache;
     int offset = 50;
 
     //TODO fix this bug. Some parts of the world do not belong to a neigh...
@@ -27,48 +27,77 @@ public class NeighborhoodCacheTests extends PApplet {
     public void setup() {
         World.WorldFactory factory =
                 new World.WorldFactory(width - 2 * offset, height - 2 * offset);
+
+
+        //TODO delete
+//        World.WorldFactory factory = new World.WorldFactory(5,7);
+//        factory.setNeighDRadius(2);
+//        factory.setNeighOffset(0);
+
         world = factory.createNewWorld();
+        spacePointsCache = world.getSpacePointsCache();
         noCursor();
     }
 
     @Override
     public void draw() {
 
-        board = world.getNeighborhoodsCache();
         background(255);
-        SpacePoint origin;
+
+        //World
         fill(200);
         stroke(0);
         rect(offset, offset, world.width, world.height);
-        Neighborhood[] neighborhoods = board.getNeighborhoods();
-        for (Neighborhood neighborhood : neighborhoods) {
-            origin = neighborhood.getOrigin();
-            if (neighborhood.isWithing(world.getSpacePointsCache().get(mouseX
-                    - offset, mouseY - offset))) {
+
+        //Neighborhoods
+        SpacePoint currentPoint = spacePointsCache.get(mouseX - offset,
+                mouseY - offset);
+
+        Neighborhood[] neighborhoods = currentPoint.getNeighborhoods();
+        Neighborhood neighborhood;
+        SpacePoint origin;
+        if (neighborhoods != null) {
+            for (int ni = neighborhoods.length - 1; ni >= 0; ni--) {
+
                 fill(0, 155);
-            } else {
-                noFill();
+                //Neighborhood
+                neighborhood = neighborhoods[ni];
+                origin = neighborhood.getOrigin();
+                rect(origin.x + offset, origin.y + offset,
+                        neighborhoods[ni].getWidth(), neighborhoods[ni].getHeight());
+
+                //Neighs Center
+                if (ni == 0) {
+                    fill(Color.YELLOW.getRGB());
+                }
+                ellipse(neighborhoods[ni].getCenterX() + offset,
+                        neighborhoods[ni].getCenterY() + offset,
+                        5, 5);
             }
-            noStroke();
-
-            //Neighborhood
-            rect(origin.x + offset, origin.y + offset,
-                    neighborhood.getWidth(), neighborhood.getHeight());
-//            ellipse(origin.x + offset, origin.y + offset, 5, 5);
-
-            //Neighs Center
-            ellipse(neighborhood.getCenterX() + offset, neighborhood.getCenterY() + offset,
-                    5, 5);
-
         }
 
 
+//        for (Neighborhood neighborhood : neighborhoods) {
+//            origin = neighborhood.getOrigin();
+//            if (neighborhood.isWithing(world.getSpacePointsCache().get(mouseX
+//                    - offset, mouseY - offset))) {
+//                fill(0, 155);
+//            } else {
+//                noFill();
+//            }
+//            noStroke();
+//
+//            //Neighborhood
+//            rect(origin.x + offset, origin.y + offset,
+//                    neighborhood.getWidth(), neighborhood.getHeight());
+////            ellipse(origin.x + offset, origin.y + offset, 5, 5);
+//
+//            //Neighs Center
+//            ellipse(neighborhood.getCenterX() + offset, neighborhood.getCenterY() + offset,
+//                    5, 5);
+//
+//        }
 
-        //Mass center
-        PVector massCenter = neighborhoodMassCenter(neighborhoods);
-        stroke(0);
-        fill(0);
-        ellipse(massCenter.x + offset, massCenter.y + offset, 2, 2);
 
         fill(255);
         //mouse
@@ -79,7 +108,7 @@ public class NeighborhoodCacheTests extends PApplet {
 
         //Info
         fill(80, 155);
-        text(neighborhoods.length + " : " + (mouseX - offset) +
+        text((mouseX - offset) +
                 " : " + (mouseY - offset) + " : " +
                 world.width + " : " + world.height, 20, 20);
 
@@ -90,8 +119,9 @@ public class NeighborhoodCacheTests extends PApplet {
         World.WorldFactory factory =
                 new World.WorldFactory(width - 2 * offset, height - 2 * offset);
         factory.setNeighDRadius((int) map(mouseX, 0, width, 10, 50));
-        factory.setNeighOffset(factory.getNeighDRadius() / 3);
+        factory.setNeighOffset(0);
         world = factory.createNewWorld();
+        spacePointsCache = world.getSpacePointsCache();
     }
 
     private PVector neighborhoodMassCenter(Neighborhood[] neighborhoods) {
@@ -109,7 +139,6 @@ public class NeighborhoodCacheTests extends PApplet {
         return new PVector(xSum / totalArea,
                 ySum / totalArea);
     }
-
 
 
 }

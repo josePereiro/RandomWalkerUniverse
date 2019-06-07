@@ -42,9 +42,9 @@ public class RandomNumbersCache {
         }
     }
 
-    public SpacePoint getNextStep(SpacePoint position, SpacePoint tendency) {
+    public SpacePoint pickANeighbor(SpacePoint position, Tendency tendency) {
         float rn = getNextFloat();
-        float[] td = tendency.tendDistribution;
+        float[] td = tendency.getTendencyDistribution();
         if (rn <= td[World.Statics.UP_NEIGHBORHOOD_INDEX]) {
             return position.fourNeighbors[World.Statics.UP_NEIGHBORHOOD_INDEX];
         } else if (rn <= td[World.Statics.DOWN_NEIGHBORHOOD_INDEX]) {

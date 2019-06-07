@@ -1,8 +1,16 @@
 package Core.Tools;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Tools {
+
+    public static void main(String[] args) {
+        Integer[] col = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8};
+        System.out.println(Arrays.toString(col));
+        CollectionsOps.moveItemsForward(col.length, col);
+        System.out.println(Arrays.toString(col));
+    }
 
     public static class CollectionsOps {
 
@@ -14,6 +22,11 @@ public class Tools {
             return s / floats.length;
         }
 
+        public static <T> void moveItemsForward(int from, T[] col) {
+            for (int i = col.length - 1; i > from; i--) {
+                col[i] = col[i - 1];
+            }
+        }
     }
 
     /**
@@ -519,5 +532,6 @@ public class Tools {
         }
         return multiples;
     }
+
 
 }

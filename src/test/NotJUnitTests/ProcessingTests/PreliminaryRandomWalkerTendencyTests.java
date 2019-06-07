@@ -29,7 +29,7 @@ public class PreliminaryRandomWalkerTendencyTests extends PApplet {
     RandomNumbersCache randomNumbersCache;
     SpacePoint tendency;
     SpacePoint center;
-    int rpf = 900;//1300 //2400
+    int rpf = 20;//900;//1300 //2400
     int itrs = 0;
     float lastFrameRate = 0;
 
@@ -68,10 +68,10 @@ public class PreliminaryRandomWalkerTendencyTests extends PApplet {
         lastFrameRate = frameRate;
 
         stroke(0);
-        for (int r = 0; r < 10; r++) {
+        for (int r = 0; r < rpf; r++) {
             for (int i = 0; i < walkers.size(); i++) {
                 SpacePoint walker = walkers.get(i);
-                walker = randomNumbersCache.getNextStep(walker,
+                walker = randomNumbersCache.pickANeighbor(walker,
                         tendency);
                 walkers.set(i, walker);
             }

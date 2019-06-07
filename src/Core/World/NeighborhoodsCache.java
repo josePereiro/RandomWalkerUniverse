@@ -55,8 +55,48 @@ public class NeighborhoodsCache {
 
                 yOriSize = getOriginAndSize(cy, centerYs, wHeight, dRadius, offset);
                 neighborhoods[ni] = new Neighborhood(spacePointsCache.getPositive(xOriSize[0], yOriSize[0]),
+                        spacePointsCache.getPositive(centerXs.get(cx), centerYs.get(cy)),
                         xOriSize[1], yOriSize[1], bufferCapacity);
                 ni++;
+            }
+        }
+
+        assignNeighborhoods(spacePointsCache, wWidth, wHeight);
+    }
+
+    private void assignNeighborhoods(SpacePointsCache spacePointsCache, int wWidth, int wHeight) {
+        int xLimit, yLimit;
+        SpacePoint origin;
+        int[][] neighCount = new int[wWidth][wHeight];
+
+        //Counting
+        for (Neighborhood neighborhood : neighborhoods) {
+            origin = neighborhood.getOrigin();
+            xLimit = origin.x + neighborhood.getWidth();
+            yLimit = origin.y + neighborhood.getHeight();
+            for (int x = origin.x; x < xLimit; x++) {
+                for (int y = origin.y; y < yLimit; y++) {
+                    neighCount[x][y]++;
+                }
+            }
+        }
+
+        //Creating neighborhood array
+        for (int x = 0; x < wWidth; x++) {
+            for (int y = 0; y < wHeight; y++) {
+                spacePointsCache.get(x, y).neighborhoods = new Neighborhood[neighCount[x][y]];
+            }
+        }
+
+        //Assigning
+        for (Neighborhood neighborhood : neighborhoods) {
+            origin = neighborhood.getOrigin();
+            xLimit = origin.x + neighborhood.getWidth();
+            yLimit = origin.y + neighborhood.getHeight();
+            for (int x = origin.x; x < xLimit; x++) {
+                for (int y = origin.y; y < yLimit; y++) {
+                    spacePointsCache.get(x,y).addNeighborhood(neighborhood);
+                }
             }
         }
     }
@@ -79,4 +119,5 @@ public class NeighborhoodsCache {
     public Neighborhood[] getNeighborhoods() {
         return neighborhoods;
     }
+
 }

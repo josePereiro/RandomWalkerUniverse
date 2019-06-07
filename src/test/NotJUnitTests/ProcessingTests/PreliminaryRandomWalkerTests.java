@@ -66,7 +66,7 @@ public class PreliminaryRandomWalkerTests extends PApplet {
         for (int r = 0; r < rpf; r++) {
             for (int i = 0; i < walkers.size(); i++) {
                 SpacePoint walker = walkers.get(i);
-                walker = randomNumbersCache.getNextStep(walker,
+                walker = randomNumbersCache.pickANeighbor(walker,
                         tendency);
                 walkers.set(i, walker);
             }
