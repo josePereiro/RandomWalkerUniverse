@@ -1,8 +1,8 @@
 package test.NotJUnitTests.ProcessingTests;
 
 import Core.World.RandomNumbersCache;
-import Core.World.Vector2D;
-import Core.World.Vector2DCache;
+import Core.World.SpacePoint;
+import Core.World.SpacePointsCache;
 import Core.World.World;
 import processing.core.PApplet;
 
@@ -23,12 +23,12 @@ public class PreliminaryRandomWalkerTendencyTests extends PApplet {
 
     int desiredFrameRate = 60;
     int walkerCount = 10000;
-    ArrayList<Vector2D> walkers;
+    ArrayList<SpacePoint> walkers;
     World world;
-    Vector2DCache vector2DCache;
+    SpacePointsCache spacePointsCache;
     RandomNumbersCache randomNumbersCache;
-    Vector2D tendency;
-    Vector2D center;
+    SpacePoint tendency;
+    SpacePoint center;
     int rpf = 900;//1300 //2400
     int itrs = 0;
     float lastFrameRate = 0;
@@ -37,19 +37,19 @@ public class PreliminaryRandomWalkerTendencyTests extends PApplet {
     public void setup() {
         World.WorldFactory factory = new World.WorldFactory(width, height);
         world = factory.createNewWorld();
-        vector2DCache = world.getVector2DCache();
+        spacePointsCache = world.getSpacePointsCache();
         randomNumbersCache = world.getRandomNumbersCache();
         walkers = new ArrayList<>();
-        Vector2D walker;
+        SpacePoint walker;
         for (int i = 0; i < walkerCount; i++) {
-            walker = vector2DCache.get(width / 2, height / 2);
+            walker = spacePointsCache.get(width / 2, height / 2);
             walkers.add(walker);
         }
-        tendency = vector2DCache.get(0, 0);
+        tendency = spacePointsCache.get(0, 0);
         background(255);
         fill(0);
         frameRate(desiredFrameRate);
-        center = vector2DCache.get(width / 2, height / 2);
+        center = spacePointsCache.get(width / 2, height / 2);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class PreliminaryRandomWalkerTendencyTests extends PApplet {
 
         background(255);
 
-        tendency = vector2DCache.distance(center.x, center.y, mouseX, mouseY);
-        tendency = vector2DCache.multiply(tendency, 2);
+        tendency = spacePointsCache.distance(center.x, center.y, mouseX, mouseY);
+        tendency = spacePointsCache.multiply(tendency, 2);
 
         if (frameRate > lastFrameRate) {
             rpf += (1 - lastFrameRate / frameRate) * 100;
@@ -70,7 +70,7 @@ public class PreliminaryRandomWalkerTendencyTests extends PApplet {
         stroke(0);
         for (int r = 0; r < 10; r++) {
             for (int i = 0; i < walkers.size(); i++) {
-                Vector2D walker = walkers.get(i);
+                SpacePoint walker = walkers.get(i);
                 walker = randomNumbersCache.getNextStep(walker,
                         tendency);
                 walkers.set(i, walker);
@@ -79,7 +79,7 @@ public class PreliminaryRandomWalkerTendencyTests extends PApplet {
         }
 
         //Drawing
-        for (Vector2D walker : walkers) {
+        for (SpacePoint walker : walkers) {
             point(walker.x, walker.y);
         }
         //Tendency

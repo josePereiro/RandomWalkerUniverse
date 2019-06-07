@@ -13,7 +13,7 @@ public class MemoryTest {
     public static void main(String[] args) {
 
         //Put your code here
-//        Vector2DCache cache = new Vector2DCache(1200, 1200);
+//        SpacePointsCache cache = new SpacePointsCache(1200, 1200);
         double[] randoms = new double[1000000];
         Random r = new Random();
         for (int i = 0; i < randoms.length; i++) {

@@ -4,7 +4,7 @@ public class World {
 
     public int width;
     public int height;
-    private Vector2DCache vector2DCache;
+    private SpacePointsCache spacePointsCache;
     private RandomNumbersCache randomNumbersCache;
     private NeighborhoodsCache neighborhoodsCache;
 
@@ -13,8 +13,8 @@ public class World {
         this.height = height;
     }
 
-    public Vector2DCache getVector2DCache() {
-        return vector2DCache;
+    public SpacePointsCache getSpacePointsCache() {
+        return spacePointsCache;
     }
 
     public RandomNumbersCache getRandomNumbersCache() {
@@ -38,6 +38,7 @@ public class World {
             private static final int DEFAULT_RANDOM_CACHE_LENGTH = 10000000;
             private static final int DEFAULT_NEIGHBORHOOD_DRADIUS = 20;
             private static final int DEFAULT_NEIGHBORHOOD_OFFSET = 5;
+            private static final int DEFAULT_NEIGHBORHOOD_BUFFER_CAPACITY = 50;
 
         }
 
@@ -52,6 +53,7 @@ public class World {
         //Neighborhoods
         private int neighDRadius;
         private int neighOffset;
+        private int neighBufferCapacity;
         //RandomNumbersCache
         private int randNumbersCacheLength;
 
@@ -65,6 +67,7 @@ public class World {
             //Neighborhoods
             neighDRadius = Statics.Defaults.DEFAULT_NEIGHBORHOOD_DRADIUS;
             neighOffset = Statics.Defaults.DEFAULT_NEIGHBORHOOD_OFFSET;
+            neighBufferCapacity = Statics.Defaults.DEFAULT_NEIGHBORHOOD_BUFFER_CAPACITY;
 
             //RandomNumbersCache
             randNumbersCacheLength = Statics.Defaults.DEFAULT_RANDOM_CACHE_LENGTH;
@@ -72,19 +75,19 @@ public class World {
 
         public World createNewWorld() {
 
-            //Vector2DCache
-            Vector2DCache vector2DCache = new Vector2DCache(wWidth, wHeight);
+            //SpacePointsCache
+            SpacePointsCache spacePointsCache = new SpacePointsCache(wWidth, wHeight);
 
             //NeighborhoodCache
             NeighborhoodsCache neighborhoodsCache = new NeighborhoodsCache(wWidth,
-                    wHeight, neighDRadius, neighOffset, vector2DCache);
+                    wHeight, neighDRadius, neighOffset, neighBufferCapacity, spacePointsCache);
 
             //RandomNu
             RandomNumbersCache randomNumbersCache = new RandomNumbersCache(randNumbersCacheLength);
 
             //newWorld
             World newWorld = new World(wWidth, wHeight);
-            newWorld.vector2DCache = vector2DCache;
+            newWorld.spacePointsCache = spacePointsCache;
             newWorld.neighborhoodsCache = neighborhoodsCache;
             newWorld.randomNumbersCache = randomNumbersCache;
 

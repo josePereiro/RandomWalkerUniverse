@@ -42,7 +42,7 @@ public class RandomNumbersCache {
         }
     }
 
-    public Vector2D getNextStep(Vector2D position, Vector2D tendency) {
+    public SpacePoint getNextStep(SpacePoint position, SpacePoint tendency) {
         float rn = getNextFloat();
         float[] td = tendency.tendDistribution;
         if (rn <= td[World.Statics.UP_NEIGHBORHOOD_INDEX]) {

@@ -1,7 +1,7 @@
 package test.NotJUnitTests.ProcessingTests;
 
-import Core.World.Vector2D;
-import Core.World.Vector2DCache;
+import Core.World.SpacePoint;
+import Core.World.SpacePointsCache;
 import Core.World.World;
 import processing.core.PApplet;
 
@@ -17,21 +17,21 @@ public class MaxCollinearTest extends PApplet {
     }
 
     World world;
-    Vector2DCache cache;
+    SpacePointsCache cache;
 
     @Override
     public void setup() {
         World.WorldFactory factory = new World.WorldFactory(width, height);
         world = factory.createNewWorld();
-        cache = world.getVector2DCache();
+        cache = world.getSpacePointsCache();
 
         fill(0);
     }
 
     @Override
     public void draw() {
-        Vector2D small = cache.get(mouseX - width / 2, mouseY - height / 2);
-        Vector2D maxCollinear = small.getMaxCollinear();
+        SpacePoint small = cache.get(mouseX - width / 2, mouseY - height / 2);
+        SpacePoint maxCollinear = small.getMaxCollinear();
 
         background(255);
         //Drawing

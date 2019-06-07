@@ -2,12 +2,14 @@ package Core.World;
 
 public class Neighborhood extends Rectangle {
 
-    Neighborhood(Vector2D origin, int width, int height) {
+    WalkersBuffer neighboors;
+
+    Neighborhood(SpacePoint origin, int width, int height, int bufferCapacity) {
         super(origin, width, height);
+        neighboors = new WalkersBuffer(bufferCapacity);
     }
 
-    void iterateAction() {
-
+    public WalkersBuffer getNeighboors() {
+        return neighboors;
     }
-
 }

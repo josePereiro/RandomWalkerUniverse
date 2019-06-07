@@ -1,7 +1,7 @@
 package test.JUnit.Vector2D;
 
-import Core.World.Vector2D;
-import Core.World.Vector2DCache;
+import Core.World.SpacePoint;
+import Core.World.SpacePointsCache;
 import Core.World.World;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
@@ -11,14 +11,14 @@ import java.awt.*;
 import java.util.Random;
 
 
-public class Vector2DCacheTest {
+public class SpacePointCacheTest {
 
     private static final int DEFAULT_W = 25;
     private static final int DEFAULT_H = 50;
     private static final int REPEAT = 50;
-    private static Vector2DCache cache;
+    private static SpacePointsCache cache;
     private final Object[] temp = new Object[1];
-    private Vector2D v2d;
+    private SpacePoint v2d;
     private int x, y;
     private Random r = new Random();
     private Support.WallTimeTester timeTester;
@@ -27,7 +27,7 @@ public class Vector2DCacheTest {
     static void beforeAll() {
         World.WorldFactory factory = new World.WorldFactory(DEFAULT_H, DEFAULT_H);
         World world = factory.createNewWorld();
-        cache = world.getVector2DCache();
+        cache = world.getSpacePointsCache();
     }
 
 

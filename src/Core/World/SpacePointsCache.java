@@ -9,42 +9,30 @@ import static Core.World.World.Statics.*;
  * Vectors will be very commonly used... It is very possible
  * that a lot of operations or a lot of objects will use the same Vector,
  * so I wanna cached!!!
- * I will do Vector2DTest
+ * I will do SpacePointTest
  * immutable so any operation that returns (2,2) will be returning
  * the same object in memory. Now, knowing that, I can store in
- * Vector2DTest other useful information like the magnitude, and the
+ * SpacePointTest other useful information like the magnitude, and the
  * reference to other related vectors, like the perpendiculars, the inverse,
  * etc.
  */
-public class Vector2DCache {
+public class SpacePointsCache {
 
-    /**
-     * TODO
-     * Implement a square cache...
-     * Why?
-     * If the cache only depends of the size of the world,
-     * if the world width is 10 time smaller than the height,
-     * that means the x axis will be 10 time smaller than the y.
-     * This affects, for instance, the tendencies. The y tendency
-     * parts will be 10 time more 'continuous' than the xs...
-     */
+    private final SpacePoint[][] cache;
+    private final int size;
+    private final int lastIndex;
+    private Vector2DFactory factory;
 
-
-    final Vector2D[][] cache;
-    final int size;
-    final int lastIndex;
-    Vector2DFactory factory;
-
-    Vector2DCache(int wWidth, int wHeight) {
+    SpacePointsCache(int wWidth, int wHeight) {
         size = Math.max(wWidth, wHeight);
-        cache = new Vector2D[2 * size - 1][2 * size - 1];
+        cache = new SpacePoint[2 * size - 1][2 * size - 1];
         lastIndex = size - 1;
         fillCache(wWidth, wHeight);
     }
 
     private void fillCache(int wWidth, int wHeight) {
         int vx, vy;
-        Vector2D vector2D;
+        SpacePoint spacePoint;
 
         factory = new Vector2DFactory();
 
@@ -53,32 +41,32 @@ public class Vector2DCache {
             vx = x > lastIndex ? lastIndex - x : x;
             for (int y = 0; y < cache[x].length; y++) {
                 vy = y > lastIndex ? lastIndex - y : y;
-                vector2D = factory.getPartialVector2D(vx, vy);
-                cache[x][y] = vector2D;
+                spacePoint = factory.getPartialVector2D(vx, vy);
+                cache[x][y] = spacePoint;
             }
         }
 
         //Finishing
         for (int x = 0; x < cache.length; x++) {
             for (int y = 0; y < cache[x].length; y++) {
-                vector2D = cache[x][y];
-                factory.setFourNeighbors(vector2D, wWidth - 1,
+                spacePoint = cache[x][y];
+                factory.setFourNeighbors(spacePoint, wWidth - 1,
                         wHeight - 1);
-                factory.setTendDistribution(vector2D);
-                factory.setMaxCollinear(vector2D);
+                factory.setTendDistribution(spacePoint);
+                factory.setMaxCollinear(spacePoint);
             }
         }
     }
 
-    public Vector2D getPositive(int x, int y) {
+    public SpacePoint getPositive(int x, int y) {
         return cache[x][y];
     }
 
-    public Vector2D get(int x, int y) {
+    public SpacePoint get(int x, int y) {
         return cache[x < 0 ? lastIndex - x : x][y < 0 ? lastIndex - y : y];
     }
 
-    public Vector2D getAndCheck(int x, int y) {
+    public SpacePoint getAndCheck(int x, int y) {
         if (x > lastIndex) {
             throw new IndexOutOfBoundsException("x = " + x + " is too big for a cache with size = " + size);
         } else if (x < -lastIndex) {
@@ -91,19 +79,19 @@ public class Vector2DCache {
         return get(x, y);
     }
 
-    public Vector2D distance(Vector2D p1, Vector2D p2) {
+    public SpacePoint distance(SpacePoint p1, SpacePoint p2) {
         return get(p1.x - p2.x, p1.y - p2.y);
     }
 
-    public Vector2D distance(int x1, int y1, int x2, int y2) {
+    public SpacePoint distance(int x1, int y1, int x2, int y2) {
         return get(x2 - x1, y2 - y1);
     }
 
-    public Vector2D inverse(Vector2D v) {
+    public SpacePoint inverse(SpacePoint v) {
         return get(0 - v.x, 0 - v.y);
     }
 
-    public Vector2D getMaxCollinear(Vector2D v) {
+    private SpacePoint getMaxCollinear(SpacePoint v) {
         if (v.x == 0) {
             return get(0, Tools.toSameSign(v.y, lastIndex));
         } else {
@@ -118,71 +106,71 @@ public class Vector2DCache {
         }
     }
 
-    public Vector2D multiply(Vector2D v, int i) {
+    public SpacePoint multiply(SpacePoint v, int i) {
         return get(v.x * i, v.y * i);
     }
 
     private class Vector2DFactory {
 
         /**
-         * Returns an Vector2D in an incomplete state.
+         * Returns an SpacePoint in an incomplete state.
          *
          * @param x the x coordinate
          * @param y the y coordinate
          * @return
          */
-        private Vector2D getPartialVector2D(int x, int y) {
-            return new Vector2D(x, y);
+        private SpacePoint getPartialVector2D(int x, int y) {
+            return new SpacePoint(x, y);
         }
 
-        private void setFourNeighbors(Vector2D vector2D, int lastX, int lastY) {
-            if (vector2D.x < 0 || vector2D.y < 0)
+        private void setFourNeighbors(SpacePoint spacePoint, int lastX, int lastY) {
+            if (spacePoint.x < 0 || spacePoint.y < 0)
                 return;
 
-            Vector2D[] neighbors = vector2D.fourNeighbors;
+            SpacePoint[] neighbors = spacePoint.fourNeighbors;
             assert neighbors != null;
 
             //UP
-            if (vector2D.y == 0) {
-                neighbors[UP_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y);
+            if (spacePoint.y == 0) {
+                neighbors[UP_NEIGHBORHOOD_INDEX] = get(spacePoint.x, spacePoint.y);
             } else {
-                neighbors[UP_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y - 1);
+                neighbors[UP_NEIGHBORHOOD_INDEX] = get(spacePoint.x, spacePoint.y - 1);
             }
 
             //Down
-            if (vector2D.y == lastY) {
-                neighbors[DOWN_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y);
+            if (spacePoint.y == lastY) {
+                neighbors[DOWN_NEIGHBORHOOD_INDEX] = get(spacePoint.x, spacePoint.y);
             } else {
-                neighbors[DOWN_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y + 1);
+                neighbors[DOWN_NEIGHBORHOOD_INDEX] = get(spacePoint.x, spacePoint.y + 1);
             }
 
             //Right
-            if (vector2D.x == lastX) {
-                neighbors[RIGHT_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y);
+            if (spacePoint.x == lastX) {
+                neighbors[RIGHT_NEIGHBORHOOD_INDEX] = get(spacePoint.x, spacePoint.y);
             } else {
-                neighbors[RIGHT_NEIGHBORHOOD_INDEX] = get(vector2D.x + 1, vector2D.y);
+                neighbors[RIGHT_NEIGHBORHOOD_INDEX] = get(spacePoint.x + 1, spacePoint.y);
             }
 
             //Left
-            if (vector2D.x == 0) {
-                neighbors[LEFT_NEIGHBORHOOD_INDEX] = get(vector2D.x, vector2D.y);
+            if (spacePoint.x == 0) {
+                neighbors[LEFT_NEIGHBORHOOD_INDEX] = get(spacePoint.x, spacePoint.y);
             } else {
-                neighbors[LEFT_NEIGHBORHOOD_INDEX] = get(vector2D.x - 1, vector2D.y);
+                neighbors[LEFT_NEIGHBORHOOD_INDEX] = get(spacePoint.x - 1, spacePoint.y);
             }
 
         }
 
-        private void setTendDistribution(Vector2D vector2D) {
+        private void setTendDistribution(SpacePoint spacePoint) {
             float max = 4 * (size - 1);
-            float[] tendDist = vector2D.tendDistribution;
+            float[] tendDist = spacePoint.tendDistribution;
             assert tendDist != null;
-            tendDist[UP_NEIGHBORHOOD_INDEX] = 0.25F - vector2D.y / max;
-            tendDist[DOWN_NEIGHBORHOOD_INDEX] = tendDist[UP_NEIGHBORHOOD_INDEX] + 0.25F + vector2D.y / max;
-            tendDist[RIGHT_NEIGHBORHOOD_INDEX] = tendDist[DOWN_NEIGHBORHOOD_INDEX] + 0.25F + vector2D.x / max;
+            tendDist[UP_NEIGHBORHOOD_INDEX] = 0.25F - spacePoint.y / max;
+            tendDist[DOWN_NEIGHBORHOOD_INDEX] = tendDist[UP_NEIGHBORHOOD_INDEX] + 0.25F + spacePoint.y / max;
+            tendDist[RIGHT_NEIGHBORHOOD_INDEX] = tendDist[DOWN_NEIGHBORHOOD_INDEX] + 0.25F + spacePoint.x / max;
         }
 
-        private void setMaxCollinear(Vector2D vector2D) {
-            vector2D.maxCollinear = getMaxCollinear(vector2D);
+        private void setMaxCollinear(SpacePoint spacePoint) {
+            spacePoint.maxCollinear = getMaxCollinear(spacePoint);
         }
 
     }
