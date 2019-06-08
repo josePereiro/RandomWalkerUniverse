@@ -7,9 +7,9 @@ public class NeighborhoodsCache {
     private Neighborhood[] neighborhoods;
 
     NeighborhoodsCache(int wWidth, int wHeight, int dRadius, int offset, int bufferCapacity,
-                       SpacePointsCache spacePointsCache) {
+                       Vector2DCache vector2DCache) {
         createNeighborhoods(wWidth, wHeight, dRadius, offset, bufferCapacity,
-                spacePointsCache);
+                vector2DCache);
     }
 
     private static int[] getOriginAndSize(int index, ArrayList<Integer> centers, int dimLength,
@@ -48,7 +48,7 @@ public class NeighborhoodsCache {
     }
 
     private void createNeighborhoods(int wWidth, int wHeight, int dRadius, int offset, int bufferCapacity,
-                                     SpacePointsCache spacePointsCache) {
+                                     Vector2DCache vector2DCache) {
 
         ArrayList<Integer> centerXs = getCentersProjectionCoors(wWidth, dRadius);
         ArrayList<Integer> centerYs = getCentersProjectionCoors(wHeight, dRadius);
@@ -61,19 +61,19 @@ public class NeighborhoodsCache {
             for (int cy = 0; cy < centerYs.size(); cy++) {
 
                 yOriSize = getOriginAndSize(cy, centerYs, wHeight, dRadius, offset);
-                neighborhoods[ni] = new Neighborhood(spacePointsCache.getPositive(xOriSize[0], yOriSize[0]),
-                        spacePointsCache.getPositive(centerXs.get(cx), centerYs.get(cy)),
+                neighborhoods[ni] = new Neighborhood(vector2DCache.getPositive(xOriSize[0], yOriSize[0]),
+                        vector2DCache.getPositive(centerXs.get(cx), centerYs.get(cy)),
                         xOriSize[1], yOriSize[1], bufferCapacity);
                 ni++;
             }
         }
 
-        assignNeighborhoods(spacePointsCache, wWidth, wHeight);
+        assignNeighborhoods(vector2DCache, wWidth, wHeight);
     }
 
-    private void assignNeighborhoods(SpacePointsCache spacePointsCache, int wWidth, int wHeight) {
+    private void assignNeighborhoods(Vector2DCache vector2DCache, int wWidth, int wHeight) {
         int xLimit, yLimit;
-        SpacePoint origin;
+        Vector2D origin;
         int[][] neighCount = new int[wWidth][wHeight];
 
         //Counting
@@ -91,7 +91,7 @@ public class NeighborhoodsCache {
         //Creating neighborhood array
         for (int x = 0; x < wWidth; x++) {
             for (int y = 0; y < wHeight; y++) {
-                spacePointsCache.get(x, y).neighborhoods = new Neighborhood[neighCount[x][y]];
+                vector2DCache.get(x, y).neighborhoods = new Neighborhood[neighCount[x][y]];
             }
         }
 
@@ -102,7 +102,7 @@ public class NeighborhoodsCache {
             yLimit = origin.y + neighborhood.getHeight();
             for (int x = origin.x; x < xLimit; x++) {
                 for (int y = origin.y; y < yLimit; y++) {
-                    spacePointsCache.get(x, y).addNeighborhood(neighborhood);
+                    vector2DCache.get(x, y).addNeighborhood(neighborhood);
                 }
             }
         }

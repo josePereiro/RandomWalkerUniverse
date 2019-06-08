@@ -1,20 +1,54 @@
 package Core.World;
 
+import java.util.ArrayList;
+
 public class World {
 
     public int width;
     public int height;
-    private SpacePointsCache spacePointsCache;
+    private Vector2DCache vector2DCache;
     private RandomNumbersCache randomNumbersCache;
     private NeighborhoodsCache neighborhoodsCache;
+    private ArrayList<Walker> walkers;
 
     private World(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public SpacePointsCache getSpacePointsCache() {
-        return spacePointsCache;
+    public void step() {
+
+        //Updating Tendencies
+        for (Walker walker : walkers) {
+            walker.updateTendency(walker.getClosestNeighborhood().neighbors, vector2DCache);
+        }
+
+        //Moving
+        for (Walker walker : walkers) {
+            walker.setLocation(randomNumbersCache.pickANeighbor(walker.getLocation(),
+                    walker.getTendency()));
+        }
+
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public ArrayList<Walker> getWalkers() {
+        return walkers;
+    }
+
+    public void addWalker(Walker walker) {
+        walkers.add(walker);
+    }
+
+    public Vector2DCache getVector2DCache() {
+        return vector2DCache;
     }
 
     public RandomNumbersCache getRandomNumbersCache() {
@@ -39,6 +73,7 @@ public class World {
             private static final int DEFAULT_NEIGHBORHOOD_DRADIUS = 20;
             private static final int DEFAULT_NEIGHBORHOOD_OFFSET = 20;
             private static final int DEFAULT_NEIGHBORHOOD_BUFFER_CAPACITY = 50;
+            private static final int DEFAULT_INITIAL_WALKERS_CAPACITY = 5000;
 
         }
 
@@ -75,21 +110,23 @@ public class World {
 
         public World createNewWorld() {
 
-            //SpacePointsCache
-            SpacePointsCache spacePointsCache = new SpacePointsCache(wWidth, wHeight);
+            //Vector2DCache
+            Vector2DCache vector2DCache = new Vector2DCache(wWidth, wHeight);
 
             //NeighborhoodCache
             NeighborhoodsCache neighborhoodsCache = new NeighborhoodsCache(wWidth,
-                    wHeight, neighDRadius, neighOffset, neighBufferCapacity, spacePointsCache);
+                    wHeight, neighDRadius, neighOffset, neighBufferCapacity, vector2DCache);
 
             //RandomNu
             RandomNumbersCache randomNumbersCache = new RandomNumbersCache(randNumbersCacheLength);
 
             //newWorld
             World newWorld = new World(wWidth, wHeight);
-            newWorld.spacePointsCache = spacePointsCache;
+            newWorld.vector2DCache = vector2DCache;
             newWorld.neighborhoodsCache = neighborhoodsCache;
             newWorld.randomNumbersCache = randomNumbersCache;
+            newWorld.walkers = new ArrayList<>(Statics.Defaults.DEFAULT_INITIAL_WALKERS_CAPACITY);
+
 
             return newWorld;
         }

@@ -3,14 +3,14 @@ package Core.World;
 
 import Core.Tools.Tools;
 
-public final class SpacePoint implements Tendency {
+public final class Vector2D implements Tendency {
 
     private static final int TENDENCY_DISTRIBUTION_LENGTH = 3;
 
     public final int x;
     public final int y;
     public final float mg;
-    SpacePoint maxCollinear;
+    Vector2D maxCollinear;
 
     /**
      * An array used to transform this vector representation
@@ -26,11 +26,11 @@ public final class SpacePoint implements Tendency {
     final float[] tendDistribution;
 
     //Space Info
-    final SpacePoint[] fourNeighbors;
+    final Vector2D[] fourNeighbors;
     Neighborhood[] neighborhoods;
     private int neighborhoodsCount;
 
-    SpacePoint(int x, int y) {
+    Vector2D(int x, int y) {
         this.x = x;
         this.y = y;
         mg = distance(0, 0, x, y);
@@ -39,11 +39,11 @@ public final class SpacePoint implements Tendency {
         if (x < 0 || y < 0)
             fourNeighbors = null;
         else
-            fourNeighbors = new SpacePoint[4];
+            fourNeighbors = new Vector2D[4];
         neighborhoodsCount = 0;
     }
 
-    public SpacePoint getMaxCollinear() {
+    public Vector2D getMaxCollinear() {
         return maxCollinear;
     }
 
@@ -55,7 +55,7 @@ public final class SpacePoint implements Tendency {
 
     void addNeighborhood(Neighborhood newNeighborhood) {
         Neighborhood firstNeighborhood;
-        SpacePoint centerFirst, centerNew;
+        Vector2D centerFirst, centerNew;
         float distToFirst, distToNew;
         if (neighborhoodsCount < neighborhoods.length) {
             if (neighborhoodsCount == 0) {
@@ -92,6 +92,10 @@ public final class SpacePoint implements Tendency {
     private void addNeighborhoodAtEnd(Neighborhood neighborhood) {
         neighborhoods[neighborhoodsCount] = neighborhood;
         neighborhoodsCount++;
+    }
+
+    Neighborhood getClosestNeighborhood() {
+        return neighborhoods[0];
     }
 
     public Neighborhood[] getNeighborhoods() {

@@ -3,14 +3,13 @@ package test.NotJUnitTests.ProcessingTests;
 import Core.World.*;
 import processing.core.PApplet;
 import processing.core.PVector;
-import test.JUnit.Vector2D.SpacePointCacheTest;
 
 import java.awt.*;
 
 public class NeighborhoodCacheTests extends PApplet {
 
     World world;
-    SpacePointsCache spacePointsCache;
+    Vector2DCache vector2DCache;
     int offset = 50;
 
     //TODO fix this bug. Some parts of the world do not belong to a neigh...
@@ -35,7 +34,7 @@ public class NeighborhoodCacheTests extends PApplet {
 //        factory.setNeighOffset(0);
 
         world = factory.createNewWorld();
-        spacePointsCache = world.getSpacePointsCache();
+        vector2DCache = world.getVector2DCache();
         noCursor();
     }
 
@@ -50,12 +49,12 @@ public class NeighborhoodCacheTests extends PApplet {
         rect(offset, offset, world.width, world.height);
 
         //Neighborhoods
-        SpacePoint currentPoint = spacePointsCache.get(mouseX - offset,
+        Vector2D currentPoint = vector2DCache.get(mouseX - offset,
                 mouseY - offset);
 
         Neighborhood[] neighborhoods = currentPoint.getNeighborhoods();
         Neighborhood neighborhood;
-        SpacePoint origin;
+        Vector2D origin;
         if (neighborhoods != null) {
             for (int ni = neighborhoods.length - 1; ni >= 0; ni--) {
 
@@ -104,7 +103,7 @@ public class NeighborhoodCacheTests extends PApplet {
         factory.setNeighDRadius((int) map(mouseX, 0, width, 10, 50));
         factory.setNeighOffset(factory.getNeighDRadius());
         world = factory.createNewWorld();
-        spacePointsCache = world.getSpacePointsCache();
+        vector2DCache = world.getVector2DCache();
     }
 
     private PVector neighborhoodMassCenter(Neighborhood[] neighborhoods) {

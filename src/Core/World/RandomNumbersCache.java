@@ -42,7 +42,7 @@ public class RandomNumbersCache {
         }
     }
 
-    public SpacePoint pickANeighbor(SpacePoint position, Tendency tendency) {
+    public Vector2D pickANeighbor(Vector2D position, Tendency tendency) {
         float rn = getNextFloat();
         float[] td = tendency.getTendencyDistribution();
         if (rn <= td[World.Statics.UP_NEIGHBORHOOD_INDEX]) {

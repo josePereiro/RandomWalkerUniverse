@@ -2,13 +2,13 @@ package Core.World;
 
 public class Neighborhood {
 
-    private final SpacePoint origin;
-    private final SpacePoint center;
+    private final Vector2D origin;
+    private final Vector2D center;
     private final int width;
     private final int height;
     WalkersBuffer neighbors;
 
-    Neighborhood(SpacePoint origin, SpacePoint center, int width, int height, int bufferCapacity) {
+    Neighborhood(Vector2D origin, Vector2D center, int width, int height, int bufferCapacity) {
         this.origin = origin;
         this.center = center;
         this.width = width;
@@ -20,7 +20,7 @@ public class Neighborhood {
         return neighbors;
     }
 
-    public SpacePoint getOrigin() {
+    public Vector2D getOrigin() {
         return origin;
     }
 
@@ -40,7 +40,7 @@ public class Neighborhood {
         return center.y;
     }
 
-    public SpacePoint getCenter() {
+    public Vector2D getCenter() {
         return center;
     }
 
@@ -48,8 +48,8 @@ public class Neighborhood {
         return width * height;
     }
 
-    public boolean isWithing(SpacePoint spacePoint) {
-        return spacePoint.x >= origin.x && spacePoint.x < origin.x + width &&
-                spacePoint.y >= origin.y && spacePoint.y < origin.y + height;
+    public boolean isWithing(Vector2D vector2D) {
+        return vector2D.x >= origin.x && vector2D.x < origin.x + width &&
+                vector2D.y >= origin.y && vector2D.y < origin.y + height;
     }
 }

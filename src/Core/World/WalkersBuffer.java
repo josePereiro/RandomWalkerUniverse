@@ -1,7 +1,5 @@
 package Core.World;
 
-import Core.Walkers.Walker;
-
 public class WalkersBuffer {
 
     private final int capacity;

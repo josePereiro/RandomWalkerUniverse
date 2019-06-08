@@ -1,8 +1,8 @@
 package test.NotJUnitTests.ProcessingTests;
 
 import Core.World.RandomNumbersCache;
-import Core.World.SpacePoint;
-import Core.World.SpacePointsCache;
+import Core.World.Vector2D;
+import Core.World.Vector2DCache;
 import Core.World.World;
 import processing.core.PApplet;
 
@@ -23,11 +23,11 @@ public class PreliminaryRandomWalkerTests extends PApplet {
 
     int desiredFrameRate = 60;
     int walkerCount = 10000;
-    ArrayList<SpacePoint> walkers;
+    ArrayList<Vector2D> walkers;
     World world;
-    SpacePointsCache spacePointsCache;
+    Vector2DCache vector2DCache;
     RandomNumbersCache randomNumbersCache;
-    SpacePoint tendency;
+    Vector2D tendency;
     int rpf = 1000;//1300 //2400
     int itrs = 0;
     float lastFrameRate = 0;
@@ -36,15 +36,15 @@ public class PreliminaryRandomWalkerTests extends PApplet {
     public void setup() {
         World.WorldFactory factory = new World.WorldFactory(width,height);
         world = factory.createNewWorld();
-        spacePointsCache = world.getSpacePointsCache();
+        vector2DCache = world.getVector2DCache();
         randomNumbersCache = world.getRandomNumbersCache();
         walkers = new ArrayList<>();
-        SpacePoint walker;
+        Vector2D walker;
         for (int i = 0; i < walkerCount; i++) {
-            walker = spacePointsCache.get(width / 2, height / 2);
+            walker = vector2DCache.get(width / 2, height / 2);
             walkers.add(walker);
         }
-        tendency = spacePointsCache.get(0, 0);
+        tendency = vector2DCache.get(0, 0);
         background(255);
         fill(0);
         frameRate(desiredFrameRate);
@@ -65,7 +65,7 @@ public class PreliminaryRandomWalkerTests extends PApplet {
         stroke(0);
         for (int r = 0; r < rpf; r++) {
             for (int i = 0; i < walkers.size(); i++) {
-                SpacePoint walker = walkers.get(i);
+                Vector2D walker = walkers.get(i);
                 walker = randomNumbersCache.pickANeighbor(walker,
                         tendency);
                 walkers.set(i, walker);
@@ -73,7 +73,7 @@ public class PreliminaryRandomWalkerTests extends PApplet {
             itrs++;
         }
 
-        for (SpacePoint walker : walkers) {
+        for (Vector2D walker : walkers) {
             point(walker.x, walker.y);
         }
 
