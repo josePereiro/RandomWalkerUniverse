@@ -37,7 +37,7 @@ public class World {
 
             private static final int DEFAULT_RANDOM_CACHE_LENGTH = 10000000;
             private static final int DEFAULT_NEIGHBORHOOD_DRADIUS = 20;
-            private static final int DEFAULT_NEIGHBORHOOD_OFFSET = 5;
+            private static final int DEFAULT_NEIGHBORHOOD_OFFSET = 20;
             private static final int DEFAULT_NEIGHBORHOOD_BUFFER_CAPACITY = 50;
 
         }
@@ -99,7 +99,24 @@ public class World {
         }
 
         public void setNeighDRadius(int neighDRadius) {
+
             this.neighDRadius = neighDRadius;
+        }
+
+        public void setNeighOffset(int neighOffset) {
+            this.neighOffset = neighOffset;
+        }
+
+        public int getNeighOffset() {
+            return neighOffset;
+        }
+
+        public int getNeighBufferCapacity() {
+            return neighBufferCapacity;
+        }
+
+        public void setNeighBufferCapacity(int neighBufferCapacity) {
+            this.neighBufferCapacity = neighBufferCapacity;
         }
 
         public int getRandNumbersCacheLength() {
@@ -110,20 +127,12 @@ public class World {
             this.randNumbersCacheLength = randNumbersCacheLength;
         }
 
-        public void setNeighOffset(int neighOffset) {
-            this.neighOffset = neighOffset;
-        }
-
         public int getwWidth() {
             return wWidth;
         }
 
         public int getwHeight() {
             return wHeight;
-        }
-
-        public int getNeighOffset() {
-            return neighOffset;
         }
     }
 

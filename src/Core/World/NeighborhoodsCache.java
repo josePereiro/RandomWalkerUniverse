@@ -17,21 +17,28 @@ public class NeighborhoodsCache {
         int origin, size;
         if (index == 0) {
             if (centers.size() > 1) {
-                origin = centers.get(0) - dRadius + offset;
-                size = centers.get(2) - centers.get(1) + 1 - 2 * offset;
+                origin = centers.get(0) - dRadius - offset;
+                if (origin < 0) {
+                    origin = 0;
+                    size = dimLength;
+                } else {
+                    size = centers.get(2) - centers.get(1) + 1 + 2 * offset;
+                    if (size > dimLength) {
+                        size = dimLength;
+                    }
+                }
             } else {
                 origin = 0;
                 size = dimLength;
             }
         } else {
-            origin = centers.get(index) - dRadius;
-            if (origin <= 0) {
+            origin = centers.get(index) - dRadius - offset;
+            if (origin < 0) {
                 origin = 0;
-                size = dRadius + centers.get(index) + 1 - offset;
+                size = dRadius + centers.get(index) + 1 + offset;
             } else {
-                origin += offset;
-                size = 2 * dRadius + 1 - 2 * offset;
-                if (centers.get(index) + dRadius >= dimLength - 1) {
+                size = 2 * dRadius + 1 + 2 * offset;
+                if (centers.get(index) + dRadius + offset >= dimLength - 1) {
                     size = dimLength - origin;
                 }
             }
@@ -95,7 +102,7 @@ public class NeighborhoodsCache {
             yLimit = origin.y + neighborhood.getHeight();
             for (int x = origin.x; x < xLimit; x++) {
                 for (int y = origin.y; y < yLimit; y++) {
-                    spacePointsCache.get(x,y).addNeighborhood(neighborhood);
+                    spacePointsCache.get(x, y).addNeighborhood(neighborhood);
                 }
             }
         }
