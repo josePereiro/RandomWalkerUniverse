@@ -121,7 +121,7 @@ public class Vector2DCacheTest {
     void cachingMgVsComputing() throws Throwable {
         timeTester = new Support.WallTimeTester("CachingMgVsComputing Time test");
 
-        Executable computedTest = timeTester.addTest("(float) Point.distance(0, 0, x, y)",
+        Executable computedTest = timeTester.addTest("(float) Point.distanceVector2D(0, 0, x, y)",
                 () -> temp[0] = (float) Point.distance(0, 0, x, y)
         );
 

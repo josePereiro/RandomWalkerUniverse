@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class NeighborhoodsCache {
 
     private Neighborhood[] neighborhoods;
+    private Neighborhood[] commomCache;
 
     NeighborhoodsCache(int wWidth, int wHeight, int dRadius, int offset, int bufferCapacity,
                        Vector2DCache vector2DCache) {
@@ -21,6 +22,7 @@ public class NeighborhoodsCache {
                 if (origin < 0) {
                     origin = 0;
                     size = dimLength;
+
                 } else {
                     size = centers.get(2) - centers.get(1) + 1 + 2 * offset;
                     if (size > dimLength) {
@@ -36,6 +38,11 @@ public class NeighborhoodsCache {
             if (origin < 0) {
                 origin = 0;
                 size = dRadius + centers.get(index) + 1 + offset;
+
+                if (size > dimLength){
+                    size = dimLength;
+                }
+
             } else {
                 size = 2 * dRadius + 1 + 2 * offset;
                 if (centers.get(index) + dRadius + offset >= dimLength - 1) {
@@ -121,6 +128,19 @@ public class NeighborhoodsCache {
             }
         }
         return neighs;
+    }
+
+    void clearNeighborhoods() {
+        for (Neighborhood neighborhood : neighborhoods) {
+            neighborhood.neighbors.clear();
+        }
+    }
+
+    void locateWalker(RandomWalker walker) {
+        commomCache = walker.getLocation().neighborhoods;
+        for (Neighborhood neighborhood : commomCache) {
+            neighborhood.neighbors.addIfPossible(walker);
+        }
     }
 
     public Neighborhood[] getNeighborhoods() {

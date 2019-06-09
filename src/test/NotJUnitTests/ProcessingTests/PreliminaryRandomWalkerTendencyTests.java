@@ -57,7 +57,7 @@ public class PreliminaryRandomWalkerTendencyTests extends PApplet {
 
         background(255);
 
-        tendency = vector2DCache.distance(center.x, center.y, mouseX, mouseY);
+        tendency = vector2DCache.distanceVector2D(center.x, center.y, mouseX, mouseY);
         tendency = vector2DCache.multiply(tendency, 2);
 
         if (frameRate > lastFrameRate) {

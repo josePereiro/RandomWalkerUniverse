@@ -9,7 +9,7 @@ public class World {
     private Vector2DCache vector2DCache;
     private RandomNumbersCache randomNumbersCache;
     private NeighborhoodsCache neighborhoodsCache;
-    private ArrayList<Walker> walkers;
+    private ArrayList<RandomWalker> randomWalkers;
 
     private World(int width, int height) {
         this.width = width;
@@ -18,15 +18,26 @@ public class World {
 
     public void step() {
 
+        //Unsorting
+        randomNumbersCache.unsort(randomWalkers);
+
+        //Cleaning Neighbors
+        neighborhoodsCache.clearNeighborhoods();
+
+        //updating Neighborhoods
+        for (RandomWalker randomWalker : randomWalkers) {
+            neighborhoodsCache.locateWalker(randomWalker);
+        }
+
         //Updating Tendencies
-        for (Walker walker : walkers) {
-            walker.updateTendency(walker.getClosestNeighborhood().neighbors, vector2DCache);
+        for (RandomWalker randomWalker : randomWalkers) {
+            randomWalker.updateTendency(randomWalker.getClosestNeighborhood().neighbors, vector2DCache);
         }
 
         //Moving
-        for (Walker walker : walkers) {
-            walker.setLocation(randomNumbersCache.pickANeighbor(walker.getLocation(),
-                    walker.getTendency()));
+        for (RandomWalker randomWalker : randomWalkers) {
+            randomWalker.setLocation(randomNumbersCache.pickANeighbor(randomWalker.getLocation(),
+                    randomWalker.getTendency()));
         }
 
     }
@@ -39,12 +50,12 @@ public class World {
         return height;
     }
 
-    public ArrayList<Walker> getWalkers() {
-        return walkers;
+    public ArrayList<RandomWalker> getRandomWalkers() {
+        return randomWalkers;
     }
 
-    public void addWalker(Walker walker) {
-        walkers.add(walker);
+    public void addWalker(RandomWalker randomWalker) {
+        randomWalkers.add(randomWalker);
     }
 
     public Vector2DCache getVector2DCache() {
@@ -70,8 +81,8 @@ public class World {
         public static class Defaults {
 
             private static final int DEFAULT_RANDOM_CACHE_LENGTH = 10000000;
-            private static final int DEFAULT_NEIGHBORHOOD_DRADIUS = 20;
-            private static final int DEFAULT_NEIGHBORHOOD_OFFSET = 20;
+            private static final int DEFAULT_NEIGHBORHOOD_DRADIUS = 5;
+            private static final int DEFAULT_NEIGHBORHOOD_OFFSET = 15;
             private static final int DEFAULT_NEIGHBORHOOD_BUFFER_CAPACITY = 50;
             private static final int DEFAULT_INITIAL_WALKERS_CAPACITY = 5000;
 
@@ -91,6 +102,10 @@ public class World {
         private int neighBufferCapacity;
         //RandomNumbersCache
         private int randNumbersCacheLength;
+
+        public static World createWorld(int wWidth, int wHeight) {
+            return new World.WorldFactory(wWidth, wHeight).createNewWorld();
+        }
 
         public WorldFactory(int wWidth, int wHeight) {
             this.wWidth = wWidth;
@@ -125,7 +140,7 @@ public class World {
             newWorld.vector2DCache = vector2DCache;
             newWorld.neighborhoodsCache = neighborhoodsCache;
             newWorld.randomNumbersCache = randomNumbersCache;
-            newWorld.walkers = new ArrayList<>(Statics.Defaults.DEFAULT_INITIAL_WALKERS_CAPACITY);
+            newWorld.randomWalkers = new ArrayList<>(Statics.Defaults.DEFAULT_INITIAL_WALKERS_CAPACITY);
 
 
             return newWorld;

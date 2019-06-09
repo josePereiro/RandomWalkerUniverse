@@ -2,6 +2,7 @@ package Core.World;
 
 import Core.Tools.Tools;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomNumbersCache {
@@ -59,4 +60,17 @@ public class RandomNumbersCache {
     public int getIndex() {
         return index;
     }
+
+    public <T> void unsort(ArrayList<T> list) {
+        int ri;
+        int bound = list.size();
+        T temp;
+        for (int i = 0; i < list.size(); i++) {
+            ri = getNextInt(bound);
+            temp = list.get(i);
+            list.set(i, list.get(ri));
+            list.set(ri, temp);
+        }
+    }
+
 }

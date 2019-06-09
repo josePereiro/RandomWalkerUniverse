@@ -6,11 +6,13 @@ import Core.Tools.Tools;
 public final class Vector2D implements Tendency {
 
     private static final int TENDENCY_DISTRIBUTION_LENGTH = 3;
+    public static final int DEFAULT_BASE_BOUND = 5;
 
     public final int x;
     public final int y;
     public final float mg;
     Vector2D maxCollinear;
+    Vector2D baseCollinear;
 
     /**
      * An array used to transform this vector representation
@@ -45,6 +47,10 @@ public final class Vector2D implements Tendency {
 
     public Vector2D getMaxCollinear() {
         return maxCollinear;
+    }
+
+    public Vector2D getBaseCollinear() {
+        return baseCollinear;
     }
 
     private static float distance(int x1, int y1, int x2, int y2) {

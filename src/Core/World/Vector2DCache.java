@@ -53,7 +53,7 @@ public class Vector2DCache {
                 factory.setFourNeighbors(vector2D, wWidth - 1,
                         wHeight - 1);
                 factory.setTendDistribution(vector2D);
-                factory.setMaxCollinear(vector2D);
+                factory.setCollinear(vector2D);
             }
         }
     }
@@ -79,11 +79,15 @@ public class Vector2DCache {
         return get(x, y);
     }
 
-    public Vector2D distance(Vector2D p1, Vector2D p2) {
+    public Vector2D distanceVector2D(Vector2D p1, Vector2D p2) {
         return get(p1.x - p2.x, p1.y - p2.y);
     }
 
-    public Vector2D distance(int x1, int y1, int x2, int y2) {
+    public float distance(Vector2D p1, Vector2D p2) {
+        return get(p1.x - p2.x, p1.y - p2.y).mg;
+    }
+
+    public Vector2D distanceVector2D(int x1, int y1, int x2, int y2) {
         return get(x2 - x1, y2 - y1);
     }
 
@@ -91,23 +95,44 @@ public class Vector2DCache {
         return get(0 - v.x, 0 - v.y);
     }
 
-    private Vector2D getMaxCollinear(Vector2D v) {
+    public Vector2D getCollinear(Vector2D v, int b) {
         if (v.x == 0) {
-            return get(0, Tools.toSameSign(v.y, lastIndex));
+            return get(0, Tools.toSameSign(v.y, b));
         } else {
             float rv = Math.abs(((float) v.y) / v.x);
             if (rv < 1F) {
-                return get(Tools.toSameSign(v.x, lastIndex),
-                        Tools.toSameSign(v.y, Math.round(rv * lastIndex)));
+                return get(Tools.toSameSign(v.x, b),
+                        Tools.toSameSign(v.y, Math.round(rv * b)));
             } else {
-                return get(Tools.toSameSign(v.x, Math.round(lastIndex / rv)),
-                        Tools.toSameSign(v.y, lastIndex));
+                return get(Tools.toSameSign(v.x, Math.round(b / rv)),
+                        Tools.toSameSign(v.y, b));
             }
         }
     }
 
     public Vector2D multiply(Vector2D v, int i) {
         return get(v.x * i, v.y * i);
+    }
+
+    public Vector2D divide(Vector2D v, int i) {
+        return get(v.x / i, v.y / i);
+    }
+
+    public Vector2D add(Vector2D v1, Vector2D v2) {
+        return get(v1.x + v2.x, v1.y + v2.y);
+    }
+
+    public Vector2D addIfPossible(Vector2D v1, Vector2D v2) {
+        int x = v1.x + v2.x;
+        int y = v1.y + v2.y;
+        if (Math.abs(x) <= lastIndex && Math.abs(y) <= lastIndex) {
+            return get(x, y);
+        }
+        return v1;
+    }
+
+    public Vector2D substract(Vector2D v1, Vector2D v2) {
+        return get(v1.x - v2.x, v1.y - v2.y);
     }
 
     private class Vector2DFactory {
@@ -169,8 +194,9 @@ public class Vector2DCache {
             tendDist[RIGHT_NEIGHBORHOOD_INDEX] = tendDist[DOWN_NEIGHBORHOOD_INDEX] + 0.25F + vector2D.x / max;
         }
 
-        private void setMaxCollinear(Vector2D vector2D) {
-            vector2D.maxCollinear = getMaxCollinear(vector2D);
+        private void setCollinear(Vector2D vector2D) {
+            vector2D.maxCollinear = getCollinear(vector2D, lastIndex);
+            vector2D.baseCollinear = getCollinear(vector2D, Vector2D.DEFAULT_BASE_BOUND);
         }
 
     }

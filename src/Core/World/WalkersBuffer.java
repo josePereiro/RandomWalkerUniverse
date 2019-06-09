@@ -3,35 +3,35 @@ package Core.World;
 public class WalkersBuffer {
 
     private final int capacity;
-    private final Walker[] walkers;
+    private final RandomWalker[] randomWalkers;
     private int count;
 
     public WalkersBuffer(int capacity) {
         this.capacity = capacity;
-        walkers = new Walker[capacity];
+        randomWalkers = new RandomWalker[capacity];
         clear();
     }
 
-    public Walker get(int index) {
+    public RandomWalker get(int index) {
         checkIndex(index);
-        return walkers[index];
+        return randomWalkers[index];
     }
 
-    public Walker getUncheked(int index) {
-        return walkers[index];
+    public RandomWalker getUncheked(int index) {
+        return randomWalkers[index];
     }
 
-    public void add(Walker walker) {
+    public void add(RandomWalker randomWalker) {
         if (isFull()) {
             throw new OutOfMemoryError("Buffer is full");
         }
-        walkers[count] = walker;
+        randomWalkers[count] = randomWalker;
         count++;
     }
 
-    public void addIfPossible(Walker walker) {
+    public void addIfPossible(RandomWalker randomWalker) {
         if (hasSpace()) {
-            walkers[count] = walker;
+            randomWalkers[count] = randomWalker;
             count++;
         }
     }
@@ -48,13 +48,13 @@ public class WalkersBuffer {
         return count < capacity;
     }
 
-    public void set(int index, Walker walker) {
+    public void set(int index, RandomWalker randomWalker) {
         checkIndex(index);
-        walkers[index] = walker;
+        randomWalkers[index] = randomWalker;
     }
 
-    public void setUnchecked(int index, Walker walker) {
-        walkers[index] = walker;
+    public void setUnchecked(int index, RandomWalker randomWalker) {
+        randomWalkers[index] = randomWalker;
     }
 
     private void checkIndex(int index) {
